@@ -22,13 +22,10 @@ public:
 
     vector<Event *> getEvents(time_t start, time_t end) {
         vector<Event *> result;
+
         for (auto &singleEvent : singleEvents)
-            if (isInRange(start, end, singleEvent))
+            if (singleEvent->isInRange(start, end))
                 result.push_back(singleEvent);
-
-        for (auto &recurringEvent : recurringEvents) {
-
-        }
 
         return result;
     }
@@ -36,12 +33,6 @@ public:
 private:
     vector<SingleEvent *> singleEvents;
     vector<RecurringEvent *> recurringEvents;
-
-    bool isInRange(time_t start, time_t end, Event *event) {
-        return ((event->startDateUtc > start && event->startDateUtc < end)
-                || (event->endDateUtc > start && event->endDateUtc < end)
-                || (event->startDateUtc < start && event->endDateUtc > end));
-    }
 };
 
 

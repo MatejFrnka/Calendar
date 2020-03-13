@@ -19,8 +19,11 @@ public:
     string title;
     time_t startDateUtc;
     time_t endDateUtc;
+    bool isInRange(time_t start, time_t end);
 private:
+
 protected:
+
 };
 
 

@@ -1,18 +1,18 @@
 #include "ProjectIncludes.h"
 #include "./Calendar/EventManager.h"
+#include "./Calendar/Event.h"
+#include "./Calendar/RecurringEvent.h"
 
 int main() {
 
-    EventManager eventManager;
-    SingleEvent event("test", 1580256000, 1580272200);
+    RecurringEvent event("Title", 1000, 1100, 1000);
 
-    eventManager.addEvent(&event);
-    SingleEvent event2("test 2", 1580256000, 1580272100);
-    eventManager.addEvent(&event2);
+    vector<Event*> events = event.getEvents(8000, 16000);
 
-    vector<Event *> a = eventManager.getEvents(1580256000, 1580272201);
-    for (Event *&it : a) {
-        cout << it->title << endl;
+    for (auto &item : events){
+        cout << item->startDateUtc << endl;
     }
+
+
     return 0;
 }
