@@ -3,4 +3,4 @@ project(Calendar)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Calendar main.cpp)
+add_executable(Calendar main.cpp Calendar/Event.cpp Calendar/Event.h ProjectIncludes.h Calendar/SingleEvent.cpp Calendar/SingleEvent.h Calendar/RecurringEvent.cpp Calendar/RecurringEvent.h Calendar/EventManager.cpp Calendar/EventManager.h)
