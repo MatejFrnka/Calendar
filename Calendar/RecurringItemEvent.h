@@ -5,18 +5,20 @@
 #ifndef CALENDAR_RECURRINGITEMEVENT_H
 #define CALENDAR_RECURRINGITEMEVENT_H
 
-#include "Event.h"
-#include "RecurringEvent.h"
+#include "RecurringItemEvent.h"
+#include "CalendarIncludes.h"
+
 
 class RecurringItemEvent : public Event {
 public:
-    RecurringItemEvent(string title_, time_t startDateUtc_, time_t endDateUtc_, Event *parentEvent_) : Event(
-            std::move(title_), startDateUtc_, endDateUtc_){
-        parentEvent = parentEvent_;
-    }
+    RecurringItemEvent(string title_, time_t startDateUtc_, time_t endDateUtc_, RecurringEvent *parentEvent_);
+
+    RecurringEvent *parentEvent;
+
+    SingleEvent *getCopySingleEvent();
 
 private:
-    Event *parentEvent;
+
 };
 
 

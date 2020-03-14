@@ -7,6 +7,7 @@
 
 #include "Event.h"
 #include "RecurringItemEvent.h"
+#include "SingleEvent.h"
 
 class RecurringEvent : public Event {
 public:
@@ -25,11 +26,16 @@ public:
 
     time_t getFirstEventTime(time_t start);
 
+    RecurringEvent *getCopy();
+    SingleEvent * getCopySingleEvent();
+    void UpdateSelf(RecurringEvent * reference);
 
-private:
     time_t repeatTill;
     bool repeatToInfinity;
     time_t timeBetweenEvents;
+private:
+
+
 
     time_t roundUp(time_t numToRound, time_t multiple);
 };

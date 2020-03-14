@@ -35,7 +35,7 @@ vector<Event *> RecurringEvent::getEvents(time_t start, time_t end) {
     vector<Event *> result;
     time_t eventTime = getFirstEventTime(start);
     do {
-        RecurringItemEvent *event = new RecurringItemEvent(title, eventTime, eventTime+getDuration(), this);
+        RecurringItemEvent *event = new RecurringItemEvent(title, eventTime, eventTime + getDuration(), this);
         result.push_back(event);
 
         eventTime += timeBetweenEvents;
@@ -70,5 +70,27 @@ time_t RecurringEvent::roundUp(time_t numToRound, time_t multiple) {
     return numToRound + multiple - remainder;
 }
 
+RecurringEvent *RecurringEvent::getCopy() {
 
+    RecurringEvent *result;
+    if (repeatToInfinity)
+        result = new RecurringEvent(title, startDateUtc, endDateUtc, timeBetweenEvents);
+    else
+        result = new RecurringEvent(title, startDateUtc,endDateUtc, timeBetweenEvents,
+                                    repeatTill);
+    return result;
+}
 
+SingleEvent *RecurringEvent::getCopySingleEvent() {
+    return new SingleEvent(title, startDateUtc, endDateUtc);
+}
+
+void RecurringEvent::UpdateSelf(RecurringEvent *reference) {
+    title = reference->title;
+    startDateUtc = reference->startDateUtc;
+    endDateUtc = reference->endDateUtc;
+    timeBetweenEvents = reference->timeBetweenEvents;
+    repeatTill = reference->repeatTill;
+    repeatToInfinity = reference->repeatToInfinity;
+    timeBetweenEvents = reference->timeBetweenEvents;
+}

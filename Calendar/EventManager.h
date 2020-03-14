@@ -6,34 +6,24 @@
 #define CALENDAR_EVENTMANAGER_H
 
 #include "../ProjectIncludes.h"
-#include "Event.h"
-#include "SingleEvent.h"
-#include "RecurringEvent.h"
+#include "CalendarIncludes.h"
+
 
 class EventManager {
 public:
-    void addEvent(SingleEvent *event) {
-        singleEvents.push_back(event);
-    }
+    void addEvent(SingleEvent *event);
 
-    void addEvent(RecurringEvent *event) {
-        recurringEvents.push_back(event);
-    }
+    void addEvent(RecurringEvent *event);
 
-    vector<Event *> getEvents(time_t start, time_t end) {
-        vector<Event *> result;
+    vector<Event *> *getEvents(time_t start, time_t end);
 
-        for (auto &singleEvent : singleEvents)
-            if (singleEvent->isInRange(start, end))
-                result.push_back(singleEvent);
+    RecurringEvent *editThisAndNextEvent(RecurringEvent *eventToEdit);
 
-        return result;
-    }
+    SingleEvent *editThisOnly(RecurringItemEvent *eventToEdit);
 
 private:
     vector<SingleEvent *> singleEvents;
     vector<RecurringEvent *> recurringEvents;
 };
-
 
 #endif //CALENDAR_EVENTMANAGER_H

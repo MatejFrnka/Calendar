@@ -8,22 +8,28 @@
 
 class Event {
 public:
-    Event(string title_, time_t startDateUtc_, time_t endDateUtc_) {
-        title = std::move(title_);
-        startDateUtc = startDateUtc_;
-        endDateUtc = endDateUtc_;
-    }
-    time_t getDuration(){
-        return endDateUtc-startDateUtc;
-    }
+    Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
+
+    time_t getDuration();
+
     string title;
     time_t startDateUtc;
     time_t endDateUtc;
+
     bool isInRange(time_t start, time_t end);
+
+    void EditEvent(Event *event);
+
+    virtual void MakeAbastract() {};
+
+
+    int getDay(bool start);
+
 private:
+    tm getTime(bool start);
 
-protected:
-
+    tm startTime;
+    tm endTime;
 };
 
 
