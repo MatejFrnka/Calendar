@@ -3,4 +3,7 @@ project(Calendar)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Calendar main.cpp Calendar/Event.cpp Calendar/Event.h ProjectIncludes.h Calendar/SingleEvent.cpp Calendar/SingleEvent.h Calendar/RecurringEvent.cpp Calendar/RecurringEvent.h Calendar/EventManager.cpp Calendar/EventManager.h Calendar/RecurringItemEvent.cpp Calendar/RecurringItemEvent.h Calendar/CalendarIncludes.h Draw/DrawIncludes.h Draw/DrawManager.cpp Draw/DrawManager.h Draw/DrawModes/Draw_a.cpp Draw/DrawModes/Draw_a.h Draw/DrawModes/DrawMonth.cpp Draw/DrawModes/DrawMonth.h Draw/CalendarUtility.cpp Draw/CalendarUtility.h Draw/DrawModes/DrawDay.cpp Draw/DrawModes/DrawDay.h Calendar/ToDrawEvent.cpp Calendar/ToDrawEvent.h)
+set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -pedantic -fsanitize=address")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
+
+add_executable(Calendar main.cpp Calendar/Event.cpp Calendar/Event.h ProjectIncludes.h Calendar/SingleEvent.cpp Calendar/SingleEvent.h Calendar/RecurringEvent.cpp Calendar/RecurringEvent.h Calendar/EventManager.cpp Calendar/EventManager.h Calendar/RecurringItemEvent.cpp Calendar/RecurringItemEvent.h Calendar/CalendarIncludes.h Draw/DrawIncludes.h Draw/DrawManager.cpp Draw/DrawManager.h Draw/DrawModes/Draw_a.cpp Draw/DrawModes/Draw_a.h Draw/DrawModes/DrawMonth.cpp Draw/DrawModes/DrawMonth.h Draw/CalendarUtility.cpp Draw/CalendarUtility.h)

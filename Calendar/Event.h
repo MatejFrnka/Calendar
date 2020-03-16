@@ -8,6 +8,12 @@
 
 class Event {
 public:
+    enum Type {
+        SingleEventId,
+        RecurringEventId,
+        RecurringEventItemId
+    };
+
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
 
     time_t getDuration();
@@ -20,12 +26,13 @@ public:
 
     void EditEvent(Event *event);
 
-    virtual void MakeAbastract() {};
-
+    virtual int getTypeId() = 0;
 
     int getDay(bool start);
     int getHour(bool start);
     int getMinute(bool start);
+
+    virtual ~Event() = default;
 
 private:
     tm *getTime(bool start);
