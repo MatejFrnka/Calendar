@@ -8,6 +8,20 @@
 #include "../ProjectIncludes.h"
 #include "CalendarIncludes.h"
 
+struct EventsList {
+
+    EventsList(vector<Event *> *event) { events = event; }
+
+    vector<Event *> *events;
+
+    ~EventsList() {
+        for (Event *item : *events) {
+            if (item->getTypeId() == Event::RecurringEventItemId)
+                delete item;
+        }
+        delete events;
+    }
+};
 
 class EventManager {
 public:
@@ -15,11 +29,13 @@ public:
 
     void addEvent(RecurringEvent *event);
 
-    vector<Event *> *getEvents(time_t start, time_t end);
+    EventsList *getEvents(time_t start, time_t end);
 
     RecurringEvent *editThisAndNextEvent(RecurringEvent *eventToEdit);
 
     SingleEvent *editThisOnly(RecurringItemEvent *eventToEdit);
+
+    ~EventManager();
 
 private:
     vector<SingleEvent *> singleEvents;

@@ -9,7 +9,3 @@ SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t endDateUtc_
                                                                                           endDateUtc_) {
 
 }
-
-void SingleEvent::test() {
-    cout << "test";
-}

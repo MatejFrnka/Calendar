@@ -10,8 +10,8 @@
 class SingleEvent : public Event {
 public:
     SingleEvent(string title_, time_t startDateUtc_, time_t endDateUtc_);
-    void test();
 
+    int getTypeId() override { return Event::SingleEventId; };
 };
 
 #endif //CALENDAR_SINGLEEVENT_H

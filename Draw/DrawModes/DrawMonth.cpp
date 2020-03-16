@@ -24,7 +24,7 @@ void DrawMonth::draw(EventManager *eventManager, time_t *time) {
 
     time_t endTime = mktime(displayTime);
 
-    vector<Event *> *events = eventManager->getEvents(startTime, endTime);
+    EventsList *events = eventManager->getEvents(startTime, endTime);
 
     //Draw week days
     for (const auto &weekDay : calendarUtility.weekDays) {
@@ -37,16 +37,15 @@ void DrawMonth::draw(EventManager *eventManager, time_t *time) {
     }
     for (int i = 1; i <= numberOfDays; ++i) {
 
-        vector<Event *> *eventsToday = calendarUtility.filterEvents(i, events);
+        vector<Event *> *eventsToday = calendarUtility.filterEvents(i, events->events);
 
         if (!eventsToday->empty())
             cout << "-";
         delete eventsToday;
 
         cout << i << "\t";
-        if ((i+weekDay)%7 == 0)
+        if ((i + weekDay) % 7 == 0)
             cout << endl << endl;
     }
-
-
+    delete events;
 }

@@ -4,8 +4,8 @@
 
 #include "EventManager.h"
 
-vector<Event *> *EventManager::getEvents(time_t start, time_t end) {
-    vector<Event *> *result = new vector<Event*>;
+EventsList *EventManager::getEvents(time_t start, time_t end) {
+    vector<Event *> *result = new vector<Event *>;
 
     for (auto &singleEvent : singleEvents)
         if (singleEvent->isInRange(start, end))
@@ -15,7 +15,7 @@ vector<Event *> *EventManager::getEvents(time_t start, time_t end) {
         result->insert(result->end(), events.begin(), events.end());
 
     }
-    return result;
+    return new EventsList(result);
 }
 
 void EventManager::addEvent(SingleEvent *event) {
@@ -48,6 +48,15 @@ SingleEvent *EventManager::editThisOnly(RecurringItemEvent *eventToEdit) {
     recurringEvents.push_back(nextEvent);
     singleEvents.push_back(result);
     return result;
+}
+
+EventManager::~EventManager() {
+    for (SingleEvent *event : singleEvents) {
+        delete event;
+    }
+    for (RecurringEvent *event : recurringEvents) {
+        delete event;
+    }
 }
 
 

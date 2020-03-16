@@ -17,6 +17,7 @@ public:
 
     SingleEvent *getCopySingleEvent();
 
+    int getTypeId() override { return Event::RecurringEventItemId; };
 private:
 
 };

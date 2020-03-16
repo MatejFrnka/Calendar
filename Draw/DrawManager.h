@@ -17,6 +17,12 @@ public:
     void draw(EventManager *eventManager);
 
     Draw_a *drawMode = nullptr;
+
+    ~DrawManager() {
+        if (drawMode)
+            delete (drawMode);
+    }
+
 private:
     time_t displayTime;
 };
