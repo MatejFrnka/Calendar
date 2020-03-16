@@ -26,14 +26,22 @@ void Event::EditEvent(Event *event) {
 
 }
 
-tm Event::getTime(bool start) {
+tm *Event::getTime(bool start) {
     if (start) {
-        return startTime;
+        return &startTime;
     } else {
-        return endTime;
+        return &endTime;
     }
 }
 
 int Event::getDay(bool start) {
-    return getTime(start).tm_mday;
+    return getTime(start)->tm_mday;
+}
+
+int Event::getHour(bool start) {
+    return getTime(start)->tm_hour;
+}
+
+int Event::getMinute(bool start) {
+    return getTime(start)->tm_min;
 }

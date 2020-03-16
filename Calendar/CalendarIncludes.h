@@ -9,6 +9,7 @@
 #include "./RecurringEvent.h"
 #include "./RecurringItemEvent.h"
 #include "./SingleEvent.h"
+#include "./ToDrawEvent.h"
 
 class Event;
 

@@ -10,10 +10,20 @@
 
 class CalendarUtility {
 public:
+    enum RangeTime{
+        Day,
+        Week,
+        Month
+    };
     int getMonth(time_t *time);
 
     int getDay(time_t *time);
 
+    int timeZone = 1;
+    time_t getStartRangeTime(RangeTime range,  tm * resultTime);
+    time_t getEndRangeTime(RangeTime range,  tm * resultTime);
+    int convertWeekDay(int day);
+    int getWeekDay(time_t time);
     vector<Event *> *filterEvents(int day, vector<Event *> *events);
 
     int getNumberOfDays(int month, int year);

@@ -13,6 +13,7 @@ class Draw_a {
 public:
     virtual void draw(EventManager *eventManager, time_t *time) = 0;
 
+    int dayWidth = 30;
 protected:
     CalendarUtility calendarUtility;
 };

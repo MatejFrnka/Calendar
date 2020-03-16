@@ -24,9 +24,11 @@ public:
 
 
     int getDay(bool start);
+    int getHour(bool start);
+    int getMinute(bool start);
 
 private:
-    tm getTime(bool start);
+    tm *getTime(bool start);
 
     tm startTime;
     tm endTime;

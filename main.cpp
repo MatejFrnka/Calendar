@@ -5,8 +5,8 @@
 #include <conio.h>
 
 int main() {
-    
-    DrawManager *drawManager = new DrawManager(new DrawMonth());
+
+    DrawManager *drawManager = new DrawManager(new DrawDay());
     vector<Event *> *data = new vector<Event *>();
     tm *date = new tm();
     date->tm_year = 2020 - 1900;
@@ -17,6 +17,7 @@ int main() {
     EventManager *e = new EventManager();
     e->addEvent(new SingleEvent("Pepa", 1583859600, 1583899200));
     e->addEvent(new SingleEvent("Karel", 1584140400, 1584140500));
+    e->addEvent(new SingleEvent("Testos", 1584223200, 1584230400));
     RecurringEvent *eventos = new RecurringEvent("Reccuring", 1583668800, 1583668900, 604800, 1585440000);
     e->addEvent(eventos);
 
@@ -25,10 +26,6 @@ int main() {
     SingleEvent *editThis = e->editThisOnly(toEdit);
     editThis->title = "loool";
 
-    vector<Event *> *events = e->getEvents(1583017200, 1585695600);
-    for (auto &event : *events) {
-        cout << event->title << endl;
-    }
-    //drawManager->draw(e);
+    drawManager->draw(e);
 
 }
