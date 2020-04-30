@@ -1,11 +1,12 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
 #include "DrawMonth.h"
-#include <chrono>
 
 void DrawMonth::draw(EventManager *eventManager, time_t *time) {
+    /*
     tm *displayTime = gmtime(time);
     time_t startTime = calendarUtility.getStartRangeTime(calendarUtility.Month, displayTime);
 
@@ -14,7 +15,7 @@ void DrawMonth::draw(EventManager *eventManager, time_t *time) {
 
     time_t endTime = calendarUtility.getEndRangeTime(calendarUtility.Month, displayTime);
 
-    EventsList *events = eventManager->getEvents(startTime, endTime);
+    EventSet events = eventManager->getEvents(startTime, endTime);
 
     //Draw week days
     for (const auto &weekDay : calendarUtility.weekDays) {
@@ -28,7 +29,7 @@ void DrawMonth::draw(EventManager *eventManager, time_t *time) {
     //Draw days
     for (int i = 1; i <= numberOfDays; ++i) {
 
-        vector<Event *> *eventsToday = calendarUtility.filterEvents(i, events->events);
+        vector<Event *> *eventsToday = calendarUtility.filterEvents(i, events);
 
         if (!eventsToday->empty())
             cout << "-";
@@ -37,6 +38,5 @@ void DrawMonth::draw(EventManager *eventManager, time_t *time) {
         cout << i << "\t";
         if ((i + weekDay) % 7 == 0)
             cout << endl << endl;
-    }
-    delete events;
+    }*/
 }

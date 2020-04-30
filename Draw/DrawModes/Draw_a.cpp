@@ -1,5 +1,7 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
+
 
 #include "Draw_a.h"

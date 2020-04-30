@@ -1,7 +1,7 @@
-//
-// Created by Matej Frnka on 14.03.2020.
-//
-
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
 #include "DrawDay.h"
 
@@ -11,8 +11,8 @@ void DrawDay::draw(EventManager *eventManager, time_t *time) {
     string weekDay = calendarUtility.weekDays[calendarUtility.convertWeekDay(tmTime->tm_wday)];
     time_t endTime = calendarUtility.getEndRangeTime(calendarUtility.Day, tmTime);
 
-    vector<Event *> *events = eventManager->getEvents(startTime, endTime);
-
+    //vector<Event *> *events = eventManager->getEvents(startTime, endTime);
+    vector<Event *> *events = nullptr;
     cout << weekDay << endl;
     cout << drawLine(dayWidth) << endl;
     Event *currentlyDrawing = nullptr;

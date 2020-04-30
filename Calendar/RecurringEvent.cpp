@@ -1,6 +1,7 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
 #include "RecurringEvent.h"
 
@@ -31,12 +32,13 @@ bool RecurringEvent::getRepeatToInfinity() const {
     return repeatToInfinity;
 }
 
-vector<Event *> RecurringEvent::getEvents(time_t start, time_t end) {
-    vector<Event *> result;
+EventSet RecurringEvent::getEvents(time_t start, time_t end) {
+    EventSet result;
     time_t eventTime = getFirstEventTime(start);
+
     do {
         RecurringItemEvent *event = new RecurringItemEvent(title, eventTime, eventTime + getDuration(), this);
-        result.push_back(event);
+        result.insert(event);
 
         eventTime += timeBetweenEvents;
     } while ((repeatToInfinity || eventTime < repeatTill)
@@ -76,7 +78,7 @@ RecurringEvent *RecurringEvent::getCopy() {
     if (repeatToInfinity)
         result = new RecurringEvent(title, startDateUtc, endDateUtc, timeBetweenEvents);
     else
-        result = new RecurringEvent(title, startDateUtc,endDateUtc, timeBetweenEvents,
+        result = new RecurringEvent(title, startDateUtc, endDateUtc, timeBetweenEvents,
                                     repeatTill);
     return result;
 }

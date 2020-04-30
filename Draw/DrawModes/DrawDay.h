@@ -1,13 +1,21 @@
-//
-// Created by Matej Frnka on 14.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_DRAWDAY_H
-#define CALENDAR_DRAWDAY_H
+#pragma once
 
-#include "./../../ProjectIncludes.h"
-#include "./../DrawIncludes.h"
 
+#include <ctime>
+#include <string>
+#include <vector>
+#include <iostream>
+#include <iomanip>
+#include "../../Calendar/Event.h"
+#include "../../Calendar/EventManager.h"
+#include "Draw_a.h"
+
+using namespace std;
 
 class DrawDay : public Draw_a {
 public:
@@ -28,6 +36,3 @@ private:
 
     Event *getCurrent(vector<Event *> *events, int hour, int minute);
 };
-
-
-#endif //CALENDAR_DRAWDAY_H

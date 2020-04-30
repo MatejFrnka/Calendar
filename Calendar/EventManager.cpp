@@ -1,28 +1,31 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
 #include "EventManager.h"
 
-EventsList *EventManager::getEvents(time_t start, time_t end) {
-    vector<Event *> *result = new vector<Event *>;
+
+EventSet EventManager::getEvents(time_t start, time_t end) {
+    EventSet result;
 
     for (auto &singleEvent : singleEvents)
         if (singleEvent->isInRange(start, end))
-            result->push_back(singleEvent);
+            result.refInsert(singleEvent);
     for (auto &recurringEvent : recurringEvents) {
-        vector<Event *> events = recurringEvent->getEvents(start, end);
-        result->insert(result->end(), events.begin(), events.end());
-
+        EventSet events = recurringEvent->getEvents(start, end);
+        result.refInsert(events.begin(), events.end());
     }
-    return new EventsList(result);
+    return result;
 }
 
 void EventManager::addEvent(SingleEvent *event) {
+    event->addReference();
     singleEvents.push_back(event);
 }
 
 void EventManager::addEvent(RecurringEvent *event) {
+    event->addReference();
     recurringEvents.push_back(event);
 }
 
@@ -52,10 +55,10 @@ SingleEvent *EventManager::editThisOnly(RecurringItemEvent *eventToEdit) {
 
 EventManager::~EventManager() {
     for (SingleEvent *event : singleEvents) {
-        delete event;
+        event->removeReference();
     }
     for (RecurringEvent *event : recurringEvents) {
-        delete event;
+        event->removeReference();
     }
 }
 

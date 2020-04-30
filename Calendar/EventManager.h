@@ -1,27 +1,15 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_EVENTMANAGER_H
-#define CALENDAR_EVENTMANAGER_H
+#pragma once
 
-#include "../ProjectIncludes.h"
-#include "CalendarIncludes.h"
+#include "SingleEvent.h"
+#include "RecurringEvent.h"
+#include "../Utility/EventSet.h"
 
-struct EventsList {
-
-    EventsList(vector<Event *> *event) { events = event; }
-
-    vector<Event *> *events;
-
-    ~EventsList() {
-        for (Event *item : *events) {
-            if (item->getTypeId() == Event::RecurringEventItemId)
-                delete item;
-        }
-        delete events;
-    }
-};
+using namespace std;
 
 class EventManager {
 public:
@@ -29,7 +17,7 @@ public:
 
     void addEvent(RecurringEvent *event);
 
-    EventsList *getEvents(time_t start, time_t end);
+    EventSet getEvents(time_t start, time_t end);
 
     RecurringEvent *editThisAndNextEvent(RecurringEvent *eventToEdit);
 
@@ -37,9 +25,13 @@ public:
 
     ~EventManager();
 
+    EventManager operator=(const EventManager &) = delete;
+
+    EventManager(const EventManager &) = delete;
+
+    EventManager() = default;
+
 private:
     vector<SingleEvent *> singleEvents;
     vector<RecurringEvent *> recurringEvents;
 };
-
-#endif //CALENDAR_EVENTMANAGER_H

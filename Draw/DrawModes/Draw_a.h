@@ -1,12 +1,11 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_DRAW_A_H
-#define CALENDAR_DRAW_A_H
+#pragma once
 
-#include "./../../ProjectIncludes.h"
-#include "./../../Calendar/CalendarIncludes.h"
+#include "../../Calendar/EventManager.h"
 #include "../CalendarUtility.h"
 
 class Draw_a {
@@ -17,6 +16,3 @@ public:
 protected:
     CalendarUtility calendarUtility;
 };
-
-
-#endif //CALENDAR_DRAW_A_H

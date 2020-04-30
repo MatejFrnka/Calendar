@@ -1,13 +1,21 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
 #include "Event.h"
 
 bool Event::isInRange(time_t start, time_t end) {
-    return ((startDateUtc >= start && startDateUtc <= end)
-            || (endDateUtc >= start && endDateUtc <= end)
-            || (startDateUtc <= start && endDateUtc >= end));
+    //event starts in range
+    if (startDateUtc >= start && startDateUtc < end)
+        return true;
+    //event ends in range
+    if (endDateUtc > start && endDateUtc <= end)
+        return true;
+    // event happens through range but doesnt start or end in it
+    if (startDateUtc <= start && endDateUtc >= end)
+        return true;
+    return false;
 }
 
 Event::Event(string title_, time_t startDateUtc_, time_t endDateUtc_) {
@@ -16,6 +24,8 @@ Event::Event(string title_, time_t startDateUtc_, time_t endDateUtc_) {
     endDateUtc = endDateUtc_;
     startTime = *gmtime(&startDateUtc);
     endTime = *gmtime(&endDateUtc);
+
+    ref_cnt++;
 }
 
 time_t Event::getDuration() {
@@ -44,4 +54,19 @@ int Event::getHour(bool start) {
 
 int Event::getMinute(bool start) {
     return getTime(start)->tm_min;
+}
+
+void Event::addReference() {
+    ref_cnt++;
+//    cout << "+\tref_cnt: " << ref_cnt << endl;
+}
+
+Event *Event::removeReference() {
+    ref_cnt--;
+//    cout << title << "-\tref_cnt: " << ref_cnt << endl;
+    if (ref_cnt <= 0) {
+        delete this;
+        return nullptr;
+    }
+    return this;
 }

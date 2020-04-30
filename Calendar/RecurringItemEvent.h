@@ -1,13 +1,14 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_RECURRINGITEMEVENT_H
-#define CALENDAR_RECURRINGITEMEVENT_H
+#pragma once
 
-#include "RecurringItemEvent.h"
-#include "CalendarIncludes.h"
+#include "SingleEvent.h"
+#include "RecurringEvent.h"
 
+class RecurringEvent;
 
 class RecurringItemEvent : public Event {
 public:
@@ -18,9 +19,8 @@ public:
     SingleEvent *getCopySingleEvent();
 
     int getTypeId() override { return Event::RecurringEventItemId; };
+
+
 private:
 
 };
-
-
-#endif //CALENDAR_RECURRINGITEMEVENT_H

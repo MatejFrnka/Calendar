@@ -1,12 +1,15 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_DRAWMANAGER_H
-#define CALENDAR_DRAWMANAGER_H
+#pragma once
 
-#include "./../ProjectIncludes.h"
-#include "./DrawIncludes.h"
+#include <chrono>
+#include "DrawModes/Draw_a.h"
+#include "../Calendar/EventManager.h"
+
+using namespace std;
 
 class DrawManager {
 public:
@@ -19,13 +22,10 @@ public:
     Draw_a *drawMode = nullptr;
 
     ~DrawManager() {
-        if (drawMode)
-            delete (drawMode);
+        //if (drawMode)
+        //    delete (drawMode);
     }
 
 private:
     time_t displayTime;
 };
-
-
-#endif //CALENDAR_DRAWMANAGER_H

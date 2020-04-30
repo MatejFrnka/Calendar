@@ -1,10 +1,15 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
-#ifndef CALENDAR_EVENT_H
-#define CALENDAR_EVENT_H
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#include "../ProjectIncludes.h"
+#pragma once
+
+#include <ctime>
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 class Event {
 public:
@@ -29,17 +34,27 @@ public:
     virtual int getTypeId() = 0;
 
     int getDay(bool start);
+
     int getHour(bool start);
+
     int getMinute(bool start);
 
     virtual ~Event() = default;
 
+    bool operator<(const Event &event) const {
+        return startDateUtc < event.startDateUtc;
+    }
+
+    void addReference();
+
+    Event * removeReference();
+
+protected:
+    int ref_cnt = 0;
 private:
+
     tm *getTime(bool start);
 
     tm startTime;
     tm endTime;
 };
-
-
-#endif //CALENDAR_EVENT_H

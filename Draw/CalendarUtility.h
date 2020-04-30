@@ -1,12 +1,16 @@
-//
-// Created by Matej Frnka on 14.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_CALENDARUTILITY_H
-#define CALENDAR_CALENDARUTILITY_H
 
-#include "./../ProjectIncludes.h"
-#include "./../Calendar/CalendarIncludes.h"
+#pragma once
+
+#include <ctime>
+#include <vector>
+#include "../Calendar/Event.h"
+
+using namespace std;
 
 class CalendarUtility {
 public:
@@ -30,6 +34,3 @@ public:
 
     string weekDays[7] = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
 };
-
-
-#endif //CALENDAR_CALENDARUTILITY_H

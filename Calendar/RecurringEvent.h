@@ -1,13 +1,18 @@
-//
-// Created by Matej Frnka on 13.03.2020.
-//
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 29.04.2020
+ */
 
-#ifndef CALENDAR_RECURRINGEVENT_H
-#define CALENDAR_RECURRINGEVENT_H
+#pragma once
 
+#include <string>
+#include <vector>
 #include "Event.h"
-#include "RecurringItemEvent.h"
 #include "SingleEvent.h"
+#include "RecurringItemEvent.h"
+#include "../Utility/EventSet.h"
+
+using namespace std;
 
 class RecurringEvent : public Event {
 public:
@@ -22,7 +27,7 @@ public:
 
     bool getRepeatToInfinity() const;
 
-    vector<Event *> getEvents(time_t start, time_t end);
+    EventSet getEvents(time_t start, time_t end);
 
     time_t getFirstEventTime(time_t start);
 
@@ -43,6 +48,3 @@ private:
 
     time_t roundUp(time_t numToRound, time_t multiple);
 };
-
-
-#endif //CALENDAR_RECURRINGEVENT_H
