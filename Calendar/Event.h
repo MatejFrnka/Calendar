@@ -21,8 +21,6 @@ public:
 
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
 
-    time_t getDuration() const;
-
     bool isInRange(time_t start, time_t end) const;
 
     void EditEvent(Event *event);

@@ -19,16 +19,10 @@ using namespace std;
 
 class RecurringEvent : public Event {
 public:
-    RecurringEvent(string title_, time_t startDateUtc_, time_t endDateUtc_, time_t timeBetweenEvents_,
+    RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_,
                    time_t repeatTill_);
 
-    RecurringEvent(string title_, time_t startDateUtc_, time_t endDateUtc_, time_t timeBetweenEvents_);
-
-    time_t getRepeatTill() const;
-
-    time_t getTimeBetweenEvents() const;
-
-    bool getRepeatToInfinity() const;
+    RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
     EventSet<Event> getEvents(time_t start, time_t end);
 
@@ -39,11 +33,24 @@ public:
     SingleEvent *getCopySingleEvent() const;
 
     void UpdateSelf(RecurringEvent *reference);
+    int getTypeId() override { return Event::RecurringEventId; };
 
+private:
     time_t repeatTill;
     bool repeatToInfinity;
     time_t timeBetweenEvents;
+public:
+    time_t getRepeatTill() const;
 
-    int getTypeId() override { return Event::RecurringEventId; };
+    void setRepeatTill(time_t repeatTill);
+
+    bool isRepeatToInfinity() const;
+
+    void setRepeatToInfinity(bool repeatToInfinity);
+
+    time_t getTimeBetweenEvents() const;
+
+    void setTimeBetweenEvents(time_t timeBetweenEvents);
+
 
 };

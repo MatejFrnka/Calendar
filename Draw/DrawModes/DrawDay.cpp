@@ -2,7 +2,7 @@
  * @author: Matej Frnka <frnkamat@fit.cvut.cz>
  * @date: 29.04.2020
  */
-
+/*
 #include "DrawDay.h"
 
 void DrawDay::draw(EventManager *eventManager, time_t *time) {
@@ -90,3 +90,4 @@ string DrawDay::drawCalendarBlock(int width, string body, CalendarType type) {
     }
     return "";
 }
+*/

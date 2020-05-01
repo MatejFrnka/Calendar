@@ -11,7 +11,7 @@ using namespace std;
 
 class SingleEvent : public Event {
 public:
-    SingleEvent(string title_, time_t startDateUtc_, time_t endDateUtc_);
+    SingleEvent(string title_, time_t startDateUtc_, time_t duration_);
 
     int getTypeId() override { return Event::SingleEventId; };
 };

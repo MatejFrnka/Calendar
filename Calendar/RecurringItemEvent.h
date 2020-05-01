@@ -12,7 +12,7 @@ class RecurringEvent;
 
 class RecurringItemEvent : public Event {
 public:
-    RecurringItemEvent(string title_, time_t startDateUtc_, time_t endDateUtc_, RecurringEvent *parentEvent_);
+    RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, RecurringEvent *parentEvent_);
 
     RecurringEvent *parentEvent;
 

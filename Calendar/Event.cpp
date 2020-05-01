@@ -5,6 +5,16 @@
 
 #include "Event.h"
 
+Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
+    title = std::move(title_);
+    startDateUtc = startDateUtc_;
+    durationUtc = durationUtc_;
+
+    //TODO: CREATE TM STRUCTS startTime and endTime
+
+    ref_cnt++;
+}
+
 bool Event::isInRange(time_t start, time_t end) const {
     //event starts in range
     if (getStartDateUtc() >= start && getStartDateUtc() < end)
@@ -13,21 +23,9 @@ bool Event::isInRange(time_t start, time_t end) const {
     if (getEndDateUtc() > start && getEndDateUtc() <= end)
         return true;
     // event happens through range but doesnt start or end in it
-    if (getStartDateUtc() <= start && getStartDateUtc() >= end)
+    if (getStartDateUtc() <= start && getEndDateUtc() >= end)
         return true;
     return false;
-}
-
-Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
-    title = std::move(title_);
-    startDateUtc = startDateUtc_;
-    durationUtc = durationUtc_;
-
-    ref_cnt++;
-}
-
-time_t Event::getDuration() const {
-    return endDateUtc - startDateUtc;
 }
 
 void Event::EditEvent(Event *event) {

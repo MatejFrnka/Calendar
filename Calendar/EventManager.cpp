@@ -20,7 +20,7 @@ EventSet<Event> EventManager::getEvents(time_t start, time_t end) {
 }
 
 bool EventManager::addEvent(SingleEvent *event) {
-    if (!checkAvailability(event->startDateUtc, event->endDateUtc))
+    if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()))
         return false;
     event->addReference();
     singleEvents.push_back(event);
@@ -28,7 +28,7 @@ bool EventManager::addEvent(SingleEvent *event) {
 }
 
 bool EventManager::addEvent(RecurringEvent *event) {
-    if (!checkAvailability(event->startDateUtc, event->endDateUtc, event->timeBetweenEvents, event->repeatTill))
+    if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(), event->getRepeatTill()))
         return false;
     event->addReference();
     recurringEvents.push_back(event);
@@ -49,10 +49,10 @@ SingleEvent *EventManager::editThisOnly(RecurringItemEvent *eventToEdit) {
 
     //CREATING EVENT AFTER CURRENT EVENT
     RecurringEvent *nextEvent = parentEvent->getCopy();
-    nextEvent->startDateUtc = eventToEdit->startDateUtc + parentEvent->timeBetweenEvents;
+    nextEvent->setStartDateUtc(eventToEdit->getStartDateUtc() + parentEvent->getTimeBetweenEvents());
 
-    parentEvent->repeatTill = eventToEdit->startDateUtc;
-    parentEvent->repeatToInfinity = false;
+    parentEvent->setRepeatTill(eventToEdit->getStartDateUtc());
+    parentEvent->setRepeatToInfinity(false);
     //ADDING TO EVENT LIST
     recurringEvents.push_back(nextEvent);
     singleEvents.push_back(result);
