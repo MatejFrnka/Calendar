@@ -13,11 +13,15 @@ using namespace std;
 
 class EventManager {
 public:
-    void addEvent(SingleEvent *event);
+    bool addEvent(SingleEvent *event);
 
-    void addEvent(RecurringEvent *event);
+    bool addEvent(RecurringEvent *event);
 
-    EventSet getEvents(time_t start, time_t end);
+    bool checkAvailability(time_t start, time_t end);
+
+    bool checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill);
+
+    EventSet<Event> getEvents(time_t start, time_t end);
 
     RecurringEvent *editThisAndNextEvent(RecurringEvent *eventToEdit);
 

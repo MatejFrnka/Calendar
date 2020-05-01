@@ -32,47 +32,33 @@ bool RecurringEvent::getRepeatToInfinity() const {
     return repeatToInfinity;
 }
 
-EventSet RecurringEvent::getEvents(time_t start, time_t end) {
-    EventSet result;
+EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {
+    EventSet<Event> result;
     time_t eventTime = getFirstEventTime(start);
 
-    do {
+    while ((repeatToInfinity || eventTime < repeatTill) && eventTime < end) {
         RecurringItemEvent *event = new RecurringItemEvent(title, eventTime, eventTime + getDuration(), this);
         result.insert(event);
 
         eventTime += timeBetweenEvents;
-    } while ((repeatToInfinity || eventTime < repeatTill)
-             && eventTime < end);
+    }
     return result;
 }
 
-time_t RecurringEvent::getFirstEventTime(time_t start) {
-    if (start > startDateUtc) {
-        time_t timeDifference = start - startDateUtc;
-        time_t first = roundUp(timeDifference, timeBetweenEvents);
-        if (first + getDuration() > start)
-            return first;
-        else
-            return first + timeBetweenEvents;
+time_t RecurringEvent::getFirstEventTime(time_t start) const {
+    if (startDateUtc < start) {
+        //time_t timeDifference = start - startDateUtc;
+        //time_t first = roundUp(timeDifference, timeBetweenEvents);
+        time_t rndDown = ((start - startDateUtc) / timeBetweenEvents);
+        time_t time = rndDown * timeBetweenEvents + startDateUtc;
+        if (time + getDuration() <= start)
+            time += timeBetweenEvents;
+        return time;
     } else
         return startDateUtc;
 }
 
-//Function by Mark Ransom, modified
-//https://stackoverflow.com/a/3407254/9536240
-//https://stackoverflow.com/users/5987/mark-ransom
-time_t RecurringEvent::roundUp(time_t numToRound, time_t multiple) {
-    if (multiple == 0)
-        return numToRound;
-
-    time_t remainder = numToRound % multiple;
-    if (remainder == 0)
-        return numToRound;
-
-    return numToRound + multiple - remainder;
-}
-
-RecurringEvent *RecurringEvent::getCopy() {
+RecurringEvent *RecurringEvent::getCopy() const {
 
     RecurringEvent *result;
     if (repeatToInfinity)
@@ -83,7 +69,7 @@ RecurringEvent *RecurringEvent::getCopy() {
     return result;
 }
 
-SingleEvent *RecurringEvent::getCopySingleEvent() {
+SingleEvent *RecurringEvent::getCopySingleEvent() const {
     return new SingleEvent(title, startDateUtc, endDateUtc);
 }
 

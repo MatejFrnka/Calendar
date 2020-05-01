@@ -5,30 +5,28 @@
 
 #include "Event.h"
 
-bool Event::isInRange(time_t start, time_t end) {
+bool Event::isInRange(time_t start, time_t end) const {
     //event starts in range
-    if (startDateUtc >= start && startDateUtc < end)
+    if (getStartDateUtc() >= start && getStartDateUtc() < end)
         return true;
     //event ends in range
-    if (endDateUtc > start && endDateUtc <= end)
+    if (getEndDateUtc() > start && getEndDateUtc() <= end)
         return true;
     // event happens through range but doesnt start or end in it
-    if (startDateUtc <= start && endDateUtc >= end)
+    if (getStartDateUtc() <= start && getStartDateUtc() >= end)
         return true;
     return false;
 }
 
-Event::Event(string title_, time_t startDateUtc_, time_t endDateUtc_) {
+Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     title = std::move(title_);
     startDateUtc = startDateUtc_;
-    endDateUtc = endDateUtc_;
-    startTime = *gmtime(&startDateUtc);
-    endTime = *gmtime(&endDateUtc);
+    durationUtc = durationUtc_;
 
     ref_cnt++;
 }
 
-time_t Event::getDuration() {
+time_t Event::getDuration() const {
     return endDateUtc - startDateUtc;
 }
 
@@ -36,7 +34,7 @@ void Event::EditEvent(Event *event) {
 
 }
 
-tm *Event::getTime(bool start) {
+const tm *Event::getTime(bool start) const {
     if (start) {
         return &startTime;
     } else {
@@ -44,15 +42,15 @@ tm *Event::getTime(bool start) {
     }
 }
 
-int Event::getDay(bool start) {
+int Event::getDay(bool start) const {
     return getTime(start)->tm_mday;
 }
 
-int Event::getHour(bool start) {
+int Event::getHour(bool start) const {
     return getTime(start)->tm_hour;
 }
 
-int Event::getMinute(bool start) {
+int Event::getMinute(bool start) const {
     return getTime(start)->tm_min;
 }
 
@@ -69,4 +67,32 @@ Event *Event::removeReference() {
         return nullptr;
     }
     return this;
+}
+
+const string &Event::getTitle() const {
+    return title;
+}
+
+void Event::setTitle(const string &title) {
+    Event::title = title;
+}
+
+time_t Event::getStartDateUtc() const {
+    return startDateUtc;
+}
+
+void Event::setStartDateUtc(time_t startDateUtc) {
+    Event::startDateUtc = startDateUtc;
+}
+
+time_t Event::getDurationUtc() const {
+    return durationUtc;
+}
+
+void Event::setDurationUtc(time_t durationUtc) {
+    Event::durationUtc = durationUtc;
+}
+
+time_t Event::getEndDateUtc() const {
+    return startDateUtc + durationUtc;
 }

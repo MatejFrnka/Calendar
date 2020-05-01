@@ -12,6 +12,9 @@
 #include "RecurringItemEvent.h"
 #include "../Utility/EventSet.h"
 
+template<typename EventType>
+class EventSet;
+
 using namespace std;
 
 class RecurringEvent : public Event {
@@ -27,13 +30,13 @@ public:
 
     bool getRepeatToInfinity() const;
 
-    EventSet getEvents(time_t start, time_t end);
+    EventSet<Event> getEvents(time_t start, time_t end);
 
-    time_t getFirstEventTime(time_t start);
+    time_t getFirstEventTime(time_t start) const;
 
-    RecurringEvent *getCopy();
+    RecurringEvent *getCopy() const;
 
-    SingleEvent *getCopySingleEvent();
+    SingleEvent *getCopySingleEvent() const;
 
     void UpdateSelf(RecurringEvent *reference);
 
@@ -43,8 +46,4 @@ public:
 
     int getTypeId() override { return Event::RecurringEventId; };
 
-private:
-
-
-    time_t roundUp(time_t numToRound, time_t multiple);
 };

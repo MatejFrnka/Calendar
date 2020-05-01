@@ -6,27 +6,33 @@
 #include "EventManager.h"
 
 
-EventSet EventManager::getEvents(time_t start, time_t end) {
-    EventSet result;
+EventSet<Event> EventManager::getEvents(time_t start, time_t end) {
+    EventSet<Event> result;
 
     for (auto &singleEvent : singleEvents)
         if (singleEvent->isInRange(start, end))
             result.refInsert(singleEvent);
     for (auto &recurringEvent : recurringEvents) {
-        EventSet events = recurringEvent->getEvents(start, end);
+        EventSet<Event> events = recurringEvent->getEvents(start, end);
         result.refInsert(events.begin(), events.end());
     }
     return result;
 }
 
-void EventManager::addEvent(SingleEvent *event) {
+bool EventManager::addEvent(SingleEvent *event) {
+    if (!checkAvailability(event->startDateUtc, event->endDateUtc))
+        return false;
     event->addReference();
     singleEvents.push_back(event);
+    return true;
 }
 
-void EventManager::addEvent(RecurringEvent *event) {
+bool EventManager::addEvent(RecurringEvent *event) {
+    if (!checkAvailability(event->startDateUtc, event->endDateUtc, event->timeBetweenEvents, event->repeatTill))
+        return false;
     event->addReference();
     recurringEvents.push_back(event);
+    return true;
 }
 
 RecurringEvent *EventManager::editThisAndNextEvent(RecurringEvent *eventToEdit) {
@@ -61,5 +67,16 @@ EventManager::~EventManager() {
         event->removeReference();
     }
 }
+
+bool EventManager::checkAvailability(time_t start, time_t end) {
+    //TODO: IMPLEMENT
+    return true;
+}
+
+bool EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t) {
+    //TODO: IMPLEMENT
+    return true;
+}
+
 
 

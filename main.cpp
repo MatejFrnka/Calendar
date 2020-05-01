@@ -9,7 +9,7 @@
 
 using namespace std;
 
-string drawEvents(const EventSet &s) {
+string drawEvents(const EventSet<Event> &s) {
     stringstream ss;
     for (auto event : s) {
         ss << event->title << " " << event->startDateUtc << " " << event->endDateUtc << endl;
@@ -20,7 +20,7 @@ string drawEvents(const EventSet &s) {
 int main() {
     //EVENTSET BASIC TEST
     {
-        auto s = new EventSet;
+        EventSet<Event> *s = new EventSet<Event>;
         Event *ev5 = new SingleEvent("t5", 160, 170);
         Event *ev2 = new SingleEvent("t2", 50, 60);
         Event *ev3 = new SingleEvent("t3", 70, 80);
@@ -49,7 +49,7 @@ int main() {
     }
     //EVENTSET COPY, ASSIGMENT
     {
-        EventSet s;
+        EventSet<Event> s;
 
         Event *ev5 = new SingleEvent("t5", 160, 170);
         Event *ev2 = new SingleEvent("t2", 50, 60);
@@ -69,7 +69,7 @@ int main() {
         ev4->removeReference();
         ev5->removeReference();
 
-        EventSet s2 = s;
+        EventSet<Event> s2 = s;
         assert(drawEvents(s) == "t1 10 30\n"
                                 "t2 50 60\n"
                                 "t3 70 80\n"
@@ -155,11 +155,36 @@ int main() {
         assert(drawEvents(e1.getEvents(30, 60)) == "2 30 60\n");
         assert(drawEvents(e1.getEvents(0, 10)).empty());
         assert(drawEvents(e1.getEvents(20, 30)).empty());
-        assert(drawEvents(e1.getEvents(300, 060000654)).empty());
+        assert(drawEvents(e1.getEvents(300, 60000654)).empty());
     }
-    //RECURRING EVENTS
     {
         EventManager e1;
+        for (int i = 0; i < 1000; ++i) {
+            auto ev = new SingleEvent(to_string(i), i * 30, i * 30 + 10);
+            e1.addEvent(ev);
+            ev->removeReference();
+        }
+    }
+    //RECURRING EVENTS 1
+    {
+        EventManager e1;
+        auto rev1 = new RecurringEvent("1", 10, 20, 100, 1010);
+        e1.addEvent(rev1);
+        rev1->removeReference();
+
+        assert(drawEvents(e1.getEvents(550, 800)) == "1 610 620\n"
+                                                     "1 710 720\n");
+        assert(drawEvents(e1.getEvents(1000, 3000)).empty());
+        assert(drawEvents(e1.getEvents(0, 15)) == "1 10 20\n");
+        assert(drawEvents(e1.getEvents(14, 15)) == "1 10 20\n");
+        assert(drawEvents(e1.getEvents(14, 110)) == "1 10 20\n");
+        assert(drawEvents(e1.getEvents(0, 30)) == "1 10 20\n");
+    }
+    //RECURRING EVENTS 2
+    {
+        EventManager e1;
+        EventManager e2;
+
         auto rev1 = new RecurringEvent("1", 0, 10, 50);
         auto rev2 = new RecurringEvent("2", 20, 30, 50, 300);
         auto rev3 = new RecurringEvent("3", 240, 250, 50, 1000);
@@ -170,19 +195,24 @@ int main() {
         e1.addEvent(rev3);
         e1.addEvent(rev2);
 
+        e2.addEvent(rev4);
+
         rev1->removeReference();
         rev2->removeReference();
         rev3->removeReference();
         rev4->removeReference();
-
-        cout << drawEvents(e1.getEvents(0, 150));
 
         assert(drawEvents(e1.getEvents(0, 150)) == "1 0 10\n"
                                                    "2 20 30\n"
                                                    "1 50 60\n"
                                                    "2 70 80\n"
                                                    "1 100 110\n"
-                                                   "2 120 130\n")
+                                                   "2 120 130\n");
+        assert(drawEvents(e1.getEvents(0, 5)) == "1 0 10\n");
+        assert(drawEvents(e1.getEvents(5, 7)) == "1 0 10\n");
+
+        cout << drawEvents(e2.getEvents(0, 1000));
+
     }
     /*
     {

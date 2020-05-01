@@ -21,23 +21,19 @@ public:
 
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
 
-    time_t getDuration();
+    time_t getDuration() const;
 
-    string title;
-    time_t startDateUtc;
-    time_t endDateUtc;
-
-    bool isInRange(time_t start, time_t end);
+    bool isInRange(time_t start, time_t end) const;
 
     void EditEvent(Event *event);
 
     virtual int getTypeId() = 0;
 
-    int getDay(bool start);
+    int getDay(bool start) const;
 
-    int getHour(bool start);
+    int getHour(bool start) const;
 
-    int getMinute(bool start);
+    int getMinute(bool start) const;
 
     virtual ~Event() = default;
 
@@ -47,13 +43,33 @@ public:
 
     void addReference();
 
-    Event * removeReference();
+    Event *removeReference();
 
 protected:
     int ref_cnt = 0;
-private:
+    bool editable = true;
+//SETTERS & GETTERS
+public:
+    const string &getTitle() const;
 
-    tm *getTime(bool start);
+    void setTitle(const string &title);
+
+    time_t getStartDateUtc() const;
+
+    void setStartDateUtc(time_t startDateUtc);
+
+    time_t getDurationUtc() const;
+
+    void setDurationUtc(time_t durationUtc);
+
+    time_t getEndDateUtc() const;
+
+private:
+    string title;
+    time_t startDateUtc;
+    time_t durationUtc;
+
+    const tm *getTime(bool start) const;
 
     tm startTime;
     tm endTime;

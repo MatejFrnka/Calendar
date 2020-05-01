@@ -9,24 +9,31 @@
 #include <iostream>
 #include <vector>
 #include "../Calendar/Event.h"
+#include "../Calendar/SingleEvent.h"
+#include "../Calendar/RecurringEvent.h"
+#include "../Calendar/RecurringItemEvent.h"
+
+#define ITER typename set<EventType *, comparator<EventType>>::iterator
 
 using namespace std;
 
+template<typename EventType>
 struct comparator {
-    bool operator()(const Event *lhs, const Event *rhs) { return *lhs < *rhs; }
+    bool operator()(const EventType *lhs, const EventType *rhs) { return *lhs < *rhs; }
 };
 
-class EventSet : public set<Event *, comparator> {
+template<typename EventType>
+class EventSet : public set<EventType *, comparator<EventType>> {
 public:
-    void refInsert(Event *event);
+    void refInsert(EventType *event);
 
-    void refInsert(iterator begin, iterator end);
+    void refInsert(ITER begin, ITER end);
 
-    void refErase(Event *event);
+    void refErase(EventType *event);
 
-    void refErase(iterator position);
+    void refErase(ITER position);
 
-    void refErase(iterator begin, iterator end);
+    void refErase(ITER begin, ITER end);
 
     ~EventSet();
 

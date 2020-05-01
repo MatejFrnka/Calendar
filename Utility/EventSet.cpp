@@ -5,41 +5,46 @@
 
 #include "EventSet.h"
 
-void EventSet::refInsert(Event *event) {
+template<typename EventType>
+void EventSet<EventType>::refInsert(EventType *event) {
     event->addReference();
-    set<Event *, comparator>::insert(event);
+    set<EventType *, comparator<EventType>>::insert(event);
 }
 
-void EventSet::refInsert(iterator begin, iterator end) {
+template<typename EventType>
+void EventSet<EventType>::refInsert(ITER begin, ITER end) {
     auto tmp_begin = begin;
     while (tmp_begin != end) {
         (*tmp_begin)->addReference();
         tmp_begin++;
     }
-    set<Event *, comparator>::insert(begin, end);
+    this->insert(begin, end);
 }
 
-void EventSet::refErase(Event *event) {
-    set<Event *, comparator>::erase(event);
+template<typename EventType>
+void EventSet<EventType>::refErase(EventType *event) {
+    this->erase(event);
     event->removeReference();
 }
 
-void EventSet::refErase(iterator position) {
+template<typename EventType>
+void EventSet<EventType>::refErase(ITER position) {
     Event *e = (*position);
-    set<Event *, comparator>::erase(position);
+    this->erase(position);
     e->removeReference();
 }
 
-void EventSet::refErase(set<Event *, comparator>::iterator begin, set<Event *, comparator>::iterator end) {
+template<typename EventType>
+void EventSet<EventType>::refErase(ITER begin, ITER end) {
     const size_t dist = std::distance(begin, end);
-    auto *tmp_event = new Event *[dist];
+    auto *tmp_event = new EventType *[dist];
     size_t i = 0;
     for (auto it = begin; it != end; ++it) {
         tmp_event[i] = *it;
         i++;
     }
     //remove events from set
-    erase(begin, end);
+    this->erase(begin, end);
     //remove reference and delete unused events
     for (int j = 0; j < dist; ++j) {
         tmp_event[j]->removeReference();
@@ -47,14 +52,16 @@ void EventSet::refErase(set<Event *, comparator>::iterator begin, set<Event *, c
     delete[] tmp_event;
 }
 
-EventSet::~EventSet() {
+template<typename EventType>
+EventSet<EventType>::~EventSet() {
     for (auto event : *this) {
         event->removeReference();
         event = nullptr;
     }
 }
 
-EventSet &EventSet::operator=(const EventSet &eventSet) {
+template<typename EventType>
+EventSet<EventType> &EventSet<EventType>::operator=(const EventSet &eventSet) {
     if (&eventSet == this)
         return *this;
 
@@ -63,7 +70,13 @@ EventSet &EventSet::operator=(const EventSet &eventSet) {
     return *this;
 }
 
-EventSet::EventSet(const EventSet &eventSet) {
+template<typename EventType>
+EventSet<EventType>::EventSet(const EventSet &eventSet) {
     this->refInsert(eventSet.begin(), eventSet.end());
 }
 
+template
+class EventSet<Event>;
+
+template
+class EventSet<SingleEvent>;
