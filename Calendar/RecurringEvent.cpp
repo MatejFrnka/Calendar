@@ -7,18 +7,18 @@
 #include "../Utility/Exceptions/EventNotInRecurringEvent.h"
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_,
-                               time_t repeatTill_) : Event(std::move(title_), startDateUtc_, duration_),
-                                                     repeatTill(repeatTill_),
-                                                     timeBetweenEvents(timeBetweenEvents_),
-                                                     repeatToInfinity(false) {
+                               time_t repeatTill_) : Event(std::move(title_), startDateUtc_, duration_){
+    timeBetweenEvents = timeBetweenEvents_;
+    repeatTill = repeatTill_;
+    repeatToInfinity = false;
 
 }
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_)
-        : Event(std::move(title_), startDateUtc_, duration_),
-          repeatTill(0),
-          timeBetweenEvents(timeBetweenEvents_),
-          repeatToInfinity(true) {
+        : Event(std::move(title_), startDateUtc_, duration_){
+    timeBetweenEvents = timeBetweenEvents_;
+    repeatTill = 0;
+    repeatToInfinity = true;
 }
 
 EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {

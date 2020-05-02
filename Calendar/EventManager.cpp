@@ -20,7 +20,7 @@ EventSet<Event> EventManager::getEvents(time_t start, time_t end) {
 }
 
 bool EventManager::addEvent(SingleEvent *event) {
-    if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()))
+    if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()) != -1)
         return false;
     event->addReference();
     singleEvents.push_back(event);
@@ -78,16 +78,26 @@ time_t EventManager::checkAvailability(time_t start, time_t end) {
 }
 
 time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) {
-    if (checkAvailability(start, end) != -1)
-        return checkAvailability(start, end);
-    //TODO: IMPLEMENT
+    for (auto &sEvent  :singleEvents) {
+        if (sEvent->eventExists(start, end, timeBetweenEvents, repeatTill))
+            return false;
+    }
+    for (auto &rEvent : recurringEvents) {
+        if (rEvent->eventExists(start, end, timeBetweenEvents, repeatTill))
+            return false;
+    }
     return true;
 }
 
 time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents) {
-    if (checkAvailability(start, end) != -1)
-        return checkAvailability(start, end);
-    //TODO: IMPLEMENT
+    for (auto &sEvent  :singleEvents) {
+        if (sEvent->eventExists(start, end, timeBetweenEvents))
+            return false;
+    }
+    for (auto &rEvent : recurringEvents) {
+        if (rEvent->eventExists(start, end, timeBetweenEvents))
+            return false;
+    }
     return true;
 }
 

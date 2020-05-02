@@ -8,6 +8,8 @@
 #include "SingleEvent.h"
 #include "RecurringEvent.h"
 #include "../Utility/EventSet.h"
+#include <algorithm>
+#include <memory>
 
 using namespace std;
 
