@@ -76,7 +76,7 @@ int overlaptest(const RecurringEvent &a, const RecurringEvent &b) {
 
 int main() {
     //EVENTSET BASIC TEST
-    /*
+
     {
         EventSet<Event> *s = new EventSet<Event>;
         Event *ev5 = new SingleEvent("t5", 160, 10);
@@ -272,7 +272,7 @@ int main() {
         e1.addEvent(new SingleEvent("3", 100, 200));
         e1.addEvent(new RecurringEvent("r1", 0, 10, 50, 300));
         assert(drawEvents(e1.getEvents(1583859600, 1584223199)).empty());
-    }*/
+    }
     {
         SingleEvent ev("event", 160, 30);
         assert(ev.eventExists(0, 10) == nullptr);
@@ -292,16 +292,23 @@ int main() {
         assert(ev.eventExists(0, 10, 100) == nullptr);
         assert(ev.eventExists(70, 80, 100) != nullptr);
         assert(ev.eventExists(10, 20, 20) != nullptr);
-        assert(ev.eventExists(150, 160, 30) == nullptr);
-        assert(ev.eventExists(0, 160, 30) == nullptr);
+        assert(ev.eventExists(150, 160, 30) != nullptr);
+        assert(ev.eventExists(150, 160, 40) == nullptr);
+        assert(ev.eventExists(0, 160, 190) == nullptr);
         assert(ev.eventExists(0, 10, 1000) == nullptr);
         assert(ev.eventExists(150, 200, 500) != nullptr);
 
+        assert(ev.eventExists(150,160,40 , 700)== nullptr);
+        assert(ev.eventExists(150,160,30 , 700)!= nullptr);
         assert(ev.eventExists(10,20,20 , 170) == nullptr);
         assert(ev.eventExists(0, 10, 10, 50) == nullptr);
         assert(ev.eventExists(150, 200, 10, 50) == nullptr);
         assert(ev.eventExists(0,10,20 , 190) != nullptr);
         assert(ev.eventExists(0,10,20 , 180) != nullptr);
+        assert(ev.eventExists(160,170,20 , 160)== nullptr);
+        assert(ev.eventExists(70,80,50 , 170)== nullptr);
+        assert(ev.eventExists(70,80,50 , 180)!= nullptr);
+        assert(ev.eventExists(360,370,50 , 700)== nullptr);
 
 
         SingleEvent ev1("event", 0, 50);

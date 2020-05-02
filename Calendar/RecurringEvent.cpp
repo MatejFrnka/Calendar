@@ -22,7 +22,7 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
 
 EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {
     EventSet<Event> result;
-    time_t eventTime = getFirstEventTime(start);
+    time_t eventTime = getFirstEventTime(start, getStartDateUtc(), getDurationUtc(), getTimeBetweenEvents());
 
     while ((repeatToInfinity || eventTime < repeatTill) && eventTime < end) {
         RecurringItemEvent *event = new RecurringItemEvent(getTitle(), eventTime, getDurationUtc(), this);
@@ -30,17 +30,6 @@ EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {
         eventTime += timeBetweenEvents;
     }
     return result;
-}
-
-time_t RecurringEvent::getFirstEventTime(time_t start) const {
-    if (getStartDateUtc() < start) {
-        time_t rndDown = ((start - getStartDateUtc()) / timeBetweenEvents);
-        time_t time = rndDown * timeBetweenEvents + getStartDateUtc();
-        if (time + getDurationUtc() <= start)
-            time += timeBetweenEvents;
-        return time;
-    } else
-        return getStartDateUtc();
 }
 
 RecurringEvent *RecurringEvent::getCopy() const {

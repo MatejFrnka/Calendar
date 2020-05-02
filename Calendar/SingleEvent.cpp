@@ -18,31 +18,19 @@ Event *SingleEvent::eventExists(time_t start, time_t end) {
 }
 
 Event *SingleEvent::eventExists(time_t start, time_t end, time_t repeat) {
-    if (start >= getEndDateUtc())
-        return nullptr;
-    if (isInRange(getStartDateUtc() % repeat, getStartDateUtc() % repeat + getDurationUtc(), start % repeat,
-                  end % repeat))
+    time_t duration = end - start;
+    time_t firstEventTime = getFirstEventTime(getStartDateUtc(), start, duration, repeat);
+    if (isInRange(getStartDateUtc(), getEndDateUtc(), firstEventTime, firstEventTime + duration))
         return this;
     return nullptr;
 }
 
 Event *SingleEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) {
     time_t duration = end - start;
-    time_t test = getFirstEventTime(getStartDateUtc(), start, duration, repeat);
-    if (test + duration > repeatTill)
+    time_t firstEventTime = getFirstEventTime(getStartDateUtc(), start, duration, repeat);
+    if (firstEventTime + duration > repeatTill)
         return nullptr;
-    bool a = isInRange(getStartDateUtc(), getEndDateUtc(), test, test + duration);
-    if (a)
+    if (isInRange(getStartDateUtc(), getEndDateUtc(), firstEventTime, firstEventTime + duration))
         return this;
     return nullptr;
-    /*
-    time_t f = (getStartDateUtc() - start) / repeat;
-    time_t r_start = f * repeat;
-    time_t r_end = r_start + end - start;
-    if(r_end > repeatTill || r_start < start)
-        return nullptr;
-    bool e = isInRange(r_start, r_end);
-    if (e)
-        return this;
-    return nullptr;*/
 }

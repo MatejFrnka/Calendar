@@ -26,7 +26,7 @@ public:
 
     EventSet<Event> getEvents(time_t start, time_t end);
 
-    time_t getFirstEventTime(time_t start) const;
+
 
     RecurringEvent *getCopy() const;
 
