@@ -10,7 +10,7 @@
 
 class RecurringEvent;
 
-class RecurringItemEvent : public Event {
+class RecurringItemEvent : public SingleEvent {
 public:
     RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, RecurringEvent *parentEvent_);
 
@@ -18,7 +18,7 @@ public:
 
     SingleEvent *getCopySingleEvent();
 
-    int getTypeId() override { return Event::RecurringEventItemId; };
+    virtual int getTypeId() { return Event::RecurringEventItemId; };
 
 
 private:

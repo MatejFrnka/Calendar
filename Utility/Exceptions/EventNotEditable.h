@@ -8,7 +8,7 @@
 #include <exception>
 
 class EventNotEditable : std::exception{
-
+//TODO: IMPLEMENT
 };
 
 

@@ -15,21 +15,40 @@ Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     ref_cnt++;
 }
 
-bool Event::isInRange(time_t start, time_t end) const {
+bool Event::isInRange(time_t rangeStart, time_t rangeEnd) const {
+    return isInRange(getStartDateUtc(), getEndDateUtc(), rangeStart, rangeEnd);
+}
+
+/**
+ * Check if data range start-end is in range rangeStart-rangeEnd
+ * @param start Beginning of event range
+ * @param end End of event range
+ * @param rangeStart Beginning of the range you want to check the event is in
+ * @param rangeEnd End of the range you want to check the event is in
+ * @return True if event defined by start - end is in range defined by rangeStart-rangeEnd, else false
+ */
+bool Event::isInRange(time_t start, time_t end, time_t rangeStart, time_t rangeEnd) const {
     //event starts in range
-    if (getStartDateUtc() >= start && getStartDateUtc() < end)
+    if (start >= rangeStart && start < rangeEnd)
         return true;
     //event ends in range
-    if (getEndDateUtc() > start && getEndDateUtc() <= end)
+    if (end > rangeStart && end <= rangeEnd)
         return true;
     // event happens through range but doesnt start or end in it
-    if (getStartDateUtc() <= start && getEndDateUtc() >= end)
+    if (start <= rangeStart && end >= rangeEnd)
         return true;
     return false;
 }
 
-void Event::EditEvent(Event *event) {
-
+time_t Event::getFirstEventTime(time_t startFrom, time_t startDate, time_t duration, time_t timeBetweenEvents) const {
+    if (startDate < startFrom) {
+        time_t rndDown = ((startFrom - startDate) / timeBetweenEvents);
+        time_t time = rndDown * timeBetweenEvents + startDate;
+        if (time + duration <= startFrom)
+            time += timeBetweenEvents;
+        return time;
+    } else
+        return startDate;
 }
 
 const tm *Event::getTime(bool start) const {
@@ -93,4 +112,12 @@ void Event::setDurationUtc(time_t durationUtc) {
 
 time_t Event::getEndDateUtc() const {
     return startDateUtc + durationUtc;
+}
+
+bool Event::isEditable() const {
+    return editable;
+}
+
+void Event::setEditable(bool editable) {
+    Event::editable = editable;
 }

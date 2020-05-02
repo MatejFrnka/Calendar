@@ -33,12 +33,20 @@ public:
     SingleEvent *getCopySingleEvent() const;
 
     void UpdateSelf(RecurringEvent *reference);
+
     int getTypeId() override { return Event::RecurringEventId; };
+
+    virtual Event *eventExists(time_t start, time_t end);
+
+    virtual Event *eventExists(time_t start, time_t end, time_t repeat);
+
+    virtual Event *eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill);
 
 private:
     time_t repeatTill;
     bool repeatToInfinity;
     time_t timeBetweenEvents;
+//GETTERS AND SETTERS
 public:
     time_t getRepeatTill() const;
 

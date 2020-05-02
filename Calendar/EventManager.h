@@ -17,9 +17,11 @@ public:
 
     bool addEvent(RecurringEvent *event);
 
-    bool checkAvailability(time_t start, time_t end);
+    time_t checkAvailability(time_t start, time_t end);
 
-    bool checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill);
+    time_t checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill);
+
+    time_t checkAvailability(time_t start, time_t end, time_t repeat);
 
     EventSet<Event> getEvents(time_t start, time_t end);
 

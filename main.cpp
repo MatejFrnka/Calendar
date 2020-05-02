@@ -17,8 +17,66 @@ string drawEvents(const EventSet<Event> &s) {
     return ss.str();
 }
 
+
+time_t getFirstEventTime(time_t start, const RecurringEvent &a) {
+    time_t test = a.getStartDateUtc();
+    bool test1 = test < start;
+
+    if (test < start) {
+        time_t rndDown = ((start - a.getStartDateUtc()) / a.getTimeBetweenEvents());
+        time_t time = rndDown * a.getTimeBetweenEvents() + a.getStartDateUtc();
+        if (time + a.getDurationUtc() <= start)
+            time += a.getTimeBetweenEvents();
+        return time;
+    } else
+        return a.getStartDateUtc();
+}
+
+int overlaptest(const RecurringEvent &a, const RecurringEvent &b) {
+
+    time_t startA = a.getStartDateUtc();
+    time_t startB = b.getStartDateUtc();
+
+    time_t timeDiff = startA - startB;
+    while (true) {
+        if (startA < startB) {
+            startA = getFirstEventTime(startB, a);
+            if (startB + b.getDurationUtc() > startA)
+                return startA;
+        } else {
+            startB = getFirstEventTime(startA, b);
+            if (startA + a.getDurationUtc() > startB)
+                return startB;
+        }
+        if (timeDiff == startA - startB)
+            break;
+        if (!a.isRepeatToInfinity() && a.getRepeatTill() < startA)
+            break;
+        if (!b.isRepeatToInfinity() && b.getRepeatTill() < startB)
+            break;
+        if (abs(startA - startB) < abs(timeDiff))
+            timeDiff = startA - startB;
+    }
+    return -1;
+
+
+    /*
+    size_t j = 1;
+    time_t curr_timeDiff;
+    do {
+        time_t kalos = (b.getTimeBetweenEvents() * j) % a.getTimeBetweenEvents();
+        curr_timeDiff = (timeDiff + b.getTimeBetweenEvents() * j) % a.getTimeBetweenEvents();
+        if (curr_timeDiff < a.getDurationUtc())
+            return j;
+        j++;
+    } while (timeDiff != curr_timeDiff);
+    return -1;
+     */
+}
+
 int main() {
     //EVENTSET BASIC TEST
+    /*
     {
         EventSet<Event> *s = new EventSet<Event>;
         Event *ev5 = new SingleEvent("t5", 160, 10);
@@ -206,7 +264,6 @@ int main() {
         cout << drawEvents(e2.getEvents(0, 1000));
 
     }
-    /*
     {
         EventManager e1;
 
@@ -214,11 +271,48 @@ int main() {
         e1.addEvent(new SingleEvent("2", 30, 60));
         e1.addEvent(new SingleEvent("3", 100, 200));
         e1.addEvent(new RecurringEvent("r1", 0, 10, 50, 300));
+        assert(drawEvents(e1.getEvents(1583859600, 1584223199)).empty());
+    }*/
+    {
+        SingleEvent ev("event", 160, 30);
+        assert(ev.eventExists(0, 10) == nullptr);
+        assert(ev.eventExists(160, 170) != nullptr);
+        assert(ev.eventExists(150, 160) == nullptr);
+        assert(ev.eventExists(150, 200) != nullptr);
+        assert(ev.eventExists(170, 200) != nullptr);
+        assert(ev.eventExists(170, 180) != nullptr);
+        assert(ev.eventExists(190, 200) == nullptr);
 
-        cout << drawEvents(e1.getEvents(1583859600, 1584223199));
-        assert(drawEvents(e1.getEvents(1583859600, 1584223199)) == "");
+
+        assert(ev.eventExists(190, 200, 20) == nullptr);
+        assert(ev.eventExists(189, 200, 5060) != nullptr);
+        assert(ev.eventExists(200, 210, 10) == nullptr);
+        assert(ev.eventExists(170, 180, 100) != nullptr);
+        assert(ev.eventExists(0, 10, 10) != nullptr);
+        assert(ev.eventExists(0, 10, 100) == nullptr);
+        assert(ev.eventExists(70, 80, 100) != nullptr);
+        assert(ev.eventExists(10, 20, 20) != nullptr);
+        assert(ev.eventExists(150, 160, 30) == nullptr);
+        assert(ev.eventExists(0, 160, 30) == nullptr);
+        assert(ev.eventExists(0, 10, 1000) == nullptr);
+        assert(ev.eventExists(150, 200, 500) != nullptr);
+
+        assert(ev.eventExists(10,20,20 , 170) == nullptr);
+        assert(ev.eventExists(0, 10, 10, 50) == nullptr);
+        assert(ev.eventExists(150, 200, 10, 50) == nullptr);
+        assert(ev.eventExists(0,10,20 , 190) != nullptr);
+        assert(ev.eventExists(0,10,20 , 180) != nullptr);
+
+
+        SingleEvent ev1("event", 0, 50);
+
+        assert(ev1.eventExists(50, 60, 60) == nullptr);
+        assert(ev1.eventExists(0, 10) != nullptr);
+        assert(ev1.eventExists(50, 60) == nullptr);
+        assert(ev1.eventExists(0, 10, 20) != nullptr);
+
     }
-     */
+
     cout << "end" << endl;
     return 0;
 }

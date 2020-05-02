@@ -33,10 +33,7 @@ EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {
 }
 
 time_t RecurringEvent::getFirstEventTime(time_t start) const {
-    time_t test = getStartDateUtc();
-    bool test1 = test < start;
-
-    if (test < start) {
+    if (getStartDateUtc() < start) {
         time_t rndDown = ((start - getStartDateUtc()) / timeBetweenEvents);
         time_t time = rndDown * timeBetweenEvents + getStartDateUtc();
         if (time + getDurationUtc() <= start)
@@ -93,4 +90,16 @@ time_t RecurringEvent::getTimeBetweenEvents() const {
 
 void RecurringEvent::setTimeBetweenEvents(time_t timeBetweenEvents) {
     RecurringEvent::timeBetweenEvents = timeBetweenEvents;
+}
+
+Event *RecurringEvent::eventExists(time_t start, time_t end) {
+    return nullptr;
+}
+
+Event *RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
+    return nullptr;
+}
+
+Event *RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) {
+    return nullptr;
 }
