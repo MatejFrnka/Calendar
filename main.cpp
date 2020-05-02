@@ -32,51 +32,12 @@ time_t getFirstEventTime(time_t start, const RecurringEvent &a) {
         return a.getStartDateUtc();
 }
 
-int overlaptest(const RecurringEvent &a, const RecurringEvent &b) {
-
-    time_t startA = a.getStartDateUtc();
-    time_t startB = b.getStartDateUtc();
-
-    time_t timeDiff = startA - startB;
-    while (true) {
-        if (startA < startB) {
-            startA = getFirstEventTime(startB, a);
-            if (startB + b.getDurationUtc() > startA)
-                return startA;
-        } else {
-            startB = getFirstEventTime(startA, b);
-            if (startA + a.getDurationUtc() > startB)
-                return startB;
-        }
-        if (timeDiff == startA - startB)
-            break;
-        if (!a.isRepeatToInfinity() && a.getRepeatTill() < startA)
-            break;
-        if (!b.isRepeatToInfinity() && b.getRepeatTill() < startB)
-            break;
-        if (abs(startA - startB) < abs(timeDiff))
-            timeDiff = startA - startB;
-    }
-    return -1;
-
-
-    /*
-    size_t j = 1;
-    time_t curr_timeDiff;
-    do {
-        time_t kalos = (b.getTimeBetweenEvents() * j) % a.getTimeBetweenEvents();
-        curr_timeDiff = (timeDiff + b.getTimeBetweenEvents() * j) % a.getTimeBetweenEvents();
-        if (curr_timeDiff < a.getDurationUtc())
-            return j;
-        j++;
-    } while (timeDiff != curr_timeDiff);
-    return -1;
-     */
-}
-
 int main() {
-    //EVENTSET BASIC TEST
 
+    RecurringEvent a("a", 50, 10, 50);
+    RecurringEvent b("a", 100, 10, 100, 150);
+//    cout << a.test(100, 110, 100, 150);
+    //EVENTSET BASIC TEST
     {
         EventSet<Event> *s = new EventSet<Event>;
         Event *ev5 = new SingleEvent("t5", 160, 10);
@@ -229,6 +190,7 @@ int main() {
         assert(drawEvents(e1.getEvents(14, 15)) == "1 10 20\n");
         assert(drawEvents(e1.getEvents(14, 110)) == "1 10 20\n");
         assert(drawEvents(e1.getEvents(0, 30)) == "1 10 20\n");
+        assert(drawEvents(e1.getEvents(5000, 10000)) == "");
     }
     //RECURRING EVENTS 2
     {
@@ -264,6 +226,7 @@ int main() {
         cout << drawEvents(e2.getEvents(0, 1000));
 
     }
+    //EVENT MANAGER
     {
         EventManager e1;
 
@@ -273,6 +236,7 @@ int main() {
         e1.addEvent(new RecurringEvent("r1", 0, 10, 50, 300));
         assert(drawEvents(e1.getEvents(1583859600, 1584223199)).empty());
     }
+    //EVENT EXISTS TEST
     {
         SingleEvent ev("event", 160, 30);
         assert(ev.eventExists(0, 10) == nullptr);
@@ -298,17 +262,17 @@ int main() {
         assert(ev.eventExists(0, 10, 1000) == nullptr);
         assert(ev.eventExists(150, 200, 500) != nullptr);
 
-        assert(ev.eventExists(150,160,40 , 700)== nullptr);
-        assert(ev.eventExists(150,160,30 , 700)!= nullptr);
-        assert(ev.eventExists(10,20,20 , 170) == nullptr);
+        assert(ev.eventExists(150, 160, 40, 700) == nullptr);
+        assert(ev.eventExists(150, 160, 30, 700) != nullptr);
+        assert(ev.eventExists(10, 20, 20, 170) == nullptr);
         assert(ev.eventExists(0, 10, 10, 50) == nullptr);
         assert(ev.eventExists(150, 200, 10, 50) == nullptr);
-        assert(ev.eventExists(0,10,20 , 190) != nullptr);
-        assert(ev.eventExists(0,10,20 , 180) != nullptr);
-        assert(ev.eventExists(160,170,20 , 160)== nullptr);
-        assert(ev.eventExists(70,80,50 , 170)== nullptr);
-        assert(ev.eventExists(70,80,50 , 180)!= nullptr);
-        assert(ev.eventExists(360,370,50 , 700)== nullptr);
+        assert(ev.eventExists(0, 10, 20, 190) != nullptr);
+        assert(ev.eventExists(0, 10, 20, 180) != nullptr);
+        assert(ev.eventExists(160, 170, 20, 160) == nullptr);
+        assert(ev.eventExists(70, 80, 50, 170) == nullptr);
+        assert(ev.eventExists(70, 80, 50, 180) != nullptr);
+        assert(ev.eventExists(360, 370, 50, 700) == nullptr);
 
 
         SingleEvent ev1("event", 0, 50);
@@ -319,7 +283,78 @@ int main() {
         assert(ev1.eventExists(0, 10, 20) != nullptr);
 
     }
+    //RECURRING EVENT ITEM EXISTS TEST
+    {
+        RecurringItemEvent ev("event", 160, 30, nullptr);
+        assert(ev.eventExists(0, 10) == nullptr);
+        assert(ev.eventExists(160, 170) != nullptr);
+        assert(ev.eventExists(150, 160) == nullptr);
+        assert(ev.eventExists(150, 200) != nullptr);
+        assert(ev.eventExists(170, 200) != nullptr);
+        assert(ev.eventExists(170, 180) != nullptr);
+        assert(ev.eventExists(190, 200) == nullptr);
 
+
+        assert(ev.eventExists(190, 200, 20) == nullptr);
+        assert(ev.eventExists(189, 200, 5060) != nullptr);
+        assert(ev.eventExists(200, 210, 10) == nullptr);
+        assert(ev.eventExists(170, 180, 100) != nullptr);
+        assert(ev.eventExists(0, 10, 10) != nullptr);
+        assert(ev.eventExists(0, 10, 100) == nullptr);
+        assert(ev.eventExists(70, 80, 100) != nullptr);
+        assert(ev.eventExists(10, 20, 20) != nullptr);
+        assert(ev.eventExists(150, 160, 30) != nullptr);
+        assert(ev.eventExists(150, 160, 40) == nullptr);
+        assert(ev.eventExists(0, 160, 190) == nullptr);
+        assert(ev.eventExists(0, 10, 1000) == nullptr);
+        assert(ev.eventExists(150, 200, 500) != nullptr);
+
+        assert(ev.eventExists(150, 160, 40, 700) == nullptr);
+        assert(ev.eventExists(150, 160, 30, 700) != nullptr);
+        assert(ev.eventExists(10, 20, 20, 170) == nullptr);
+        assert(ev.eventExists(0, 10, 10, 50) == nullptr);
+        assert(ev.eventExists(150, 200, 10, 50) == nullptr);
+        assert(ev.eventExists(0, 10, 20, 190) != nullptr);
+        assert(ev.eventExists(0, 10, 20, 180) != nullptr);
+        assert(ev.eventExists(160, 170, 20, 160) == nullptr);
+        assert(ev.eventExists(70, 80, 50, 170) == nullptr);
+        assert(ev.eventExists(70, 80, 50, 180) != nullptr);
+        assert(ev.eventExists(360, 370, 50, 700) == nullptr);
+
+
+        RecurringItemEvent ev1("event", 0, 50, nullptr);
+
+        assert(ev1.eventExists(50, 60, 60) == nullptr);
+        assert(ev1.eventExists(0, 10) != nullptr);
+        assert(ev1.eventExists(50, 60) == nullptr);
+        assert(ev1.eventExists(0, 10, 20) != nullptr);
+
+    }
+    //RECURRING EVENT EXISTS TEST
+    {
+        RecurringEvent rev("event", 150, 50, 100);
+        assert(rev.eventExists(0, 10) == nullptr);
+        assert(rev.eventExists(0, 50) == nullptr);
+        assert(rev.eventExists(100, 150) == nullptr);
+        assert(rev.eventExists(200, 210) == nullptr);
+        assert(rev.eventExists(50, 100) == nullptr);
+        assert(rev.eventExists(100, 151) != nullptr);
+        assert(rev.eventExists(155, 160) != nullptr);
+        assert(rev.eventExists(1055, 1100) != nullptr);
+        assert(rev.eventExists(0, 5000) != nullptr);
+
+        assert(rev.eventExists(100, 150, 100) == nullptr);
+        assert(rev.eventExists(200, 250, 100) == nullptr);
+        assert(rev.eventExists(100, 150, 200) == nullptr);
+        assert(rev.eventExists(150, 50, 100) != nullptr);
+        assert(rev.eventExists(25, 50, 50) != nullptr);
+        //TODO: ADD MORE UNIT TESTS
+
+        RecurringEvent rev2("event", 150, 50, 100, 500);
+        assert(rev2.eventExists(500, 5000) == nullptr);
+
+
+    }
     cout << "end" << endl;
     return 0;
 }

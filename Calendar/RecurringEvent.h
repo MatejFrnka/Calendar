@@ -15,6 +15,8 @@
 template<typename EventType>
 class EventSet;
 
+class RecurringItemEvent;
+
 using namespace std;
 
 class RecurringEvent : public Event {
@@ -25,8 +27,6 @@ public:
     RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
     EventSet<Event> getEvents(time_t start, time_t end);
-
-
 
     RecurringEvent *getCopy() const;
 
@@ -40,9 +40,13 @@ public:
 
     virtual Event *eventExists(time_t start, time_t end, time_t repeat);
 
-    virtual Event *eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill);
+    virtual Event *eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_);
 
 private:
+    time_t TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_ = -1);
+
+    RecurringItemEvent *getSingle(time_t start);
+
     time_t repeatTill;
     bool repeatToInfinity;
     time_t timeBetweenEvents;
