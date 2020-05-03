@@ -8,25 +8,37 @@
 
 EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
     EventSet<shared_ptr<Event>> result;
-
-    for (const auto &singleEvent : singleEvents)
-        if (singleEvent->isInRange(start, end))
-            result.insert(singleEvent);
+    //binary search first relevant event
+    auto firstEvent = lower_bound(singleEvents.begin(),
+                                  singleEvents.end(),
+                                  start,
+                                  [](const shared_ptr<Event> &event, time_t start) { return event->getEndDateUtc() < start; });
+    while (firstEvent != singleEvents.end()) {
+        if ((*firstEvent)->isInRange(start, end))
+            result.insert(*firstEvent);
+            //break if event starts after range
+        else if ((*firstEvent)->getStartDateUtc() > end)
+            break;
+        firstEvent++;
+    }
     for (const auto &recurringEvent : recurringEvents) {
         EventSet<shared_ptr<Event>> events = recurringEvent->getEvents(start, end);
         result.insert(events.begin(), events.end());
+        //break if event starts after range end
+        if (recurringEvent->getStartDateUtc() > end)
+            break;
     }
     return result;
 }
 
-bool EventManager::addEvent(const shared_ptr<SingleEvent>& event) {
+bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
     if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()) != -1)
         return false;
     singleEvents.insert(event);
     return true;
 }
 
-bool EventManager::addEvent(const shared_ptr<RecurringEvent>& event) {
+bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
     if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(),
                            event->getRepeatTill()))
         return false;
@@ -100,6 +112,11 @@ time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetw
             return false;
     }
     return true;
+}
+
+bool EventManager::removeEvent(const shared_ptr<Event> &event) {
+    lower_bound(singleEvents.begin(), singleEvents.end(), event);
+    return false;
 }
 
 

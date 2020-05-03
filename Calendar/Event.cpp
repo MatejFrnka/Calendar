@@ -19,14 +19,7 @@ bool Event::isInRange(time_t rangeStart, time_t rangeEnd) const {
     return isInRange(getStartDateUtc(), getEndDateUtc(), rangeStart, rangeEnd);
 }
 
-/**
- * Check if data range start-end is in range rangeStart-rangeEnd
- * @param start Beginning of event range
- * @param end End of event range
- * @param rangeStart Beginning of the range you want to check the event is in
- * @param rangeEnd End of the range you want to check the event is in
- * @return True if event defined by start - end is in range defined by rangeStart-rangeEnd, else false
- */
+
 bool Event::isInRange(time_t start, time_t end, time_t rangeStart, time_t rangeEnd) const {
     //event starts in range
     if (start >= rangeStart && start < rangeEnd)

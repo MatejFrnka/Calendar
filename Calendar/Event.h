@@ -18,6 +18,8 @@ protected:
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
 
 public:
+    Event() = delete;
+
     enum Type {
         SingleEventId,
         RecurringEventId,
@@ -52,10 +54,29 @@ public:
 
     int getMinute(bool start) const;
 
+    /**
+     * Return event that happens during given time range
+     * @param start Start of range. Events ending exactly at param start will not be included
+     * @param End of range. Events starting exactly at param end will not be included
+     * @return Event happening in given time range or null_ptr
+     */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end) = 0;
-
+    /**
+     * Return event that happens during given time range
+     * @param start Start of range. Events ending exactly at param start will not be included
+     * @param End of range. Events starting exactly at param end will not be included
+     * @param repeat Repetition of event. Time_t difference between start of events
+     * @return Event happening in given time range or null_ptr
+     */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat) = 0;
-
+    /**
+     * Return event that happens during given time range
+     * @param start Start of range. Events ending exactly at param start will not be included
+     * @param End of range. Events starting exactly at param end will not be included
+     * @param repeat Repetition of event. Time_t difference between start of events
+     * @param repeatTill Time to repeat to. There will be no events happening past this time;
+     * @return Event happening in given time range or null_ptr
+     */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) = 0;
 
     virtual ~Event() = default;

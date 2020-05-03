@@ -19,6 +19,7 @@ string drawEvents(const EventSet<shared_ptr<Event>> &s) {
 }
 
 int main() {
+
     //EVENT EXISTS TEST
     {
 
@@ -140,6 +141,7 @@ int main() {
 
     }
     //SINGLE EVENT EVENT MANAGER CHECK
+
     {
 
         EventManager e1;
@@ -150,7 +152,6 @@ int main() {
         assert(e1.addEvent(ev3));
         assert(e1.addEvent(ev1));
         assert(e1.addEvent(ev2));
-
         assert(drawEvents(e1.getEvents(0, 300)) == "1 10 20\n"
                                                    "2 30 60\n"
                                                    "3 100 200\n");
@@ -164,6 +165,7 @@ int main() {
         assert(drawEvents(e1.getEvents(120, 130)) == "3 100 200\n");
         assert(drawEvents(e1.getEvents(20, 150)) == "2 30 60\n"
                                                     "3 100 200\n");
+
         assert(drawEvents(e1.getEvents(30, 60)) == "2 30 60\n");
         assert(drawEvents(e1.getEvents(0, 10)).empty());
         assert(drawEvents(e1.getEvents(20, 30)).empty());

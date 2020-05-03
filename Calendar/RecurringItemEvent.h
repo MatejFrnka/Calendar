@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include "SingleEvent.h"
 #include "RecurringEvent.h"
 
 class RecurringEvent;

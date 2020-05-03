@@ -152,6 +152,7 @@ shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start) {
 struct mk_shared_RecurringEvent : RecurringEvent {
     mk_shared_RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
             : RecurringEvent(move(title_), startDateUtc_, duration_, timeBetweenEvents_, repeatTill_) {}
+
     mk_shared_RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_)
             : RecurringEvent(move(title_), startDateUtc_, duration_, timeBetweenEvents_) {}
 };
