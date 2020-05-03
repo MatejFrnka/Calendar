@@ -3,10 +3,8 @@
 #include <string>
 #include <sstream>
 #include <assert.h>
-#include <set>
 #include <memory>
 #include "Calendar/EventManager.h"
-#include "./Utility/EventSet.h"
 
 using namespace std;
 
@@ -19,7 +17,7 @@ string drawEvents(const EventSet<shared_ptr<Event>> &s) {
 }
 
 int main() {
-
+/*
     //EVENT EXISTS TEST
     {
 
@@ -230,6 +228,57 @@ int main() {
 
         assert(drawEvents(e1.getEvents(1583859600, 1584223199)).empty());
     }
-    cout << "end" << endl;
+    //EVENT MANAGER DELETING SINGLE EVENTS
+    {
+        EventManager e1;
+        auto ev1 = SingleEvent::getInstance("1", 50, 10);
+        auto ev5 = SingleEvent::getInstance("5", 200, 30);
+        auto ev2 = SingleEvent::getInstance("2", 170, 10);
+        auto ev3 = SingleEvent::getInstance("3", 180, 1);
+        auto ev4 = SingleEvent::getInstance("4", 181, 10);
+        assert(e1.addEvent(ev1));
+        assert(e1.addEvent(ev2));
+        assert(e1.addEvent(ev3));
+        assert(!e1.addEvent(ev3));
+        assert(e1.addEvent(ev4));
+        assert(e1.addEvent(ev5));
+
+        assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
+                                                   "2 170 180\n"
+                                                   "3 180 181\n"
+                                                   "4 181 191\n"
+                                                   "5 200 230\n");
+        assert(drawEvents(e1.getEvents(180, 181)) == "3 180 181\n");
+        assert(drawEvents(e1.getEvents(180, 182)) == "3 180 181\n"
+                                                     "4 181 191\n");
+        assert(e1.removeEvent(ev3));
+        assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
+                                                   "2 170 180\n"
+                                                   "4 181 191\n"
+                                                   "5 200 230\n");
+        assert(e1.addEvent(ev3));
+        assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
+                                                   "2 170 180\n"
+                                                   "3 180 181\n"
+                                                   "4 181 191\n"
+                                                   "5 200 230\n");
+        assert(!e1.removeEvent(SingleEvent::getInstance("test", 40, 5)));
+        assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
+                                                   "2 170 180\n"
+                                                   "3 180 181\n"
+                                                   "4 181 191\n"
+                                                   "5 200 230\n");
+        assert(e1.removeEvent(ev1));
+        assert(e1.removeEvent(ev2));
+        assert(e1.removeEvent(ev3));
+        assert(e1.removeEvent(ev4));
+        assert(e1.removeEvent(ev5));
+        assert(drawEvents(e1.getEvents(0, 300)).empty());
+    }
+    //EVENT MANAGER DELETING RECURRING EVENTS
+    {
+
+    }
+    cout << "end" << endl;*/
     return 0;
 }

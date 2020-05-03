@@ -3,13 +3,15 @@
  * @date: 29.04.2020
  */
 
-#pragma once
+#ifndef CALENDAR_EVENT
+#define CALENDAR_EVENT
 
 #include <ctime>
 #include <string>
 #include <iostream>
 #include <memory>
 #include "../Utility/InheritableSharedFromThis.h"
+
 
 using namespace std;
 
@@ -61,6 +63,7 @@ public:
      * @return Event happening in given time range or null_ptr
      */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end) = 0;
+
     /**
      * Return event that happens during given time range
      * @param start Start of range. Events ending exactly at param start will not be included
@@ -69,6 +72,7 @@ public:
      * @return Event happening in given time range or null_ptr
      */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat) = 0;
+
     /**
      * Return event that happens during given time range
      * @param start Start of range. Events ending exactly at param start will not be included
@@ -133,3 +137,5 @@ private:
     tm startTime;
     tm endTime;
 };
+
+#endif

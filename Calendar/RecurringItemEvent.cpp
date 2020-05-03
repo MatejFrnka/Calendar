@@ -5,8 +5,6 @@
 
 #include "RecurringItemEvent.h"
 
-#include <utility>
-
 RecurringItemEvent::RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_)
         : SingleEvent(std::move(title_), startDateUtc_, duration_), parentEvent(std::move(parentEvent_)) {
 

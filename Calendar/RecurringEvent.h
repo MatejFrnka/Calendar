@@ -3,7 +3,8 @@
  * @date: 29.04.2020
  */
 
-#pragma once
+#ifndef CALENDAR_RECURRING_EVENT
+#define CALENDAR_RECURRING_EVENT
 
 #include <string>
 #include <vector>
@@ -91,5 +92,6 @@ public:
 
     void setTimeBetweenEvents(time_t timeBetweenEvents);
 
-
 };
+
+#endif

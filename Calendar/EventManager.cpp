@@ -115,7 +115,11 @@ time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetw
 }
 
 bool EventManager::removeEvent(const shared_ptr<Event> &event) {
-    lower_bound(singleEvents.begin(), singleEvents.end(), event);
+    auto eventIt = lower_bound(singleEvents.begin(), singleEvents.end(), event, [](const shared_ptr<SingleEvent> &a, const shared_ptr<Event> &b) { return *a < *b; });
+    if ((*eventIt) == event) {
+        singleEvents.erase(eventIt);
+        return true;
+    }
     return false;
 }
 

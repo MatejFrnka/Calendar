@@ -3,8 +3,10 @@
  * @date: 29.04.2020
  */
 
-#pragma once
+#ifndef CALENDAR_EVENT_MANAGER
+#define CALENDAR_EVENT_MANAGER
 
+#include "Event.h"
 #include "SingleEvent.h"
 #include "RecurringEvent.h"
 #include "../Utility/EventSet.h"
@@ -34,6 +36,7 @@ public:
     bool addEvent(const shared_ptr<RecurringEvent> &event);
 
     bool removeEvent(const shared_ptr<Event> &event);
+
     /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
      * @param start Start of range. Events ending exactly at param start will not be included
@@ -86,3 +89,5 @@ private:
     EventSet<shared_ptr<SingleEvent>> singleEvents;
     EventSet<shared_ptr<RecurringEvent>> recurringEvents;
 };
+
+#endif

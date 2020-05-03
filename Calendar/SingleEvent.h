@@ -3,10 +3,14 @@
  * @date: 29.04.2020
  */
 
-#pragma once
+#ifndef CALENDAR_SINGLE_EVENT
+#define CALENDAR_SINGLE_EVENT
 
-#include "./Event.h"
+
+#include "Event.h"
 #include <memory>
+#include <utility>
+#include <string>
 
 using namespace std;
 
@@ -46,3 +50,5 @@ public:
      */
     shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) override;
 };
+
+#endif

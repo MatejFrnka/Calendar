@@ -3,9 +3,11 @@
  * @date: 29.04.2020
  */
 
-#pragma once
+#ifndef CALENDAR_RECURRING_EVENT_ITEM
+#define CALENDAR_RECURRING_EVENT_ITEM
 
 #include "RecurringEvent.h"
+#include <utility>
 
 class RecurringEvent;
 
@@ -26,3 +28,5 @@ public:
 private:
 
 };
+
+#endif

@@ -3,7 +3,8 @@
  * @date: 03.05.2020
  */
 
-#pragma once
+#ifndef CALENDAR_UTILITY_EVENT_SET
+#define CALENDAR_UTILITY_EVENT_SET
 
 #include <set>
 
@@ -19,4 +20,4 @@ class EventSet : public std::set<T, compare_reference<T>> {
 
 };
 
-
+#endif
