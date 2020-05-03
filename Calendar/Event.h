@@ -8,18 +8,21 @@
 #include <ctime>
 #include <string>
 #include <iostream>
+#include <memory>
+#include "../Utility/InheritableSharedFromThis.h"
 
 using namespace std;
 
-class Event {
+class Event : public inheritable_enable_shared_from_this<Event> {
+protected:
+    Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
+
 public:
     enum Type {
         SingleEventId,
         RecurringEventId,
         RecurringEventItemId
     };
-
-    Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
 
     /**
      * Check if current event is in given range
@@ -49,11 +52,11 @@ public:
 
     int getMinute(bool start) const;
 
-    virtual Event *eventExists(time_t start, time_t end) = 0;
+    virtual shared_ptr<Event> eventExists(time_t start, time_t end) = 0;
 
-    virtual Event *eventExists(time_t start, time_t end, time_t repeat) = 0;
+    virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat) = 0;
 
-    virtual Event *eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) = 0;
+    virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) = 0;
 
     virtual ~Event() = default;
 

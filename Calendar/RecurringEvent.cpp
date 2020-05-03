@@ -4,10 +4,10 @@
  */
 
 #include "RecurringEvent.h"
-#include "../Utility/Exceptions/EventNotInRecurringEvent.h"
+
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_,
-                               time_t repeatTill_) : Event(std::move(title_), startDateUtc_, duration_){
+                               time_t repeatTill_) : Event(std::move(title_), startDateUtc_, duration_) {
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = repeatTill_;
     repeatToInfinity = false;
@@ -15,14 +15,14 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
 }
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_)
-        : Event(std::move(title_), startDateUtc_, duration_){
+        : Event(std::move(title_), startDateUtc_, duration_) {
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = 0;
     repeatToInfinity = true;
 }
 
-EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {
-    EventSet<Event> result;
+EventSet<shared_ptr<Event>> RecurringEvent::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<Event>> result;
     time_t eventTime = getFirstEventTime(start, getStartDateUtc(), getDurationUtc(), getTimeBetweenEvents());
 
     while ((repeatToInfinity || eventTime < repeatTill) && eventTime < end) {
@@ -32,6 +32,7 @@ EventSet<Event> RecurringEvent::getEvents(time_t start, time_t end) {
     return result;
 }
 
+/*
 RecurringEvent *RecurringEvent::getCopy() const {
     RecurringEvent *result;
     if (repeatToInfinity)
@@ -45,7 +46,7 @@ RecurringEvent *RecurringEvent::getCopy() const {
 SingleEvent *RecurringEvent::getCopySingleEvent() const {
     return new SingleEvent(getTitle(), getStartDateUtc(), getEndDateUtc());
 }
-
+*/
 void RecurringEvent::UpdateSelf(RecurringEvent *reference) {
     setTitle(reference->getTitle());
     setStartDateUtc(reference->getStartDateUtc());
@@ -80,26 +81,26 @@ void RecurringEvent::setTimeBetweenEvents(time_t timeBetweenEvents) {
     RecurringEvent::timeBetweenEvents = timeBetweenEvents;
 }
 
-Event *RecurringEvent::eventExists(time_t start, time_t end) {
+shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end) {
     auto events = this->getEvents(start, end);
     if (!events.empty())
         return *events.begin();
-    return nullptr;
+    return shared_ptr<Event>(nullptr);
 }
 
-Event *RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
+shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
     time_t time = TimeOfEvent(start, end, repeat);
     if (time == -1)
-        return nullptr;
+        return shared_ptr<Event>(nullptr);
     time -= (time - getStartDateUtc()) % getTimeBetweenEvents();
     return getSingle(time);
 
 }
 
-Event *RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
+shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
     time_t time = TimeOfEvent(start, end, repeat, repeatTill_);
     if (time == -1)
-        return nullptr;
+        return shared_ptr<Event>(nullptr);
     time = (time - getStartDateUtc()) % getTimeBetweenEvents();
     return getSingle(time);
 }
@@ -142,10 +143,23 @@ time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time
     return -1;
 }
 
-RecurringItemEvent *RecurringEvent::getSingle(time_t start) {
+shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start) {
     if (start % getTimeBetweenEvents() != getStartDateUtc() % getTimeBetweenEvents())
         throw EventNotInRecurringEvent();
-    auto *singleEvent = new RecurringItemEvent(getTitle(), start, getDurationUtc(), this);
-    return singleEvent;
+    return RecurringItemEvent::getInstance(getTitle(), start, getDurationUtc(), downcasted_shared_from_this<RecurringEvent>());
+}
 
+struct mk_shared_RecurringEvent : RecurringEvent {
+    mk_shared_RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
+            : RecurringEvent(move(title_), startDateUtc_, duration_, timeBetweenEvents_, repeatTill_) {}
+    mk_shared_RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_)
+            : RecurringEvent(move(title_), startDateUtc_, duration_, timeBetweenEvents_) {}
+};
+
+shared_ptr<RecurringEvent> RecurringEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_) {
+    return make_shared<mk_shared_RecurringEvent>(move(title_), startDateUtc_, duration_, timeBetweenEvents_, repeatTill_);
+}
+
+shared_ptr<RecurringEvent> RecurringEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_) {
+    return make_shared<mk_shared_RecurringEvent>(move(title_), startDateUtc_, duration_, timeBetweenEvents_);
 }

@@ -10,23 +10,28 @@
 #include "Event.h"
 #include "SingleEvent.h"
 #include "RecurringItemEvent.h"
+#include "../Utility/Exceptions/EventNotInRecurringEvent.h"
 #include "../Utility/EventSet.h"
-
-template<typename EventType>
-class EventSet;
+#include <utility>
+#include <memory>
 
 class RecurringItemEvent;
 
 using namespace std;
 
 class RecurringEvent : public Event {
-public:
-    RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_,
-                   time_t repeatTill_);
+protected:
+    RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_);
 
     RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
-    EventSet<Event> getEvents(time_t start, time_t end);
+public:
+    static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_);
+
+    static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
+
+
+    EventSet<shared_ptr<Event>> getEvents(time_t start, time_t end);
 
     RecurringEvent *getCopy() const;
 
@@ -36,16 +41,16 @@ public:
 
     int getTypeId() override { return Event::RecurringEventId; };
 
-    virtual Event *eventExists(time_t start, time_t end);
+    virtual shared_ptr<Event> eventExists(time_t start, time_t end);
 
-    virtual Event *eventExists(time_t start, time_t end, time_t repeat);
+    virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat);
 
-    virtual Event *eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_);
+    virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_);
 
 private:
     time_t TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_ = -1);
 
-    RecurringItemEvent *getSingle(time_t start);
+    shared_ptr<RecurringItemEvent> getSingle(time_t start);
 
     time_t repeatTill;
     bool repeatToInfinity;

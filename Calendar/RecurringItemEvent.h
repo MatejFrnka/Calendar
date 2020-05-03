@@ -11,10 +11,13 @@
 class RecurringEvent;
 
 class RecurringItemEvent : public SingleEvent {
-public:
-    RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, RecurringEvent *parentEvent_);
+protected:
+    RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
 
-    RecurringEvent *parentEvent;
+public:
+    static shared_ptr<RecurringItemEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
+
+    shared_ptr<RecurringEvent> parentEvent;
 
     SingleEvent *getCopySingleEvent();
 

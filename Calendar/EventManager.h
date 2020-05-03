@@ -15,9 +15,9 @@ using namespace std;
 
 class EventManager {
 public:
-    bool addEvent(SingleEvent *event);
+    bool addEvent(const shared_ptr<SingleEvent>& event);
 
-    bool addEvent(RecurringEvent *event);
+    bool addEvent(const shared_ptr< RecurringEvent>& event);
 
     time_t checkAvailability(time_t start, time_t end);
 
@@ -25,7 +25,7 @@ public:
 
     time_t checkAvailability(time_t start, time_t end, time_t repeat);
 
-    EventSet<Event> getEvents(time_t start, time_t end);
+    EventSet<shared_ptr<Event>> getEvents(time_t start, time_t end);
 
     RecurringEvent *editThisAndNextEvent(RecurringEvent *eventToEdit);
 
@@ -40,6 +40,6 @@ public:
     EventManager() = default;
 
 private:
-    vector<SingleEvent *> singleEvents;
-    vector<RecurringEvent *> recurringEvents;
+    EventSet<shared_ptr<SingleEvent>> singleEvents;
+    EventSet<shared_ptr<RecurringEvent>> recurringEvents;
 };
