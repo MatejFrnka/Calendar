@@ -17,7 +17,7 @@ string drawEvents(const EventSet<shared_ptr<Event>> &s) {
 }
 
 int main() {
-/*
+
     //EVENT EXISTS TEST
     {
 
@@ -129,7 +129,6 @@ int main() {
         assert(rev->eventExists(100, 150, 200) == nullptr);
         assert(rev->eventExists(150, 50, 100) != nullptr);
         assert(rev->eventExists(25, 50, 50) != nullptr);
-        //TODO: ADD MORE UNIT TESTS
 
         auto rev2 = RecurringEvent::getInstance("event", 150, 50, 100, 500);
         assert(rev2->eventExists(500, 5000) == nullptr);
@@ -139,7 +138,6 @@ int main() {
 
     }
     //SINGLE EVENT EVENT MANAGER CHECK
-
     {
 
         EventManager e1;
@@ -251,7 +249,7 @@ int main() {
         assert(drawEvents(e1.getEvents(180, 181)) == "3 180 181\n");
         assert(drawEvents(e1.getEvents(180, 182)) == "3 180 181\n"
                                                      "4 181 191\n");
-        assert(e1.removeEvent(ev3));
+        e1.removeEvent(ev3);
         assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
                                                    "2 170 180\n"
                                                    "4 181 191\n"
@@ -262,23 +260,158 @@ int main() {
                                                    "3 180 181\n"
                                                    "4 181 191\n"
                                                    "5 200 230\n");
-        assert(!e1.removeEvent(SingleEvent::getInstance("test", 40, 5)));
+        e1.removeEvent(SingleEvent::getInstance("test", 40, 5));
         assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
                                                    "2 170 180\n"
                                                    "3 180 181\n"
                                                    "4 181 191\n"
                                                    "5 200 230\n");
-        assert(e1.removeEvent(ev1));
-        assert(e1.removeEvent(ev2));
-        assert(e1.removeEvent(ev3));
-        assert(e1.removeEvent(ev4));
-        assert(e1.removeEvent(ev5));
+        e1.removeEvent(ev1);
+        e1.removeEvent(ev2);
+        e1.removeEvent(ev3);
+        e1.removeEvent(ev4);
+        e1.removeEvent(ev5);
         assert(drawEvents(e1.getEvents(0, 300)).empty());
     }
     //EVENT MANAGER DELETING RECURRING EVENTS
     {
+        EventManager em;
+        assert(em.addEvent(RecurringEvent::getInstance("event", 100, 50, 100)));
+        assert(drawEvents(em.getEvents(0, 500)) == "event 100 150\n"
+                                                   "event 200 250\n"
+                                                   "event 300 350\n"
+                                                   "event 400 450\n");
+        auto evi1 = *em.getEvents(300, 350).begin();
+        em.removeEvent(evi1, Event::actionType::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 500)) == "event 100 150\n"
+                                                   "event 200 250\n"
+                                                   "event 400 450\n");
+        auto evi2 = *em.getEvents(100, 150).begin();
+        em.removeEvent(evi2);
+        assert(drawEvents(em.getEvents(0, 500)) == "event 200 250\n"
+                                                   "event 400 450\n");
+        auto evi3 = *em.getEvents(200, 250).begin();
+        em.removeEvent(evi3);
+        assert(drawEvents(em.getEvents(0, 500)) == "event 400 450\n");
+        auto evi4 = *em.getEvents(6000, 7000).begin();
+        em.removeEvent(SingleEvent::getInstance("test", 400, 50));
+        assert(drawEvents(em.getEvents(0, 500)) == "event 400 450\n");
+        em.removeEvent(evi4, Event::actionType::AllEvents);
+        assert(drawEvents(em.getEvents(0, 500000)) == "");
 
+        em.addEvent(RecurringEvent::getInstance("title", 100, 50, 100, 1000));
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "title 300 350\n"
+                                                    "title 400 450\n"
+                                                    "title 500 550\n"
+                                                    "title 600 650\n"
+                                                    "title 700 750\n"
+                                                    "title 800 850\n"
+                                                    "title 900 950\n");
+        em.removeEvent(*em.getEvents(700, 750).begin(), Event::actionType::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "title 300 350\n"
+                                                    "title 400 450\n"
+                                                    "title 500 550\n"
+                                                    "title 600 650\n"
+                                                    "title 800 850\n"
+                                                    "title 900 950\n");
+        em.removeEvent(*em.getEvents(500, 550).begin(), Event::actionType::ThisAndNext);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "title 300 350\n"
+                                                    "title 400 450\n");
+        assert(em.addEvent(SingleEvent::getInstance("title", 500, 500)));
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "title 300 350\n"
+                                                    "title 400 450\n"
+                                                    "title 500 1000\n");
+        em.removeEvent(*em.getEvents(200, 250).begin(), Event::actionType::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 300 350\n"
+                                                    "title 400 450\n"
+                                                    "title 500 1000\n");
+        auto evi5 = *em.getEvents(300, 350).begin();
+        em.removeEvent(evi5, Event::actionType::ThisAndNext);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 500 1000\n");
+        em.removeEvent(*em.getEvents(100, 150).begin(), Event::actionType::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 500 1000\n");
+        em.removeEvent(*em.getEvents(0, 2000).begin(), Event::actionType::AllEvents);
+        assert(drawEvents(em.getEvents(0, 2000)).empty());
+        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 550)));
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n");
+        em.removeEvent(*em.getEvents(0, 2000).begin(), Event::AllEvents);
+        assert(drawEvents(em.getEvents(0, 2000)).empty());
+        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 550)));
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n");
+        em.removeEvent(*em.getEvents(0, 2000).begin(), Event::ThisAndNext);
+        assert(drawEvents(em.getEvents(0, 2000)).empty());
+        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 750)));
+        em.removeEvent(*em.getEvents(600, 2000).begin(), Event::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n"
+                                                    "title 700 750\n");
+        em.removeEvent(*em.getEvents(400, 2000).begin(), Event::AllEvents);
+        assert(drawEvents(em.getEvents(0, 2000)).empty());
+
+        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 750)));
+        em.removeEvent(*em.getEvents(600, 2000).begin(), Event::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n"
+                                                    "title 700 750\n");
+        em.removeEvent(*em.getEvents(400, 2000).begin(), Event::ThisAndNext);
+        assert(drawEvents(em.getEvents(0, 2000)).empty());
+
+        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 750)));
+        em.removeEvent(*em.getEvents(600, 2000).begin(), Event::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n"
+                                                    "title 700 750\n");
+        em.removeEvent(*em.getEvents(400, 2000).begin(), Event::OnlyThis);
+        em.removeEvent(*em.getEvents(400, 2000).begin(), Event::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)).empty());
+
+        em.addEvent(RecurringEvent::getInstance("title", 100, 50, 100, 1000));
+        em.removeEvent(*em.getEvents(300, 350).begin(), Event::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "title 400 450\n"
+                                                    "title 500 550\n"
+                                                    "title 600 650\n"
+                                                    "title 700 750\n"
+                                                    "title 800 850\n"
+                                                    "title 900 950\n");
+        assert(em.addEvent(SingleEvent::getInstance("single", 300, 50)));
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "single 300 350\n"
+                                                    "title 400 450\n"
+                                                    "title 500 550\n"
+                                                    "title 600 650\n"
+                                                    "title 700 750\n"
+                                                    "title 800 850\n"
+                                                    "title 900 950\n");
+        em.removeEvent(*em.getEvents(300, 450).begin(), Event::OnlyThis);
+        em.removeEvent(*em.getEvents(300, 450).begin(), Event::OnlyThis);
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "title 500 550\n"
+                                                    "title 600 650\n"
+                                                    "title 700 750\n"
+                                                    "title 800 850\n"
+                                                    "title 900 950\n");
+        assert(em.addEvent(RecurringEvent::getInstance("r", 300, 50, 1000)));
+        assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
+                                                    "title 200 250\n"
+                                                    "r 300 350\n"
+                                                    "title 500 550\n"
+                                                    "title 600 650\n"
+                                                    "title 700 750\n"
+                                                    "title 800 850\n"
+                                                    "title 900 950\n"
+                                                    "r 1300 1350\n");
     }
-    cout << "end" << endl;*/
+    cout << "end" << endl;
     return 0;
 }

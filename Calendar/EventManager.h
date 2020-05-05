@@ -17,11 +17,6 @@ using namespace std;
 
 class EventManager {
 public:
-    enum actionType {
-        AllEvents,
-        ThisAndNext,
-        OnlyThis
-    };
 
     /**
      * @param event Adds event to collection of events
@@ -35,7 +30,7 @@ public:
      */
     bool addEvent(const shared_ptr<RecurringEvent> &event);
 
-    bool removeEvent(const shared_ptr<Event> &event);
+    void removeEvent(const shared_ptr<Event> &event, Event::actionType actionType = Event::actionType::OnlyThis);
 
     /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included

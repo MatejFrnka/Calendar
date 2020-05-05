@@ -15,6 +15,7 @@
 #include "../Utility/EventSet.h"
 #include <utility>
 #include <memory>
+#include <algorithm>
 #include "SingleEvent.h"
 
 class RecurringItemEvent;
@@ -32,12 +33,7 @@ public:
 
     static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
-
     EventSet<shared_ptr<Event>> getEvents(time_t start, time_t end);
-
-    RecurringEvent *getCopy() const;
-
-    SingleEvent *getCopySingleEvent() const;
 
     void UpdateSelf(RecurringEvent *reference);
 
@@ -70,7 +66,33 @@ public:
      */
     shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) override;
 
+    shared_ptr<Event> freeRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event, actionType actionType);
+
+    shared_ptr<RecurringEvent> getParentOfItem(const shared_ptr<RecurringItemEvent> &recurringItem);
+
+    shared_ptr<RecurringEvent> getFirstNode();
+
+//    RecurringEvent &operator=(const RecurringEvent &event);
+
+    bool deleteThisNode();
+
 private:
+    shared_ptr<Event> freeOnlyOneRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event);
+
+    shared_ptr<Event> freeThisAndNextRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event);
+
+    shared_ptr<Event> freeAllRecurringItemEvent();
+
+    bool  isValid();
+
+    /**
+     * Get first event that happens while this event is happening
+     * @param start Start of event to check
+     * @param end End of event to check
+     * @param repeat Repetition of event (space between starts)
+     * @param repeatTill_ Event will not repeat beyond this, value -1 for infinity. Default value is -1
+     * @return first time of event specified by given parameters that happens during this class event
+     */
     time_t TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_ = -1);
 
     shared_ptr<RecurringItemEvent> getSingle(time_t start);
@@ -78,6 +100,9 @@ private:
     time_t repeatTill;
     bool repeatToInfinity;
     time_t timeBetweenEvents;
+    shared_ptr<RecurringEvent> parentNode = nullptr;
+    shared_ptr<RecurringEvent> childNode = nullptr;
+
 //GETTERS AND SETTERS
 public:
     time_t getRepeatTill() const;

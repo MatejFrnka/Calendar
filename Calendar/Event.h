@@ -20,6 +20,12 @@ protected:
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
 
 public:
+    enum actionType {
+        AllEvents,
+        ThisAndNext,
+        OnlyThis
+    };
+
     Event() = delete;
 
     enum Type {
@@ -27,6 +33,7 @@ public:
         RecurringEventId,
         RecurringEventItemId
     };
+
 
     /**
      * Check if current event is in given range
@@ -83,18 +90,20 @@ public:
      */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) = 0;
 
+    /**
+     * Removes event from all events it depends on
+     * @param actionType How many events does function effect
+     * @return shared_ptr to freed event, nullptr if event could not be freed
+     */
+    virtual shared_ptr<Event> freeSelf(actionType actionType= actionType::OnlyThis);
+
     virtual ~Event() = default;
 
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;
     }
-
-    void addReference();
-
-    Event *removeReference();
-
 protected:
-    int ref_cnt = 0;
+
     bool editable = true;
 
     /**

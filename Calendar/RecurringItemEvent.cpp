@@ -18,8 +18,7 @@ struct mk_shared_RecurringItemEvent : RecurringItemEvent {
 shared_ptr<RecurringItemEvent> RecurringItemEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_) {
     return make_shared<mk_shared_RecurringItemEvent>(move(title_), startDateUtc_, duration_, move(parentEvent_));
 }
-/*
-SingleEvent *RecurringItemEvent::getCopySingleEvent() {
-    return new SingleEvent(getTitle(), getStartDateUtc(), getDurationUtc());
+
+shared_ptr<Event> RecurringItemEvent::freeSelf(Event::actionType actionType) {
+    return  parentEvent->freeRecurringItemEvent(downcasted_shared_from_this<RecurringItemEvent>(), actionType);
 }
-*/

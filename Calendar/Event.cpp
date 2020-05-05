@@ -11,8 +11,6 @@ Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     durationUtc = durationUtc_;
 
     //TODO: CREATE TM STRUCTS startTime and endTime
-
-    ref_cnt++;
 }
 
 bool Event::isInRange(time_t rangeStart, time_t rangeEnd) const {
@@ -64,21 +62,6 @@ int Event::getMinute(bool start) const {
     return getTime(start)->tm_min;
 }
 
-void Event::addReference() {
-    ref_cnt++;
-//    cout << "+\tref_cnt: " << ref_cnt << endl;
-}
-
-Event *Event::removeReference() {
-    ref_cnt--;
-//    cout << title << "-\tref_cnt: " << ref_cnt << endl;
-    if (ref_cnt <= 0) {
-        delete this;
-        return nullptr;
-    }
-    return this;
-}
-
 const string &Event::getTitle() const {
     return title;
 }
@@ -113,4 +96,8 @@ bool Event::isEditable() const {
 
 void Event::setEditable(bool editable) {
     Event::editable = editable;
+}
+
+shared_ptr<Event> Event::freeSelf(actionType actionType){
+    return shared_from_this();
 }

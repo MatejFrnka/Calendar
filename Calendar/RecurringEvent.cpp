@@ -29,24 +29,13 @@ EventSet<shared_ptr<Event>> RecurringEvent::getEvents(time_t start, time_t end) 
         result.insert(getSingle(eventTime));
         eventTime += timeBetweenEvents;
     }
+    if (childNode && childNode->getEndDateUtc() <= end) {
+        auto childEvents = childNode->getEvents(start, end);
+        result.insert(childEvents.begin(), childEvents.end());
+    }
     return result;
 }
 
-/*
-RecurringEvent *RecurringEvent::getCopy() const {
-    RecurringEvent *result;
-    if (repeatToInfinity)
-        result = new RecurringEvent(getTitle(), getStartDateUtc(), getDurationUtc(), timeBetweenEvents);
-    else
-        result = new RecurringEvent(getTitle(), getStartDateUtc(), getDurationUtc(), timeBetweenEvents,
-                                    repeatTill);
-    return result;
-}
-
-SingleEvent *RecurringEvent::getCopySingleEvent() const {
-    return new SingleEvent(getTitle(), getStartDateUtc(), getEndDateUtc());
-}
-*/
 void RecurringEvent::UpdateSelf(RecurringEvent *reference) {
     setTitle(reference->getTitle());
     setStartDateUtc(reference->getStartDateUtc());
@@ -100,19 +89,17 @@ shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t r
 shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
     time_t time = TimeOfEvent(start, end, repeat, repeatTill_);
     if (time == -1)
-        return shared_ptr<Event>(nullptr);
+        return nullptr;
+    if (!repeatToInfinity && time + getDurationUtc() > repeatTill) {
+        if (childNode)
+            return childNode->eventExists(start, end, repeat, repeatTill_);
+        return nullptr;
+    }
     time = (time - getStartDateUtc()) % getTimeBetweenEvents();
     return getSingle(time);
 }
 
-/**
- * Get first event that happens while this event is happening
- * @param start Start of event to check
- * @param end End of event to check
- * @param repeat Repetition of event (space between starts)
- * @param repeatTill_ Event will not repeat beyond this, value -1 for infinity. Default value is -1
- * @return first time of event specified by given parameters that happens during this class event
- */
+
 time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
     bool repeatToInfinity_ = (repeatTill_ == -1);
     time_t startA = this->getStartDateUtc();
@@ -164,3 +151,134 @@ shared_ptr<RecurringEvent> RecurringEvent::getInstance(string title_, time_t sta
 shared_ptr<RecurringEvent> RecurringEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_) {
     return make_shared<mk_shared_RecurringEvent>(move(title_), startDateUtc_, duration_, timeBetweenEvents_);
 }
+
+shared_ptr<RecurringEvent> RecurringEvent::getParentOfItem(const shared_ptr<RecurringItemEvent> &recurringItem) {
+    time_t timediff = recurringItem->getStartDateUtc() - getStartDateUtc();
+    if (timediff < 0)
+        return nullptr;
+    if (recurringItem->getStartDateUtc() < getStartDateUtc()) {
+        if (parentNode)
+            return parentNode->getParentOfItem(recurringItem);
+        return nullptr;
+    }
+
+    if (!repeatToInfinity && recurringItem->getEndDateUtc() > getRepeatTill()) {
+        if (childNode)
+            return childNode->getParentOfItem(recurringItem);
+        return nullptr;
+    }
+
+    if ((timediff % getTimeBetweenEvents()) == 0)
+        return downcasted_shared_from_this<RecurringEvent>();
+    return nullptr;
+}
+
+shared_ptr<Event> RecurringEvent::freeRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event, Event::actionType actionType) {
+    //GET RECURRING EVENT FROM SEQUENCE THAT GENERATES RECURRING ITEM EVENT
+    auto owner = getParentOfItem(event);
+    if (!owner)
+        throw EventNotInRecurringEvent();
+    if (owner != shared_from_this())
+        return owner->freeRecurringItemEvent(event, actionType);
+
+
+    //IF ACTION TYPE EFFECTS ENTIRE SEQUENCE
+    if (actionType == Event::actionType::AllEvents)
+        return freeAllRecurringItemEvent();
+    if (actionType == Event::actionType::ThisAndNext)
+        return freeThisAndNextRecurringItemEvent(event);
+    if (actionType == Event::actionType::OnlyThis)
+        return freeOnlyOneRecurringItemEvent(event);
+
+    return nullptr;
+
+}
+
+shared_ptr<RecurringEvent> RecurringEvent::getFirstNode() {
+    if (parentNode)
+        return parentNode->getFirstNode();
+    return downcasted_shared_from_this<RecurringEvent>();
+}
+
+bool RecurringEvent::deleteThisNode() {
+    if (parentNode) {
+        parentNode->childNode = childNode;
+        return true;
+    } else if (childNode) {
+        childNode->parentNode = parentNode;
+        *this = *childNode;
+        if (childNode) {
+            childNode = childNode->childNode;
+            childNode->parentNode = downcasted_shared_from_this<RecurringEvent>();
+        } else {
+            childNode = nullptr;
+        }
+        return true;
+    }
+    return false;
+}
+
+shared_ptr<Event> RecurringEvent::freeOnlyOneRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event) {
+    //RECURRING ITEM EVENT IS THE FIRST IN SEQUENCE
+    if (event->getStartDateUtc() == this->getStartDateUtc()) {
+        setStartDateUtc(getStartDateUtc() + timeBetweenEvents);
+        if (!isValid())
+            //IF THIS NODE CANT BE DELETED THEN IT MUST BE THE LAST EVENT OF ENTIRE RANGE - RETURN IT INSTEAD
+            if (!deleteThisNode()) {
+                setStartDateUtc(event->getStartDateUtc());
+                repeatTill = event->getEndDateUtc();
+                return shared_from_this();
+            }
+        return event;
+    }
+    //RECURRING ITEM EVENT IS LAST IN SEQUENCE
+    if (!repeatToInfinity && event->getEndDateUtc() + timeBetweenEvents > repeatTill) {
+        setRepeatTill(event->getStartDateUtc());
+        return event;
+    }
+    //RECURRING ITEM EVENT IS IN THE MIDDLE OF THE SEQUENCE
+    //COPY THIS SEQUENCE AND SET ITS START TO START OF EVENT + TIME BETWEEN EVENTS
+    shared_ptr<RecurringEvent> next = make_shared<RecurringEvent>(RecurringEvent(*this));
+    next->setStartDateUtc(event->getStartDateUtc() + timeBetweenEvents);
+    next->parentNode = downcasted_shared_from_this<RecurringEvent>();
+    childNode = next;
+    //SET END OF THIS SEQUENCE TO START OF EVENT
+    setRepeatTill(event->getStartDateUtc());
+    setRepeatToInfinity(false);
+    return event;
+}
+
+shared_ptr<Event> RecurringEvent::freeThisAndNextRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event) {
+    //RECURRING ITEM EVENT IS THE FIRST IN SEQUENCE
+    if (event->getStartDateUtc() == this->getStartDateUtc()) {
+        if (parentNode)
+            parentNode->childNode = nullptr;
+        return shared_from_this();
+    }
+    //RECURRING ITEM EVENT IS LAST IN SEQUENCE
+    //OR
+    //RECURRING ITEM EVENT IS IN THE MIDDLE OF THE SEQUENCE
+    //SET END OF THIS SEQUENCE TO START OF EVENT
+    setRepeatTill(event->getStartDateUtc());
+    //COPY THIS SEQUENCE AND SET ITS START TO START OF EVENT
+    shared_ptr<RecurringEvent> next = make_shared<RecurringEvent>(RecurringEvent(*this));
+    next->setStartDateUtc(event->getStartDateUtc());
+    childNode = nullptr;
+    return next;
+}
+
+shared_ptr<Event> RecurringEvent::freeAllRecurringItemEvent() {
+    return getFirstNode();
+}
+
+bool RecurringEvent::isValid() {
+    return repeatToInfinity || getStartDateUtc() < getRepeatTill();
+}
+/*
+RecurringEvent &RecurringEvent::operator=(const RecurringEvent &event) {
+    if (this == &event)
+        return *this;
+
+    return *this;
+}
+*/

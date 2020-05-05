@@ -6,31 +6,6 @@
 #include "EventManager.h"
 
 
-EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
-    EventSet<shared_ptr<Event>> result;
-    //binary search first relevant event
-    auto firstEvent = lower_bound(singleEvents.begin(),
-                                  singleEvents.end(),
-                                  start,
-                                  [](const shared_ptr<Event> &event, time_t start) { return event->getEndDateUtc() < start; });
-    while (firstEvent != singleEvents.end()) {
-        if ((*firstEvent)->isInRange(start, end))
-            result.insert(*firstEvent);
-            //break if event starts after range
-        else if ((*firstEvent)->getStartDateUtc() > end)
-            break;
-        firstEvent++;
-    }
-    for (const auto &recurringEvent : recurringEvents) {
-        EventSet<shared_ptr<Event>> events = recurringEvent->getEvents(start, end);
-        result.insert(events.begin(), events.end());
-        //break if event starts after range end
-        if (recurringEvent->getStartDateUtc() > end)
-            break;
-    }
-    return result;
-}
-
 bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
     if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()) != -1)
         return false;
@@ -39,19 +14,12 @@ bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
 }
 
 bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
-    if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(),
-                           event->getRepeatTill()))
+    if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(), event->getRepeatTill()))
         return false;
     recurringEvents.insert(event);
     return true;
 }
-/*
-RecurringEvent *EventManager::editThisAndNextEvent(RecurringEvent *eventToEdit) {
-    RecurringEvent *result = eventToEdit->getCopy();
-    recurringEvents.push_back(result);
-    return result;
-}
-*/
+
 /*
 SingleEvent *EventManager::editThisOnly(RecurringItemEvent *eventToEdit) {
     SingleEvent *result = eventToEdit->getCopySingleEvent();
@@ -91,7 +59,7 @@ time_t EventManager::checkAvailability(time_t start, time_t end) {
 }
 
 time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) {
-    for (auto &sEvent  :singleEvents) {
+    for (auto &sEvent : singleEvents) {
         if (sEvent->eventExists(start, end, timeBetweenEvents, repeatTill))
             return false;
     }
@@ -100,6 +68,38 @@ time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetw
             return false;
     }
     return true;
+}
+
+/*
+RecurringEvent *EventManager::editThisAndNextEvent(RecurringEvent *eventToEdit) {
+    RecurringEvent *result = eventToEdit->getCopy();
+    recurringEvents.push_back(result);
+    return result;
+}
+*/
+EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<Event>> result;
+    //binary search first relevant event
+    auto firstEvent = lower_bound(singleEvents.begin(),
+                                  singleEvents.end(),
+                                  start,
+                                  [](const shared_ptr<Event> &event, time_t start) { return event->getEndDateUtc() < start; });
+    while (*firstEvent && firstEvent != singleEvents.end()) {
+        if ((*firstEvent)->isInRange(start, end))
+            result.insert(*firstEvent);
+            //break if event starts after range
+        else if ((*firstEvent)->getStartDateUtc() > end)
+            break;
+        firstEvent++;
+    }
+    for (const auto &recurringEvent : recurringEvents) {
+        EventSet<shared_ptr<Event>> events = recurringEvent->getEvents(start, end);
+        result.insert(events.begin(), events.end());
+        //break if event starts after range end
+        if (recurringEvent->getStartDateUtc() > end)
+            break;
+    }
+    return result;
 }
 
 time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents) {
@@ -114,13 +114,24 @@ time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetw
     return true;
 }
 
-bool EventManager::removeEvent(const shared_ptr<Event> &event) {
+void EventManager::removeEvent(const shared_ptr<Event> &event, Event::actionType actionType) {
+    //Binary search through single events
     auto eventIt = lower_bound(singleEvents.begin(), singleEvents.end(), event, [](const shared_ptr<SingleEvent> &a, const shared_ptr<Event> &b) { return *a < *b; });
     if ((*eventIt) == event) {
+        (*eventIt)->freeSelf(actionType);
         singleEvents.erase(eventIt);
-        return true;
+    } else {
+        //Event was not found in single events - must be recurring item event
+        auto rEvent = (event)->freeSelf(actionType);
+        if (rEvent == nullptr)
+            return;
+        auto recEventIt = lower_bound(recurringEvents.begin(), recurringEvents.end(), rEvent,
+                                      [](const shared_ptr<RecurringEvent> &a, const shared_ptr<Event> &b) { return *a < *b; });
+        if (*recEventIt == rEvent) {
+            recurringEvents.erase(recEventIt);
+        }
     }
-    return false;
+
 }
 
 
