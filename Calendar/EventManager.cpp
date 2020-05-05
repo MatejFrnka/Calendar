@@ -20,36 +20,6 @@ bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
     return true;
 }
 
-/*
-SingleEvent *EventManager::editThisOnly(RecurringItemEvent *eventToEdit) {
-    SingleEvent *result = eventToEdit->getCopySingleEvent();
-    //GETTING PARENT EVENT
-
-    RecurringEvent *parentEvent = eventToEdit->parentEvent;
-
-    //CREATING EVENT AFTER CURRENT EVENT
-    RecurringEvent *nextEvent = parentEvent->getCopy();
-    nextEvent->setStartDateUtc(eventToEdit->getStartDateUtc() + parentEvent->getTimeBetweenEvents());
-
-    parentEvent->setRepeatTill(eventToEdit->getStartDateUtc());
-    parentEvent->setRepeatToInfinity(false);
-    //ADDING TO EVENT LIST
-    recurringEvents.push_back(nextEvent);
-    singleEvents.push_back(result);
-    return result;
-}
-*/
-
-EventManager::~EventManager() {
-    /*
-    for (SingleEvent *event : singleEvents) {
-        event->removeReference();
-    }
-    for (RecurringEvent *event : recurringEvents) {
-        event->removeReference();
-    }*/
-}
-
 time_t EventManager::checkAvailability(time_t start, time_t end) {
     auto events = getEvents(start, end);
     if (events.empty())

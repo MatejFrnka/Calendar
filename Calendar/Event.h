@@ -28,13 +28,6 @@ public:
 
     Event() = delete;
 
-    enum Type {
-        SingleEventId,
-        RecurringEventId,
-        RecurringEventItemId
-    };
-
-
     /**
      * Check if current event is in given range
      * @param rangeStart Start of range
@@ -54,8 +47,6 @@ public:
     bool isInRange(time_t start, time_t end, time_t rangeStart, time_t rangeEnd) const;
 
     void EditEvent(Event *event);
-
-    virtual int getTypeId() = 0;
 
     int getDay(bool start) const;
 

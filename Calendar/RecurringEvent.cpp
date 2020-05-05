@@ -36,16 +36,6 @@ EventSet<shared_ptr<Event>> RecurringEvent::getEvents(time_t start, time_t end) 
     return result;
 }
 
-void RecurringEvent::UpdateSelf(RecurringEvent *reference) {
-    setTitle(reference->getTitle());
-    setStartDateUtc(reference->getStartDateUtc());
-    setDurationUtc(reference->getDurationUtc());
-    timeBetweenEvents = reference->timeBetweenEvents;
-    repeatTill = reference->repeatTill;
-    repeatToInfinity = reference->repeatToInfinity;
-    timeBetweenEvents = reference->timeBetweenEvents;
-}
-
 time_t RecurringEvent::getRepeatTill() const {
     return repeatTill;
 }
@@ -184,7 +174,7 @@ shared_ptr<Event> RecurringEvent::freeRecurringItemEvent(const shared_ptr<Recurr
 
     //IF ACTION TYPE EFFECTS ENTIRE SEQUENCE
     if (actionType == Event::actionType::AllEvents)
-        return freeAllRecurringItemEvent();
+        return getFirstNode();
     if (actionType == Event::actionType::ThisAndNext)
         return freeThisAndNextRecurringItemEvent(event);
     if (actionType == Event::actionType::OnlyThis)
@@ -219,11 +209,11 @@ bool RecurringEvent::deleteThisNode() {
 }
 
 shared_ptr<Event> RecurringEvent::freeOnlyOneRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event) {
-    //RECURRING ITEM EVENT IS THE FIRST IN SEQUENCE
+    //IF RECURRING ITEM EVENT IS THE FIRST IN SEQUENCE
     if (event->getStartDateUtc() == this->getStartDateUtc()) {
         setStartDateUtc(getStartDateUtc() + timeBetweenEvents);
         if (!isValid())
-            //IF THIS NODE CANT BE DELETED THEN IT MUST BE THE LAST EVENT OF ENTIRE RANGE - RETURN IT INSTEAD
+            //IF THIS NODE CANT BE DELETED THEN IT MUST BE THE LAST NODE OF ENTIRE RANGE - RETURN IT INSTEAD
             if (!deleteThisNode()) {
                 setStartDateUtc(event->getStartDateUtc());
                 repeatTill = event->getEndDateUtc();
@@ -248,12 +238,12 @@ shared_ptr<Event> RecurringEvent::freeOnlyOneRecurringItemEvent(const shared_ptr
     return event;
 }
 
-shared_ptr<Event> RecurringEvent::freeThisAndNextRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event) {
+shared_ptr<RecurringEvent> RecurringEvent::freeThisAndNextRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event) {
     //RECURRING ITEM EVENT IS THE FIRST IN SEQUENCE
     if (event->getStartDateUtc() == this->getStartDateUtc()) {
         if (parentNode)
             parentNode->childNode = nullptr;
-        return shared_from_this();
+        return downcasted_shared_from_this<RecurringEvent>();
     }
     //RECURRING ITEM EVENT IS LAST IN SEQUENCE
     //OR
@@ -267,18 +257,6 @@ shared_ptr<Event> RecurringEvent::freeThisAndNextRecurringItemEvent(const shared
     return next;
 }
 
-shared_ptr<Event> RecurringEvent::freeAllRecurringItemEvent() {
-    return getFirstNode();
-}
-
 bool RecurringEvent::isValid() {
     return repeatToInfinity || getStartDateUtc() < getRepeatTill();
 }
-/*
-RecurringEvent &RecurringEvent::operator=(const RecurringEvent &event) {
-    if (this == &event)
-        return *this;
-
-    return *this;
-}
-*/

@@ -21,8 +21,6 @@ protected:
 public:
     static shared_ptr<SingleEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_);
 
-    virtual int getTypeId() { return Event::SingleEventId; };
-
     /**
      * Return event that happens during given time range
      * @param start Start of range. Events ending exactly at param start will not be included
