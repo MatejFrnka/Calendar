@@ -28,6 +28,8 @@ protected:
 
     RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
+    RecurringEvent() = delete;
+
 public:
     static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_);
 
@@ -87,8 +89,6 @@ public:
 
     shared_ptr<RecurringEvent> getFirstNode();
 
-//    RecurringEvent &operator=(const RecurringEvent &event);
-
 private:
     /**
      * Deletes this node of RecurringEvent, If this is the first node, it instead replaces itself with the next
@@ -114,7 +114,7 @@ private:
      * Check if event start is less than repeat till
      * @return true if event is valid
      */
-    bool isValid();
+    bool isValid() const;
 
     /**
      * Get first event that happens while this event is happening
@@ -124,7 +124,7 @@ private:
      * @param repeatTill_ Event will not repeat beyond this, value -1 for infinity. Default value is -1
      * @return first time of event specified by given parameters that happens during this class event
      */
-    time_t TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_ = -1);
+    time_t TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_ = -1) const;
 
     /**
      * Creates RecurringEventItem at given time from self

@@ -40,12 +40,27 @@ public:
     void removeEvent(const shared_ptr<Event> &event, Event::actionType actionType = Event::actionType::OnlyThis);
 
     /**
+     * Moves event to new position
+     * @param event Event to move
+     * @param newStartDateUtc New start time of event, -1 to automatically find next closest space to move to
+     * @return true if success, false if failed
+     */
+    bool moveEvent(shared_ptr<SingleEvent> &event, time_t newStartDateUtc = -1);
+    /**
+     * Finds first next free space
+     * @param start Where to start searching for free space
+     * @param duration How long does the empty space have to be
+     * @return Start of next first free space, -1 if there is no space ever (caused by recurring events repeating to infinity)
+     */
+    time_t findFreeSpace(time_t start, time_t duration) const;
+
+    /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param end  End of range. Events starting exactly at param end will not be included
-     * @return -1 if no events were found, else time_t of start of the first event
+     * @return nullptr if no events were found, else first event found
      */
-    time_t checkAvailability(time_t start, time_t end) const;
+    shared_ptr<Event> checkAvailability(time_t start, time_t end) const;
 
     /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
@@ -53,18 +68,18 @@ public:
      * @param end  End of range. Events starting exactly at param end will not be included
      * @param repeat Repetition of event. Time_t difference between start of events
      * @param repeatTill Time to repeat to. There will be no events happening past this time;
-     * @return -1 if no events were found, else time_t of start of the first event
+     * @return nullptr if no events were found, else first event found
      */
-    time_t checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill) const;
+    shared_ptr<Event> checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill) const;
 
     /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param end  End of range. Events starting exactly at param end will not be included
      * @param repeat Repetition of event. Time_t difference between start of events
-     * @return -1 if no events were found, else time_t of start of the first event
+     * @return nullptr if no events were found, else first event found
      */
-    time_t checkAvailability(time_t start, time_t end, time_t repeat) const;
+    shared_ptr<Event> checkAvailability(time_t start, time_t end, time_t repeat) const;
 
     /**
      * Used to get events happening between specified time

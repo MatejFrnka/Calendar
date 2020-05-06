@@ -18,12 +18,15 @@ protected:
 public:
     static shared_ptr<RecurringItemEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
 
+    RecurringItemEvent() = delete;
+
     /**
      * Removes event from its RecurringEvent parent
      * @param actionType How many events does function effect
      * @return shared_ptr to freed event, nullptr if event could not be freed
      */
-    shared_ptr<Event> freeSelf(actionType actionType= actionType::OnlyThis) override;
+    shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis) override;
+
 private:
     shared_ptr<RecurringEvent> parentEvent;
 };

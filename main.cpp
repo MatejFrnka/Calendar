@@ -412,6 +412,38 @@ int main() {
                                                     "title 900 950\n"
                                                     "r 1300 1350\n");
     }
+    //FIND FREE SPACE
+    {
+        EventManager em;
+        assert(em.addEvent(RecurringEvent::getInstance("r1", 0, 50, 100)));
+        em.removeEvent(*em.getEvents(300, 400).begin());
+        assert(em.findFreeSpace(100, 100) == 250);
+        em.removeEvent(*em.getEvents(0, 400).begin(), Event::actionType::AllEvents);
+        assert(drawEvents(em.getEvents(0, 1000)).empty());
+        assert(em.addEvent(SingleEvent::getInstance("t", 200, 100)));
+        assert(em.addEvent(SingleEvent::getInstance("t", 301, 100)));
+        assert(em.findFreeSpace(200, 1) == 300);
+        assert(em.addEvent(SingleEvent::getInstance("t", 300, 1)));
+        assert(em.findFreeSpace(200, 1) == 401);
+        assert(em.findFreeSpace(100, 1) == 100);
+        assert(em.addEvent(RecurringEvent::getInstance("t", 500, 100, 200)));
+        assert(em.findFreeSpace(600, 500) == -1);
+        assert(em.findFreeSpace(557, 100) == 600);
+        assert(em.findFreeSpace(557, 101) == -1);
+        auto a = dynamic_pointer_cast<SingleEvent>(*em.getEvents(700, 800).begin());
+        assert(em.moveEvent(a, 750));
+        assert(drawEvents(em.getEvents(600, 1000)) == "t 750 850\n"
+                                                      "t 900 1000\n");
+        a = dynamic_pointer_cast<SingleEvent>(*em.getEvents(750, 850).begin());
+        assert(em.checkAvailability(801, 901) != nullptr);
+        assert(!em.moveEvent(a, 801));
+        assert(em.moveEvent(a, 800));
+        assert(drawEvents(em.getEvents(600, 1000)) == "t 800 900\n"
+                                                      "t 900 1000\n");
+        assert(em.moveEvent(a, 600));
+        assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
+                                                      "t 900 1000\n");
+    }
     cout << "end" << endl;
     return 0;
 }

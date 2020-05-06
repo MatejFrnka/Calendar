@@ -29,7 +29,7 @@ EventSet<shared_ptr<Event>> RecurringEvent::getEvents(time_t start, time_t end) 
         result.insert(getSingle(eventTime));
         eventTime += timeBetweenEvents;
     }
-    if (childNode && childNode->getEndDateUtc() <= end) {
+    if (childNode) {
         auto childEvents = childNode->getEvents(start, end);
         result.insert(childEvents.begin(), childEvents.end());
     }
@@ -90,7 +90,7 @@ shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t r
 }
 
 
-time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
+time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_) const {
     bool repeatToInfinity_ = (repeatTill_ == -1);
     time_t startA = this->getStartDateUtc();
     time_t startB = start;
@@ -120,7 +120,7 @@ time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time
     return -1;
 }
 
-shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start) {
+shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start){
     if (start % getTimeBetweenEvents() != getStartDateUtc() % getTimeBetweenEvents())
         throw EventNotInRecurringEvent();
     return RecurringItemEvent::getInstance(getTitle(), start, getDurationUtc(), downcasted_shared_from_this<RecurringEvent>());
@@ -255,6 +255,6 @@ shared_ptr<RecurringEvent> RecurringEvent::freeThisAndNextRecurringItemEvent(con
     return next;
 }
 
-bool RecurringEvent::isValid() {
+bool RecurringEvent::isValid() const{
     return repeatToInfinity || getStartDateUtc() < getRepeatTill();
 }

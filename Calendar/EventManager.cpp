@@ -7,48 +7,48 @@
 
 
 bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
-    if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()) != -1)
+    if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()))
         return false;
     singleEvents.insert(event);
     return true;
 }
 
 bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
-    if (!checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(), event->getRepeatTill()))
+    if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(), event->getRepeatTill()))
         return false;
     recurringEvents.insert(event);
     return true;
 }
 
 
-time_t EventManager::checkAvailability(time_t start, time_t end) const {
+shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end) const {
     for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
         shared_ptr<Event> event = (*i)->eventExists(start, end);
         if (event) {
-            return event->getStartDateUtc();
+            return event;
         }
     }
-    return -1;
+    return nullptr;
 }
 
-time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) const {
+shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) const {
     for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
         shared_ptr<Event> event = (*i)->eventExists(start, end, timeBetweenEvents, repeatTill);
         if (event) {
-            return event->getStartDateUtc();
+            return event;
         }
     }
-    return -1;
+    return nullptr;
 }
 
-time_t EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents) const {
+shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents) const {
     for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
         shared_ptr<Event> event = (*i)->eventExists(start, end, timeBetweenEvents);
         if (event) {
-            return event->getStartDateUtc();
+            return event;
         }
     }
-    return -1;
+    return nullptr;
 }
 
 EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
@@ -57,12 +57,11 @@ EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
     auto firstEvent = lower_bound(singleEvents.begin(),
                                   singleEvents.end(),
                                   start,
-                                  [](const shared_ptr<Event> &event, time_t start) { return event->getEndDateUtc() < start; });
+                                  [](const shared_ptr<SingleEvent> &event, time_t start) { return event->getEndDateUtc() < start; });
     while (*firstEvent && firstEvent != singleEvents.end()) {
         if ((*firstEvent)->isInRange(start, end))
             result.insert(*firstEvent);
-            //break if event starts after range
-        else if ((*firstEvent)->getStartDateUtc() > end)
+        else if ((*firstEvent)->getStartDateUtc() > end) //break if event starts after range
             break;
         firstEvent++;
     }
@@ -93,6 +92,39 @@ void EventManager::removeEvent(const shared_ptr<Event> &event, Event::actionType
     if (*recEventIt == freeEvent) {
         recurringEvents.erase(recEventIt);
     }
+}
+
+bool EventManager::moveEvent(shared_ptr<SingleEvent> &event, time_t newStartDateUtc) {
+    if (newStartDateUtc == -1)
+        newStartDateUtc = findFreeSpace(event->getEndDateUtc(), event->getDurationUtc());
+    removeEvent(event);
+
+    if (checkAvailability(newStartDateUtc, newStartDateUtc + event->getDurationUtc()))
+        return false;
+    if (!event->isEditable())
+        return false;
+    event->setStartDateUtc(newStartDateUtc);
+    addEvent(event);
+    return true;
+}
+
+time_t EventManager::findFreeSpace(time_t start, time_t duration) const {
+    //Top limit for event in case it is longer than time between recurring event that goes to infinity
+    time_t timeMax = -1;
+    for (const auto &event:recurringEvents) {
+        if (event->isRepeatToInfinity() && event->getTimeBetweenEvents() - event->getDurationUtc() < duration) {
+            if (timeMax == -1 || timeMax > event->getStartDateUtc())
+                timeMax = event->getStartDateUtc();
+        }
+    }
+
+    while (timeMax == -1 || start <= timeMax - duration) {
+        auto event = checkAvailability(start, start + duration);
+        if (event == nullptr)
+            return start;
+        start = event->getEndDateUtc();
+    }
+    return -1;
 }
 
 

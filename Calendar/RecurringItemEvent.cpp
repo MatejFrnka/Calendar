@@ -20,5 +20,10 @@ shared_ptr<RecurringItemEvent> RecurringItemEvent::getInstance(string title_, ti
 }
 
 shared_ptr<Event> RecurringItemEvent::freeSelf(Event::actionType actionType) {
-    return  parentEvent->freeRecurringItemEvent(downcasted_shared_from_this<RecurringItemEvent>(), actionType);
+    if (parentEvent) {
+        auto result = parentEvent->freeRecurringItemEvent(downcasted_shared_from_this<RecurringItemEvent>(), actionType);
+        this->parentEvent = nullptr;
+        return result;
+    }
+    return shared_from_this();
 }
