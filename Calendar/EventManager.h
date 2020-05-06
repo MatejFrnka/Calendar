@@ -10,8 +10,10 @@
 #include "SingleEvent.h"
 #include "RecurringEvent.h"
 #include "../Utility/EventSet.h"
+#include "../Utility/EventsIterator.h"
 #include <algorithm>
 #include <memory>
+#include <utility>
 
 using namespace std;
 
@@ -43,7 +45,7 @@ public:
      * @param end  End of range. Events starting exactly at param end will not be included
      * @return -1 if no events were found, else time_t of start of the first event
      */
-    time_t checkAvailability(time_t start, time_t end);
+    time_t checkAvailability(time_t start, time_t end) const;
 
     /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
@@ -53,7 +55,7 @@ public:
      * @param repeatTill Time to repeat to. There will be no events happening past this time;
      * @return -1 if no events were found, else time_t of start of the first event
      */
-    time_t checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill);
+    time_t checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill) const;
 
     /**
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
@@ -62,7 +64,7 @@ public:
      * @param repeat Repetition of event. Time_t difference between start of events
      * @return -1 if no events were found, else time_t of start of the first event
      */
-    time_t checkAvailability(time_t start, time_t end, time_t repeat);
+    time_t checkAvailability(time_t start, time_t end, time_t repeat) const;
 
     /**
      * Used to get events happening between specified time

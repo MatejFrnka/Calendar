@@ -16,8 +16,6 @@ struct compare_reference {
 };
 
 template<typename T>
-class EventSet : public std::set<T, compare_reference<T>> {
-
-};
+using EventSet = std::set<T, compare_reference<T>>;
 
 #endif

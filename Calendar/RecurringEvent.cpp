@@ -6,8 +6,8 @@
 #include "RecurringEvent.h"
 
 
-RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_,
-                               time_t repeatTill_) : Event(std::move(title_), startDateUtc_, duration_) {
+RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
+        : Event(std::move(title_), startDateUtc_, duration_) {
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = repeatTill_;
     repeatToInfinity = false;
@@ -179,9 +179,7 @@ shared_ptr<Event> RecurringEvent::freeRecurringItemEvent(const shared_ptr<Recurr
         return freeThisAndNextRecurringItemEvent(event);
     if (actionType == Event::actionType::OnlyThis)
         return freeOnlyOneRecurringItemEvent(event);
-
     return nullptr;
-
 }
 
 shared_ptr<RecurringEvent> RecurringEvent::getFirstNode() {

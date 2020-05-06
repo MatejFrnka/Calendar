@@ -9,8 +9,6 @@ Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     title = std::move(title_);
     startDateUtc = startDateUtc_;
     durationUtc = durationUtc_;
-
-    //TODO: CREATE TM STRUCTS startTime and endTime
 }
 
 bool Event::isInRange(time_t rangeStart, time_t rangeEnd) const {
@@ -40,26 +38,6 @@ time_t Event::getFirstEventTime(time_t startFrom, time_t startDate, time_t durat
         return time;
     } else
         return startDate;
-}
-
-const tm *Event::getTime(bool start) const {
-    if (start) {
-        return &startTime;
-    } else {
-        return &endTime;
-    }
-}
-
-int Event::getDay(bool start) const {
-    return getTime(start)->tm_mday;
-}
-
-int Event::getHour(bool start) const {
-    return getTime(start)->tm_hour;
-}
-
-int Event::getMinute(bool start) const {
-    return getTime(start)->tm_min;
 }
 
 const string &Event::getTitle() const {
@@ -98,6 +76,13 @@ void Event::setEditable(bool editable) {
     Event::editable = editable;
 }
 
-shared_ptr<Event> Event::freeSelf(actionType actionType){
+shared_ptr<Event> Event::freeSelf(actionType actionType) {
     return shared_from_this();
+}
+
+EventSet<shared_ptr<Event>> Event::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<Event>> result;
+    if (isInRange(start, end))
+        result.insert(shared_from_this());
+    return result;
 }
