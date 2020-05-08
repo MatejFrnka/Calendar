@@ -86,6 +86,11 @@ void EventManager::removeEvent(const shared_ptr<Event> &event, Event::actionType
         singleEvents.erase(eventIt);
         return;
     }
+    shared_ptr<RecurringEvent> ev = nullptr;
+    for (const auto &ptr  : recurringEvents) {
+        if (ev == nullptr || ev->getStartDateUtc() < ptr->getStartDateUtc())
+            ev = ptr;
+    }
     //Event was not found in single events - must be recurring item event
     auto recEventIt = lower_bound(recurringEvents.begin(), recurringEvents.end(), freeEvent,
                                   [](const shared_ptr<RecurringEvent> &a, const shared_ptr<Event> &b) { return *a < *b; });

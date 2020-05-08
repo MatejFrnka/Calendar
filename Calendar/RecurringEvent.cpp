@@ -143,8 +143,8 @@ shared_ptr<RecurringEvent> RecurringEvent::getParentOfItem(const shared_ptr<Recu
     if (timediff < 0)
         return nullptr;
     if (recurringItem->getStartDateUtc() < getStartDateUtc()) {
-        if (parentNode)
-            return parentNode->getParentOfItem(recurringItem);
+        if (!parentNode.expired())
+            return shared_ptr<RecurringEvent>(parentNode)->getParentOfItem(recurringItem);
         return nullptr;
     }
 
@@ -179,14 +179,14 @@ shared_ptr<Event> RecurringEvent::freeRecurringItemEvent(const shared_ptr<Recurr
 }
 
 shared_ptr<RecurringEvent> RecurringEvent::getFirstNode() {
-    if (parentNode)
-        return parentNode->getFirstNode();
+    if (!parentNode.expired())
+        return shared_ptr<RecurringEvent>(parentNode)->getFirstNode();
     return downcasted_shared_from_this<RecurringEvent>();
 }
 
 bool RecurringEvent::deleteThisNode() {
-    if (parentNode) {
-        parentNode->childNode = childNode;
+    if (!parentNode.expired()) {
+        shared_ptr<RecurringEvent>(parentNode)->childNode = childNode;
         return true;
     } else if (childNode) {
         childNode->parentNode = parentNode;
@@ -235,8 +235,8 @@ shared_ptr<Event> RecurringEvent::freeOnlyOneRecurringItemEvent(const shared_ptr
 shared_ptr<RecurringEvent> RecurringEvent::freeThisAndNextRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event) {
     //RECURRING ITEM EVENT IS THE FIRST IN SEQUENCE
     if (event->getStartDateUtc() == this->getStartDateUtc()) {
-        if (parentNode)
-            parentNode->childNode = nullptr;
+        if (!parentNode.expired())
+            shared_ptr<RecurringEvent>(parentNode)->childNode = nullptr;
         return downcasted_shared_from_this<RecurringEvent>();
     }
     //RECURRING ITEM EVENT IS LAST IN SEQUENCE

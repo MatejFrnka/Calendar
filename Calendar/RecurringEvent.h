@@ -142,7 +142,7 @@ private:
     time_t timeBetweenEvents;
     //If recurring item event was removed from RecurringEvent, Recurring event gets split into multiple smaller RecurringEvents to not include the event anymore
     //Parent node - always has event start sooner than this
-    shared_ptr<RecurringEvent> parentNode = nullptr;
+    weak_ptr<RecurringEvent> parentNode;
     //Child node - always has event start after this repeatTill
     shared_ptr<RecurringEvent> childNode = nullptr;
 
