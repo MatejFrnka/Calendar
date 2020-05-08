@@ -3,7 +3,8 @@
  * @date: 06.05.2020
  */
 
-#pragma once
+#ifndef CALENDAR_UTILITY_EVENTS_ITERATOR
+#define CALENDAR_UTILITY_EVENTS_ITERATOR
 
 #include <memory>
 #include <algorithm>
@@ -38,4 +39,4 @@ private:
     EventSet<std::shared_ptr<RecurringEvent>>::const_iterator recIt;
 };
 
-
+#endif

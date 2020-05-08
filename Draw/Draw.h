@@ -3,11 +3,13 @@
  * @date: 06.05.2020
  */
 
-#pragma once
-
+#ifndef CALENDAR_DRAW_DRAW
+#define CALENDAR_DRAW_DRAW
 
 class Draw {
 
 };
+
+#endif
 
 

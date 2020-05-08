@@ -3,17 +3,19 @@
  * @date: 06.05.2020
  */
 
-#pragma once
+#ifndef CALENDAR_APP_ACTION
+#define CALENDAR_APP_ACTION
 
 struct Action {
 public:
-    enum outcome{
+    enum outcome {
         Success,
         Failed
     };
+
     Action() = delete;
 
     virtual outcome executeAction() = 0;
 };
 
-
+#endif

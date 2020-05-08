@@ -3,12 +3,17 @@
  * @date: 01.05.2020
  */
 
-#pragma once
+#ifndef CALENDAR_UTILITY_EXCEPTIONS_EVENT_NOT_EDITABLE
+#define CALENDAR_UTILITY_EXCEPTIONS_EVENT_NOT_EDITABLE
 
 #include <exception>
 
-class EventNotEditable : std::exception{
-//TODO: IMPLEMENT
+/**
+ * Used when trying to edit attribute of event that can not be edited
+ */
+class EventNotEditable : std::exception {
+
 };
 
 
+#endif

@@ -3,8 +3,8 @@
  * @date: 06.05.2020
  */
 
-#pragma once
-
+#ifndef CALENDAR_APP_CUSTOM_ACTION
+#define CALENDAR_APP_CUSTOM_ACTION
 
 #include "Action.h"
 
@@ -21,3 +21,4 @@ private:
     function fn;
 };
 
+#endif

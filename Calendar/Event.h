@@ -79,7 +79,7 @@ public:
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param End of range. Events starting exactly at param end will not be included
      * @param repeat Repetition of event. Time_t difference between start of events
-     * @param repeatTill Time to repeat to. There will be no events happening past this time;
+     * @param repeatTill Time to repeat to. There will be no events happening past this time; Set repeat till to -1 for repeat to infinity
      * @return Event happening in given time range or null_ptr
      */
     virtual shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) = 0;

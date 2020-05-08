@@ -1,5 +1,3 @@
 TODO:
     either use pragma once or ifndef def but not both
-    změnit set na using namespace
-    přidat @throws k dokumentaci
     const tam kam patří

@@ -18,17 +18,13 @@ shared_ptr<Event> SingleEvent::eventExists(time_t start, time_t end) {
 }
 
 shared_ptr<Event> SingleEvent::eventExists(time_t start, time_t end, time_t repeat) {
-    time_t duration = end - start;
-    time_t firstEventTime = getFirstEventTime(getStartDateUtc(), start, duration, repeat);
-    if (isInRange(getStartDateUtc(), getEndDateUtc(), firstEventTime, firstEventTime + duration))
-        return shared_from_this();
-    return shared_ptr<Event>(nullptr);
+    return eventExists(start, end, repeat, -1);
 }
 
 shared_ptr<Event> SingleEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) {
     time_t duration = end - start;
     time_t firstEventTime = getFirstEventTime(getStartDateUtc(), start, duration, repeat);
-    if (firstEventTime + duration > repeatTill)
+    if (firstEventTime + duration > repeatTill && repeatTill != -1)
         return shared_ptr<Event>(nullptr);
     if (isInRange(getStartDateUtc(), getEndDateUtc(), firstEventTime, firstEventTime + duration))
         return shared_from_this();

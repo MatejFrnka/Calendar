@@ -3,7 +3,8 @@
  * @date: 06.05.2020
  */
 
-#pragma once
+#ifndef CALENDAR_APP_INTERFACE
+#define CALENDAR_APP_INTERFACE
 
 
 class Interface {
@@ -11,3 +12,4 @@ class Interface {
 };
 
 
+#endif
