@@ -5,13 +5,14 @@
 #include <cassert>
 #include <memory>
 #include "Calendar/EventManager.h"
+#include "App/Interface.h"
 
 
 using namespace std;
 
 string drawEvents(const EventSet<shared_ptr<SingleEvent>> &s) {
     stringstream ss;
-    for (const auto& event : s) {
+    for (const auto &event : s) {
         ss << event->getTitle() << " " << event->getStartDateUtc() << " " << event->getEndDateUtc() << endl;
     }
     return ss.str();
@@ -451,7 +452,10 @@ int main() {
         assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
                                                       "t 900 1000\n");
     }
-
+    {
+        Interface i(cin, cout);
+        i.start();
+    }
 
     cout << "end" << endl;
     return 0;

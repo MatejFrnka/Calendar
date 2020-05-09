@@ -8,7 +8,7 @@ Nakonec jsem se rozhodl pro použití dvou kontejnerů, jeden pro normální a d
 
 Toto rozdělení ale neznamená, že _podtřídy_ `Event` nevyužívají polymorfismus. `Event` například předepisuje funkce `getEvents`, `freeSelf`, `isInRange`,.., Děděné třídy tyto funkce různě implementují.
 ##Vykreslování
-Polymorfismus bude využíván i při vykreslování událostí. Třída Draw bude předepisovat třídy DayDraw, WeekDraw, MonthDraw. Tyto třídy budou vykreslovat eventy různými způsoby.
+Polymorfismus bude využíván i při vykreslování událostí. Třída `Draw` bude předepisovat třídy `DayDraw`, `WeekDraw`, `MonthDraw`. Tyto třídy budou funkce `draw` vykreslovat eventy různými způsoby.
 
-V této složce pod názvem class_diagram naleznete obrázek class diagramu, které popisuje třídy tohoto programu.
-
+##Commands
+Celý program bude ovládán pomocí tříd dědících z `Command`. Tato třída bude předepisovat funkci `executeCommand`, kterou budou dědící třídy různě implementovat. Například pokud uživatel zadá klíčové slovo `create single`, vyhledá se v seznamu commandů command s názvem `create` a zavolá se funkce `executeCommand`. Slovo `single` bude do této funkce předáno jako parametr.

@@ -23,3 +23,5 @@ Pokud bude uživatel hledat konkrétní událost, bude ji moci vyhledat podle jm
 ##Export - Import,
 
 Uživatel bude mít možnost exportovat a importovat události. Zároveň bude aplikace kalendář načítat události při spuštění a ukládat je při ukončení. 
+
+##
