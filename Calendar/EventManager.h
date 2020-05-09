@@ -64,28 +64,11 @@ public:
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param end  End of range. Events starting exactly at param end will not be included
-     * @return nullptr if no events were found, else first event found
-     */
-    shared_ptr<Event> checkAvailability(time_t start, time_t end) const;
-
-    /**
-     * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
-     * @param start Start of range. Events ending exactly at param start will not be included
-     * @param end  End of range. Events starting exactly at param end will not be included
      * @param repeat Repetition of event. Time_t difference between start of events
      * @param repeatTill Time to repeat to. There will be no events happening past this time;
      * @return nullptr if no events were found, else first event found
      */
-    shared_ptr<Event> checkAvailability(time_t start, time_t end, time_t repeat, time_t repeatTill) const;
-
-    /**
-     * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
-     * @param start Start of range. Events ending exactly at param start will not be included
-     * @param end  End of range. Events starting exactly at param end will not be included
-     * @param repeat Repetition of event. Time_t difference between start of events
-     * @return nullptr if no events were found, else first event found
-     */
-    shared_ptr<Event> checkAvailability(time_t start, time_t end, time_t repeat) const;
+    shared_ptr<SingleEvent> checkAvailability(time_t start, time_t end, time_t repeat = -1, time_t repeatTill = -1) const;
 
     /**
      * Used to get events happening between specified time
@@ -93,7 +76,7 @@ public:
      * @param end End of range. Events starting exactly at param end will not be included
      * @return EventSet of events happening in given time range
      */
-    EventSet<shared_ptr<Event>> getEvents(time_t start, time_t end);
+    EventSet<shared_ptr<SingleEvent>> getEvents(time_t start, time_t end);
 
     /**
      * Finds events that exactly match given name

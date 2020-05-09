@@ -20,10 +20,15 @@ bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
     return true;
 }
 
-
-shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end) const {
+shared_ptr<SingleEvent> EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) const {
     for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
-        shared_ptr<Event> event = (*i)->eventExists(start, end);
+        shared_ptr<SingleEvent> event;
+        if (timeBetweenEvents == -1)
+            event = (*i)->eventExists(start, end);
+        else if (repeatTill == -1)
+            event = (*i)->eventExists(start, end, timeBetweenEvents);
+        else
+            event = (*i)->eventExists(start, end, timeBetweenEvents, repeatTill);
         if (event) {
             return event;
         }
@@ -31,28 +36,8 @@ shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end) cons
     return nullptr;
 }
 
-shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) const {
-    for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
-        shared_ptr<Event> event = (*i)->eventExists(start, end, timeBetweenEvents, repeatTill);
-        if (event) {
-            return event;
-        }
-    }
-    return nullptr;
-}
-
-shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents) const {
-    for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
-        shared_ptr<Event> event = (*i)->eventExists(start, end, timeBetweenEvents);
-        if (event) {
-            return event;
-        }
-    }
-    return nullptr;
-}
-
-EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
-    EventSet<shared_ptr<Event>> result;
+EventSet<shared_ptr<SingleEvent>> EventManager::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<SingleEvent>> result;
     //binary search first relevant event
     auto firstEvent = lower_bound(singleEvents.begin(),
                                   singleEvents.end(),
@@ -66,7 +51,7 @@ EventSet<shared_ptr<Event>> EventManager::getEvents(time_t start, time_t end) {
         firstEvent++;
     }
     for (const auto &recurringEvent : recurringEvents) {
-        EventSet<shared_ptr<Event>> events = recurringEvent->getEvents(start, end);
+        EventSet<shared_ptr<SingleEvent>> events = recurringEvent->getEvents(start, end);
         result.insert(events.begin(), events.end());
         //break if event starts after range end
         if (recurringEvent->getStartDateUtc() > end)

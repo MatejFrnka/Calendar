@@ -6,9 +6,10 @@
 #include <memory>
 #include "Calendar/EventManager.h"
 
+
 using namespace std;
 
-string drawEvents(const EventSet<shared_ptr<Event>> &s) {
+string drawEvents(const EventSet<shared_ptr<SingleEvent>> &s) {
     stringstream ss;
     for (const auto& event : s) {
         ss << event->getTitle() << " " << event->getStartDateUtc() << " " << event->getEndDateUtc() << endl;
@@ -450,6 +451,8 @@ int main() {
         assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
                                                       "t 900 1000\n");
     }
+
+
     cout << "end" << endl;
     return 0;
 }

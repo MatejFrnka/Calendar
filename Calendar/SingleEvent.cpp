@@ -11,23 +11,23 @@ SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) 
 
 }
 
-shared_ptr<Event> SingleEvent::eventExists(time_t start, time_t end) {
+shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end) {
     if (isInRange(start, end))
-        return shared_from_this();
-    return shared_ptr<Event>(nullptr);
+        return downcasted_shared_from_this<SingleEvent>();
+    return nullptr;
 }
 
-shared_ptr<Event> SingleEvent::eventExists(time_t start, time_t end, time_t repeat) {
+shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end, time_t repeat) {
     return eventExists(start, end, repeat, -1);
 }
 
-shared_ptr<Event> SingleEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) {
+shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) {
     time_t duration = end - start;
     time_t firstEventTime = getFirstEventTime(getStartDateUtc(), start, duration, repeat);
     if (firstEventTime + duration > repeatTill && repeatTill != -1)
-        return shared_ptr<Event>(nullptr);
+        return nullptr;
     if (isInRange(getStartDateUtc(), getEndDateUtc(), firstEventTime, firstEventTime + duration))
-        return shared_from_this();
+        return downcasted_shared_from_this<SingleEvent>();
     return nullptr;
 }
 
@@ -43,9 +43,9 @@ shared_ptr<Event> SingleEvent::freeSelf(Event::actionType actionType) {
     return shared_from_this();
 }
 
-EventSet<shared_ptr<Event>> SingleEvent::getEvents(time_t start, time_t end) {
-    EventSet<shared_ptr<Event>> result;
+EventSet<shared_ptr<SingleEvent>> SingleEvent::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<SingleEvent>> result;
     if (isInRange(start, end))
-        result.insert(shared_from_this());
+        result.insert(downcasted_shared_from_this<SingleEvent>());
     return result;
 }

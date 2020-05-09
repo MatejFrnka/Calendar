@@ -21,8 +21,8 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
     repeatToInfinity = true;
 }
 
-EventSet<shared_ptr<Event>> RecurringEvent::getEvents(time_t start, time_t end) {
-    EventSet<shared_ptr<Event>> result;
+EventSet<shared_ptr<SingleEvent>> RecurringEvent::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<SingleEvent>> result;
     time_t eventTime = getFirstEventTime(start, getStartDateUtc(), getDurationUtc(), getTimeBetweenEvents());
 
     while ((repeatToInfinity || eventTime < repeatTill) && eventTime < end) {
@@ -60,18 +60,18 @@ void RecurringEvent::setTimeBetweenEvents(time_t timeBetweenEvents) {
     RecurringEvent::timeBetweenEvents = timeBetweenEvents;
 }
 
-shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end) {
+shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end) {
     auto events = this->getEvents(start, end);
     if (!events.empty())
         return *events.begin();
-    return shared_ptr<Event>(nullptr);
+    return nullptr;
 }
 
-shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
+shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
     return eventExists(start, end, repeat, -1);
 }
 
-shared_ptr<Event> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
+shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
     time_t time = TimeOfEvent(start, end, repeat, repeatTill_);
     if (time == -1 || (!repeatToInfinity && repeatTill_ != -1 && time + end - start > repeatTill_))
         return nullptr;
