@@ -285,11 +285,11 @@ int main() {
                                                    "event 400 450\n");
 
         auto evi1 = *em.getEvents(300, 350).begin();
+
         em.removeEvent(evi1, Event::actionType::OnlyThis);
         assert(drawEvents(em.getEvents(0, 500)) == "event 100 150\n"
                                                    "event 200 250\n"
                                                    "event 400 450\n");
-        /*
         auto evi2 = *em.getEvents(100, 150).begin();
         em.removeEvent(evi2);
         assert(drawEvents(em.getEvents(0, 500)) == "event 200 250\n"
@@ -338,6 +338,7 @@ int main() {
                                                     "title 300 350\n"
                                                     "title 400 450\n"
                                                     "title 500 1000\n");
+
         auto evi5 = *em.getEvents(300, 350).begin();
         em.removeEvent(evi5, Event::actionType::ThisAndNext);
         assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
@@ -415,10 +416,9 @@ int main() {
                                                     "title 800 850\n"
                                                     "title 900 950\n"
                                                     "r 1300 1350\n");
-                                                    */
     }
-    /*
     //FIND FREE SPACE
+
     {
         EventManager em;
         assert(em.addEvent(RecurringEvent::getInstance("r1", 0, 50, 100)));
@@ -450,7 +450,6 @@ int main() {
         assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
                                                       "t 900 1000\n");
     }
-*/
     cout << "end" << endl;
     return 0;
 }

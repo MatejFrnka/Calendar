@@ -28,9 +28,10 @@ protected:
 
     RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
+public:
+
     RecurringEvent() = delete;
 
-public:
     static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_);
 
     static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
@@ -80,6 +81,10 @@ public:
      */
     shared_ptr<Event> freeRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event, actionType actionType);
 
+private:
+
+    shared_ptr<RecurringEvent> getFirstNode();
+
     /**
      * Gets RecurringEvent node that generated the event
      * @param recurringItem RecurringEvent to find parent of
@@ -88,9 +93,6 @@ public:
      */
     shared_ptr<RecurringEvent> getParentOfItem(const shared_ptr<RecurringItemEvent> &recurringItem);
 
-    shared_ptr<RecurringEvent> getFirstNode();
-
-private:
     /**
      * Deletes this node of RecurringEvent, If this is the first node, it instead replaces itself with the next
      * @return True if deleted, false if this is the last node of recurring event and cannot be deleted
@@ -143,6 +145,7 @@ private:
     //If recurring item event was removed from RecurringEvent, Recurring event gets split into multiple smaller RecurringEvents to not include the event anymore
     //Parent node - always has event start sooner than this
     weak_ptr<RecurringEvent> parentNode;
+
     //Child node - always has event start after this repeatTill
     shared_ptr<RecurringEvent> childNode = nullptr;
 

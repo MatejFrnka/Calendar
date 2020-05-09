@@ -19,7 +19,6 @@ using namespace std;
 class Event : public inheritable_enable_shared_from_this<Event> {
 protected:
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
-
 public:
     enum actionType {
         AllEvents,
@@ -89,9 +88,9 @@ public:
      * @param actionType How many events does function effect
      * @return shared_ptr to freed event, nullptr if event could not be freed
      */
-    virtual shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis);
+    virtual shared_ptr<Event> freeSelf(actionType actionType);
 
-    virtual ~Event() = default;
+    void exportEvent(const string &path);
 
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;

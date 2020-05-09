@@ -1,11 +1,14 @@
-POLYMOFISMUS
+#POLYMOFISMUS
+####Události
+Polymorfismus je nejvíce využíván u práce s událostmi. Je dána abstraktní třída `Eventu` ze které dědí třídy `SingleEvent` a `RecurringEvent`. Ze SingleEvent dále dědí `RecurringItemEvent`, což je _pod-událost_ vygenerována třídou `RecurringEvent`
 
-Polymorfismus je využíván hlavně v případě třídy Event. Z Eventu dědí třídy SingleEvent a RecurringEvent. Ze SingleEvent dědí RecurringItemEvent, což je SingleEvent vygenerovaný třídou RecurringEvent.
-Při návrhu aplikace jsem čelil rozhodnutí, zda chci ve třídě EventManager, což je třída, která provádí operace se Eventy, plně využívat polymorfismus třídy Event a všechny je uložit to jednoho kontejneru (využívám std::set), nebo je rozdělit do kontejneru s SingleEvents a RecurringEvents.
-Nakonec jsem se rozhodl pro použití dvou kontejnerů, jeden pro opakující se Eventy a jeden pro Neopakující se eventy. Toto rozhodnutí jsem učinil proto, že při získávání eventů v zadaném časovém rozmezí je v neopakujících se eventech možné binárně vyhledávat podle začátku události, zatímco opakující události se musí lineárně procházet. To je proto, že opakující událost může začínat před začátkem požadovaného rozmezí ale i přes to může generovat události dějící se v požadovaném časovém rozmezí.
-Vzhledem k tomu, že očekávám, že větší množství událostí bude neopakujících se, si myslím, že tato optimalizace bude mít znatelný dopad na rychlost programu.
-Toto rozdělení ale neznamená, že podtřídy Event nevyužívají polymorfismus. Ve většině operací se s nimi pracuje jako s třídou Event.
-Polymorfismus bude využíván i při vykreslování událostí. Třída Draw bude předepisovat třídy DayDraw, WeekDraw, MonthDraw. Tyto třídy budou vykreslovat eventy různými způsoby. V případě pokračujícího vývoje bude velmi jednoduché přidat třídy typu Draw, které budou vykreslovat například do pdf, nebo jako webovou stránku.
-Poslední využítí polymorfismu je ve třídě Action. Tato třída bude předepisovat možnost akcí. Například MoveAction, která event přesune, AttributeEditAction která upraví atribut nebo DeleteAction, která event smaže. EventManager bude ke každému eventu vracet list těchto akcí, které se poté zobrazí uživateli jako možnosti akcí, které může provést nad zvoleným eventem.
-V této složce pod názvem class_diagram naleznete obrázek class diagramu tohoto programu.
+Při návrhu aplikace jsem čelil rozhodnutí, zda chci  plně využívat polymorfismus třídy `Event` a všechny je uložit to jednoho kontejneru (využívám `std::set`), nebo je rozdělit do dvou kontejnerů. `SingleEvents` a `RecurringEvents`.
+
+Nakonec jsem se rozhodl pro použití dvou kontejnerů, jeden pro normální a druhý pro opakující se události. Toto rozhodnutí jsem učinil proto, že při vyhledávání událostí podle času (což bude s nejvyšší pravědpodobností nejčastější způsob vyhledávání, protože se bude používat při zobrazování událostí) je v neopakujících se událostech možné vyhledávat binárně, zatímco opakující-se události se musí lineárně procházet.
+
+Toto rozdělení ale neznamená, že _podtřídy_ `Event` nevyužívají polymorfismus. Ve většině operací se s nimi pracuje pouze jako s třídou `Event`.
+####Vykreslování
+Polymorfismus bude využíván i při vykreslování událostí. Třída Draw bude předepisovat třídy DayDraw, WeekDraw, MonthDraw. Tyto třídy budou vykreslovat eventy různými způsoby.
+
+V této složce pod názvem class_diagram naleznete obrázek class diagramu, které popisuje třídy tohoto programu.
 

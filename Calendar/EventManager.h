@@ -21,6 +21,11 @@ class EventManager {
 public:
 
     /**
+     * @param path Path to event file to add
+     * @return True if adding as successful, false if event collides with another
+     */
+    bool addEvent(const string &path);
+    /**
      * @param event Adds event to collection of events
      * @return True if adding as successful, false if event collides with another
      */
@@ -46,6 +51,7 @@ public:
      * @return true if success, false if failed
      */
     bool moveEvent(shared_ptr<SingleEvent> &event, time_t newStartDateUtc = -1);
+
     /**
      * Finds first next free space
      * @param start Where to start searching for free space
@@ -88,6 +94,20 @@ public:
      * @return EventSet of events happening in given time range
      */
     EventSet<shared_ptr<Event>> getEvents(time_t start, time_t end);
+
+    /**
+     * Finds events that exactly match given name
+     * Search speed is linear
+     * @return Set of events that have equal name to @param fullName
+     */
+    EventSet<shared_ptr<Event>> findByName(const string &fullName);
+
+    /**
+     * Finds events that exactly match given name
+     * Search speed is linear
+     * @return Set of events that have equal name to @param fullName
+     */
+    EventSet<shared_ptr<Event>> findByAddress(const string &address);
 
     EventManager operator=(const EventManager &) = delete;
 
