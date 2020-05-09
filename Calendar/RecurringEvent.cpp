@@ -254,3 +254,7 @@ shared_ptr<RecurringEvent> RecurringEvent::freeThisAndNextRecurringItemEvent(con
 bool RecurringEvent::isValid() const {
     return repeatToInfinity || getStartDateUtc() < getRepeatTill();
 }
+
+shared_ptr<Event> RecurringEvent::freeSelf(Event::actionType actionType) {
+    return shared_from_this();
+}

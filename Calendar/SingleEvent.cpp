@@ -38,3 +38,14 @@ struct mk_shared_SingleEvent : SingleEvent {
 shared_ptr<SingleEvent> SingleEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_) {
     return make_shared<mk_shared_SingleEvent>(move(title_), startDateUtc_, duration_);
 }
+
+shared_ptr<Event> SingleEvent::freeSelf(Event::actionType actionType) {
+    return shared_from_this();
+}
+
+EventSet<shared_ptr<Event>> SingleEvent::getEvents(time_t start, time_t end) {
+    EventSet<shared_ptr<Event>> result;
+    if (isInRange(start, end))
+        result.insert(shared_from_this());
+    return result;
+}

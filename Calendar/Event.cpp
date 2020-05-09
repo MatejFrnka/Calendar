@@ -75,14 +75,3 @@ bool Event::isEditable() const {
 void Event::setEditable(bool editable) {
     Event::editable = editable;
 }
-
-shared_ptr<Event> Event::freeSelf(actionType actionType) {
-    return shared_from_this();
-}
-
-EventSet<shared_ptr<Event>> Event::getEvents(time_t start, time_t end) {
-    EventSet<shared_ptr<Event>> result;
-    if (isInRange(start, end))
-        result.insert(shared_from_this());
-    return result;
-}

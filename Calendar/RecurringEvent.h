@@ -81,6 +81,13 @@ public:
      */
     shared_ptr<Event> freeRecurringItemEvent(const shared_ptr<RecurringItemEvent> &event, actionType actionType);
 
+
+    /**
+     * Removes event from all events it depends on
+     * @param actionType How many events does function effect
+     * @return shared_ptr to freed event, nullptr if event could not be freed
+     */
+    virtual shared_ptr<Event> freeSelf(actionType actionType);
 private:
 
     shared_ptr<RecurringEvent> getFirstNode();

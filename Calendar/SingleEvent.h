@@ -21,6 +21,8 @@ protected:
 public:
     static shared_ptr<SingleEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_);
 
+    EventSet<shared_ptr<Event>> getEvents(time_t start, time_t end) override;
+
     SingleEvent() = delete;
 
     /**
@@ -49,6 +51,13 @@ public:
      * @return Event happening in given time range or null_ptr
      */
     shared_ptr<Event> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) override;
+
+    /**
+     * Removes event from all events it depends on
+     * @param actionType How many events does function effect
+     * @return shared_ptr to freed event, nullptr if event could not be freed
+     */
+    shared_ptr<Event> freeSelf(actionType actionType) override;
 };
 
 #endif
