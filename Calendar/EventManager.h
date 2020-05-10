@@ -15,8 +15,6 @@
 #include <memory>
 #include <utility>
 
-using namespace std;
-
 class EventManager {
 public:
 

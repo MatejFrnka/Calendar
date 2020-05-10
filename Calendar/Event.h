@@ -13,7 +13,6 @@
 #include "../Utility/InheritableSharedFromThis.h"
 #include "../Utility/EventSet.h"
 
-
 using namespace std;
 
 class SingleEvent;

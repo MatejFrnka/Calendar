@@ -9,6 +9,8 @@
 #include "RecurringEvent.h"
 #include <utility>
 
+using namespace std;
+
 class RecurringEvent;
 
 class RecurringItemEvent : public SingleEvent {

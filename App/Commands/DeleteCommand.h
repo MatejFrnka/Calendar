@@ -14,6 +14,8 @@ public:
 
     }
 
+    DeleteCommand(const DeleteCommand &) = delete;
+
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
         out << "not implemented\n";
         return commands;

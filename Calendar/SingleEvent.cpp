@@ -5,7 +5,7 @@
 
 #include "SingleEvent.h"
 
-SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : Event(std::move(title_),
+SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : Event(move(title_),
                                                                                         startDateUtc_,
                                                                                         duration_) {
 

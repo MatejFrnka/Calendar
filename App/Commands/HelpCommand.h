@@ -17,25 +17,10 @@ public:
 
     }
 
-    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
-        printCommandsRec(refCommands, 0);
-        return refCommands;
-    };
+    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override;
 
 private:
-    void printCommandsRec(const std::vector<std::shared_ptr<Command>> &toPrint, int depth) const {
-        depth++;
-        for (const auto &it : toPrint) {
-            for (int i = 1; i < depth; ++i) {
-                if (i == 1) {
-                    out << "|- ";
-                } else
-                    out << "-- ";
-            }
-            out << *it << std::endl;
-            printCommandsRec(it->getSubCommands(), depth);
-        }
-    }
+    void printCommandsRec(const std::vector<std::shared_ptr<Command>> &toPrint, int depth) const;
 
     const std::vector<std::shared_ptr<Command>> &refCommands;
 };

@@ -21,6 +21,8 @@ class Interface {
 public:
     Interface(std::istream &in, std::ostream &out);
 
+    Interface(const Interface &) = delete;
+
     void start();
 
 private:

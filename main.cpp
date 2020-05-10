@@ -454,6 +454,7 @@ int main() {
     }
     {
         //UI is very unfinished. Only implemented the base structure
+        cout << "asserts ok" << endl;
         Interface i(cin, cout);
         i.start();
     }

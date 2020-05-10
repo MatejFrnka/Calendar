@@ -6,7 +6,7 @@
 #include "Event.h"
 
 Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
-    title = std::move(title_);
+    title = move(title_);
     startDateUtc = startDateUtc_;
     durationUtc = durationUtc_;
 }

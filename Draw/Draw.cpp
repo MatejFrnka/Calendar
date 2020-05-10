@@ -4,3 +4,7 @@
  */
 
 #include "Draw.h"
+
+Draw::Draw(std::ostream &out_) : out(out_) {
+
+}
