@@ -13,19 +13,31 @@
 
 class HelpCommand : public Command {
 public:
-    HelpCommand(const std::vector<std::unique_ptr<Command>> &commands_, std::ostream &out_) : Command("help", "", out_), commands(commands_) {
+    HelpCommand(const std::vector<std::shared_ptr<Command>> &commands_, std::ostream &out_) : Command("help", "", out_), refCommands(commands_) {
 
     }
 
-    outcome executeAction(std::vector<std::string> parameters) override {
-        for (const auto &command : commands) {
-            out << *command << std::endl;
-        }
-        return outcome::Success;
-    }
+    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
+        printCommandsRec(refCommands, 0);
+        return refCommands;
+    };
 
 private:
-    const std::vector<std::unique_ptr<Command>> &commands;
+    void printCommandsRec(const std::vector<std::shared_ptr<Command>> &toPrint, int depth) const {
+        depth++;
+        for (const auto &it : toPrint) {
+            for (int i = 1; i < depth; ++i) {
+                if (i == 1) {
+                    out << "|- ";
+                } else
+                    out << "-- ";
+            }
+            out << *it << std::endl;
+            printCommandsRec(it->getSubCommands(), depth);
+        }
+    }
+
+    const std::vector<std::shared_ptr<Command>> &refCommands;
 };
 
 #endif

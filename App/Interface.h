@@ -10,6 +10,9 @@
 #include "Commands/Command.h"
 #include "Commands/HelpCommand.h"
 #include "Commands/CreateCommand.h"
+#include "Commands/DeleteCommand.h"
+#include "../Utility/InputUtility.h"
+#include "../Calendar/EventManager.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -24,14 +27,11 @@ private:
     std::istream &in;
     std::ostream &out;
 
-    Command::outcome executeAction(const std::string &commandName, const std::vector<std::unique_ptr<Command>>& commands);
+    std::vector<std::shared_ptr<Command>> executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands);
 
-    template<typename T>
-    T getInput(const std::string &dialog);
+    std::vector<std::shared_ptr<Command>> homeCommands;
 
-    bool showDialog(const std::string &message);
-
-    std::vector<std::unique_ptr<Command>> homeCommands;
+    EventManager eventManager;
 };
 
 #endif
