@@ -28,6 +28,7 @@ public:
 private:
     std::istream &in;
     std::ostream &out;
+    InputUtility inputUtility;
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands);
 

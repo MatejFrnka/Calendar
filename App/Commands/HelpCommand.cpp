@@ -10,11 +10,11 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
     for (const auto &it : toPrint) {
         for (int i = 1; i < depth; ++i) {
             if (i == 1) {
-                out << "|- ";
+                inputUtility.out << "|- ";
             } else
-                out << "-- ";
+                inputUtility.out << "-- ";
         }
-        out << *it << std::endl;
+        inputUtility.out << *it << std::endl;
         printCommandsRec(it->getSubCommands(), depth);
     }
 }

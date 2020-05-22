@@ -11,11 +11,14 @@
 #include <ostream>
 #include <vector>
 #include <memory>
+#include "../../Utility/InputUtility.h"
 
 class Command {
 public:
 
-    Command(std::string name_, std::string description_, std::ostream &out_) : name(std::move(name_)), description(std::move(description_)), out(out_) {}
+    Command(std::string name_, std::string description_, InputUtility &inputUtility_) : name(std::move(name_)), description(std::move(description_)), inputUtility(inputUtility_) {}
+
+
 
     /**
      * Executes command's action
@@ -37,7 +40,7 @@ public:
         return ostream << cmd.name << ":\t" << cmd.description;
     }
 
-    std::ostream &out;
+    InputUtility &inputUtility;
 protected:
     std::vector<std::shared_ptr<Command>> commands;
 };

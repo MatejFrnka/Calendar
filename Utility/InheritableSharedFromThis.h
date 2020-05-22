@@ -8,6 +8,7 @@
 
 #include <memory>
 
+
 class InheritableEnableSharedFromThis : public std::enable_shared_from_this<InheritableEnableSharedFromThis> {
 public:
     virtual ~InheritableEnableSharedFromThis() = default;

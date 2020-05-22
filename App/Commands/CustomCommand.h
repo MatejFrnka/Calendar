@@ -14,8 +14,8 @@ using namespace std;
 
 class CustomCommand : public Command {
 public:
-    CustomCommand(string name, string description, ostream &out, function<vector<shared_ptr<Command>>(vector<string>, CustomCommand &self)> function)
-            : Command(move(name), move(description), out), fn(move(function)) {}
+    CustomCommand(string name, string description, InputUtility &inputUtility_, function<vector<shared_ptr<Command>>(vector<string>, CustomCommand &self)> function)
+            : Command(move(name), move(description), inputUtility_), fn(move(function)) {}
 
     vector<shared_ptr<Command>> executeAction(const vector<string> &parameters) override {
         return fn(parameters, *this);

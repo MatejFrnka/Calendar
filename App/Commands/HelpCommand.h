@@ -13,7 +13,7 @@
 
 class HelpCommand : public Command {
 public:
-    HelpCommand(const std::vector<std::shared_ptr<Command>> &commands_, std::ostream &out_) : Command("help", "", out_), refCommands(commands_) {
+    HelpCommand(const std::vector<std::shared_ptr<Command>> &commands_, InputUtility &inputUtility_) : Command("help", "", inputUtility_), refCommands(commands_) {
 
     }
 

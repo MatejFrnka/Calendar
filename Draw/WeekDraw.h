@@ -9,8 +9,8 @@
 
 #include "Draw.h"
 
-class WeekDraw : Draw {
-    void drawEvents(EventSet<std::shared_ptr<Event> >events) override;
+class WeekDraw : public Draw {
+    WeekDraw(std::ostream &out_, EventManager &eventManager_) : Draw(out_, eventManager_){};
 };
 
 

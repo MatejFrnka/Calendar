@@ -9,20 +9,23 @@
 #include <ostream>
 #include <memory>
 #include "../Utility/EventSet.h"
+#include "../Calendar/EventManager.h"
 
 class Event;
 
 class Draw {
 public:
-    Draw(std::ostream &out_);
+    Draw(std::ostream &out_, EventManager &eventManager_) : out(out_), eventManager(eventManager_) {};
+
     /**
      * Draws events
      * @param events events to draw
      */
-    virtual void drawEvents(EventSet<std::shared_ptr<Event>> events) = 0;
+    virtual void drawEvents(time_t startTime) = 0;
 
 protected:
     std::ostream &out;
+    EventManager &eventManager;
 };
 
 #endif

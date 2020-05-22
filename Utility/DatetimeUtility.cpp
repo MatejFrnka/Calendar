@@ -1,0 +1,68 @@
+/**
+ * @author: Matej Frnka <frnkamat@fit.cvut.cz>
+ * @date: 19.05.2020
+ */
+
+#include "DatetimeUtility.h"
+
+int DatetimeUtility::getMonth(time_t time) {
+    tm *tmTime = gmtime(&time);
+    int result = tmTime->tm_mon;
+    delete tmTime;
+    return result;
+}
+
+int DatetimeUtility::getDay(time_t time) {
+    tm *tmTime = gmtime(&time);
+    int result = tmTime->tm_mday;
+    delete tmTime;
+    return result;
+}
+
+int DatetimeUtility::getNumberOfDays(int month, int year) {
+    if (month == 1) {
+        if ((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0))
+            return 29;
+        else
+            return 28;
+    } else if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7
+               || month == 9 || month == 11)
+        return 31;
+    else
+        return 30;
+}
+
+time_t DatetimeUtility::getStartRangeTime(DatetimeUtility::RangeTime range, tm *resultTime) {
+    resultTime->tm_sec = 0;
+    resultTime->tm_min = 0;
+    resultTime->tm_hour = 0;
+    if (range == RangeTime::Week) {
+        resultTime->tm_mday -= convertWeekDay(resultTime->tm_wday);
+    }
+    if (range == RangeTime::Month) {
+        resultTime->tm_mday = 1;
+    }
+    return mktime(resultTime) + (timeZone * 3600);
+
+}
+
+time_t DatetimeUtility::getEndRangeTime(DatetimeUtility::RangeTime range, tm *resultTime) {
+    resultTime->tm_sec = 60;
+    resultTime->tm_min = 59;
+    resultTime->tm_hour = 23;
+    if (range == RangeTime::Week) {
+        resultTime->tm_mday -= convertWeekDay(resultTime->tm_wday);
+    }
+    if (range == RangeTime::Month) {
+        resultTime->tm_mday = getNumberOfDays(resultTime->tm_mon, resultTime->tm_year);
+    }
+    return mktime(resultTime) + (timeZone * 3600);
+}
+
+int DatetimeUtility::convertWeekDay(int day) {
+    return (day + 6) % 7;
+}
+
+std::vector<std::string> DatetimeUtility::getWeekDays() {
+    return std::vector<std::string>{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+}

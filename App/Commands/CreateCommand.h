@@ -11,10 +11,11 @@
 #include "Command.h"
 #include "CustomCommand.h"
 #include "../../Calendar/EventManager.h"
+#include "../../Utility/InputUtility.h"
 
 class CreateCommand : public Command {
 public:
-    CreateCommand(std::ostream &out, EventManager &eventManager);
+    CreateCommand(InputUtility &inputUtility, EventManager &eventManager);
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override;
 };

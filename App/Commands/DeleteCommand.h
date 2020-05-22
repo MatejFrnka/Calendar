@@ -10,14 +10,14 @@
 
 class DeleteCommand : public Command {
 public:
-    DeleteCommand(std::ostream &out_) : Command("delete", "Deletes an event", out_) {
+    DeleteCommand(InputUtility &inputUtility_) : Command("delete", "Deletes an event", inputUtility_) {
 
     }
 
     DeleteCommand(const DeleteCommand &) = delete;
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
-        out << "not implemented\n";
+        inputUtility.out << "not implemented\n";
         return commands;
     };
 };
