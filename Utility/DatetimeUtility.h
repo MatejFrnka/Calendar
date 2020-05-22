@@ -22,8 +22,6 @@ public:
 
     static int getDay(time_t time);
 
-    static const int timeZone = 1;
-
     static time_t getStartRangeTime(RangeTime range, tm *resultTime);
 
     static time_t getEndRangeTime(RangeTime range, tm *resultTime);
@@ -33,6 +31,7 @@ public:
     static int getNumberOfDays(int month, int year);
 
     static std::vector<std::string> getWeekDays();
+    static std::vector<std::string> getMonths();
 };
 
 

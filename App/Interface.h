@@ -13,6 +13,7 @@
 #include "Commands/DeleteCommand.h"
 #include "../Utility/InputUtility.h"
 #include "../Calendar/EventManager.h"
+#include "../Draw/DrawManager.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -35,6 +36,7 @@ private:
     std::vector<std::shared_ptr<Command>> homeCommands;
 
     EventManager eventManager;
+    DrawManager drawManager;
 };
 
 #endif

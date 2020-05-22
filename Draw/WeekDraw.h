@@ -10,7 +10,10 @@
 #include "Draw.h"
 
 class WeekDraw : public Draw {
-    WeekDraw(std::ostream &out_, EventManager &eventManager_) : Draw(out_, eventManager_){};
+public:
+    WeekDraw(std::ostream &out_, EventManager &eventManager_) : Draw(out_, eventManager_) {};
+
+    void drawEvents(time_t time) override;
 };
 
 

@@ -12,12 +12,18 @@
 #include <vector>
 #include <memory>
 #include "../../Utility/InputUtility.h"
+#include <map>
 
 class Command {
 public:
 
-    Command(std::string name_, std::string description_, InputUtility &inputUtility_) : name(std::move(name_)), description(std::move(description_)), inputUtility(inputUtility_) {}
-
+    Command(std::string name_,
+            std::string description_,
+            InputUtility &inputUtility_,
+            std::map<std::string, std::string> parameters_ = std::map<std::string, std::string>()) : name(std::move(name_)),
+                                                                                                     description(std::move(description_)),
+                                                                                                     inputUtility(inputUtility_),
+                                                                                                     parameters(std::move(parameters_)) {}
 
 
     /**
@@ -43,6 +49,7 @@ public:
     InputUtility &inputUtility;
 protected:
     std::vector<std::shared_ptr<Command>> commands;
+    const std::map<std::string, std::string> parameters;
 };
 
 #endif

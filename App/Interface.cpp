@@ -17,10 +17,10 @@ void Interface::start() {
     }
 }
 
-Interface::Interface(std::istream &in_, std::ostream &out_) : in(in_), out(out_), inputUtility(in_, out_) {
+Interface::Interface(std::istream &in_, std::ostream &out_) : in(in_), out(out_), inputUtility(in_, out_), drawManager(eventManager, out_) {
     homeCommands.push_back(std::make_shared<CreateCommand>(inputUtility, eventManager));
     homeCommands.push_back(std::make_shared<DeleteCommand>(inputUtility));
-    homeCommands.push_back(std::make_shared<DrawCommand>(inputUtility, eventManager));
+    homeCommands.push_back(std::make_shared<DrawCommand>(inputUtility, drawManager));
 }
 
 std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands) {

@@ -8,22 +8,32 @@
 
 #include "Command.h"
 #include "../../Draw/MonthDraw.h"
+#include "../../Draw/DrawManager.h"
 
 class DrawCommand : public Command {
 public:
-    DrawCommand(InputUtility &inputUtility_, EventManager &eventManager_) : Command("draw", "Draws events", inputUtility_), eventManager(eventManager_) {
-        draw = std::unique_ptr<Draw>(new MonthDraw(inputUtility_.out, eventManager_));
+    DrawCommand(InputUtility inputUtility_, DrawManager &drawManager_) : Command("draw", "Draws events", inputUtility_),
+                                                                         drawManager(drawManager_) {
     }
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
-        MonthDraw monthDraw(inputUtility.out, eventManager);
-        monthDraw.drawEvents(0);
+        if (parameters.empty()) {
+            drawManager.draw();
+            return commands;
+        }
+        if (parameters[0] == "month")
+            drawManager.setMode(DrawManager::DrawMode::month);
+        if (parameters[0] == "week")
+            drawManager.setMode(DrawManager::DrawMode::week);
+        if (parameters[0] == "day")
+            drawManager.setMode(DrawManager::DrawMode::day);
+        drawManager.draw();
         return std::vector<std::shared_ptr<Command>>();
     }
 
 private:
-    EventManager &eventManager;
-    std::unique_ptr<Draw> draw;
+    DrawManager &drawManager;
+    time_t time = 500;
 };
 
 #endif //CALENDAR_DRAWCOMMAND_H

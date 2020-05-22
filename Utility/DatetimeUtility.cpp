@@ -42,7 +42,7 @@ time_t DatetimeUtility::getStartRangeTime(DatetimeUtility::RangeTime range, tm *
     if (range == RangeTime::Month) {
         resultTime->tm_mday = 1;
     }
-    return mktime(resultTime) + (timeZone * 3600);
+    return mktime(resultTime);
 
 }
 
@@ -56,7 +56,8 @@ time_t DatetimeUtility::getEndRangeTime(DatetimeUtility::RangeTime range, tm *re
     if (range == RangeTime::Month) {
         resultTime->tm_mday = getNumberOfDays(resultTime->tm_mon, resultTime->tm_year);
     }
-    return mktime(resultTime) + (timeZone * 3600);
+    return mktime(resultTime);
+
 }
 
 int DatetimeUtility::convertWeekDay(int day) {
@@ -65,4 +66,19 @@ int DatetimeUtility::convertWeekDay(int day) {
 
 std::vector<std::string> DatetimeUtility::getWeekDays() {
     return std::vector<std::string>{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+}
+
+std::vector<std::string> DatetimeUtility::getMonths() {
+    return std::vector<std::string>{"January",
+                                    "February",
+                                    "March",
+                                    "April",
+                                    "May",
+                                    "June",
+                                    "July",
+                                    "August",
+                                    "September",
+                                    "October",
+                                    "November",
+                                    "December"};
 }
