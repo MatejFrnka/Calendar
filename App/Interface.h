@@ -10,7 +10,7 @@
 #include "Commands/Command.h"
 #include "Commands/HelpCommand.h"
 #include "Commands/CreateCommand.h"
-#include "Commands/DeleteCommand.h"
+#include "Commands/Selected/DeleteCommand.h"
 #include "../Utility/InputUtility.h"
 #include "../Calendar/EventManager.h"
 #include "../Draw/DrawManager.h"

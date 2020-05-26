@@ -12,8 +12,9 @@
 class WeekDraw : public Draw {
 public:
     WeekDraw(std::ostream &out_, EventManager &eventManager_) : Draw(out_, eventManager_) {};
-
-    void drawEvents(time_t time) override;
+    void moveNext(tm &time) override;
+    void movePrevious(tm &time) override;
+    void drawEvents(tm &time) override;
 };
 
 

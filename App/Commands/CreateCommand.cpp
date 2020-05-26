@@ -12,7 +12,7 @@ CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventMana
                          [&eventManager](const std::vector<std::string> &params, CustomCommand &self) {
                              //Gathering event info
                              auto title = self.inputUtility.readString("Title", params.empty() ? "" : params[0]);
-                             auto startUtc = self.inputUtility.readDate("Start", params.size() <= 1 ? "" : params[1]);
+                             auto startUtc = self.inputUtility.readDateTime("Start", params.size() <= 1 ? "" : params[1]);
                              auto Duration = self.inputUtility.readTimeSpan("Duration", params.size() <= 2 ? "" : params[2]);
 
                              eventManager.addEvent(SingleEvent::getInstance(title, startUtc, Duration));

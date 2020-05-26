@@ -5,7 +5,7 @@
 
 #include "SelectCommand.h"
 #include "CustomCommand.h"
-#include "DeleteCommand.h"
+#include "Selected/DeleteCommand.h"
 
 SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventManager_)
         : Command("select", "Selects an event", inputUtility, std::map<std::string, std::string>{{"date",  "Selects event by date"},
@@ -22,7 +22,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(const std::ve
         inputUtility.noParameterFound();
         return std::vector<std::shared_ptr<Command>>();
     } else if (parameters[0] == "date") {
-        result = eventManager.findByStart(inputUtility.readDate("Start", parameters.size() >= 2 ? parameters[1] : ""));
+        result = eventManager.findByStart(inputUtility.readDateTime("Start", parameters.size() >= 2 ? parameters[1] : ""));
     } else if (parameters[0] == "title") {
         events = eventManager.findByTitle(inputUtility.readString("Name", parameters.size() >= 2 ? parameters[1] : ""));
     } else if (parameters[0] == "place") {

@@ -17,11 +17,15 @@ class Draw {
 public:
     Draw(std::ostream &out_, EventManager &eventManager_) : out(out_), eventManager(eventManager_) {};
 
+    virtual void moveNext(tm &time) = 0;
+
+    virtual void movePrevious(tm &time) = 0;
+
     /**
      * Draws events
      * @param events events to draw
      */
-    virtual void drawEvents(time_t startTime) = 0;
+    virtual void drawEvents(tm &time) = 0;
 
 protected:
     std::ostream &out;

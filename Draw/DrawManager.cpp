@@ -26,3 +26,15 @@ void DrawManager::setMode(DrawManager::DrawMode drawMode) {
     if (drawMode == DrawMode::day)
         drawUtility = std::make_unique<DayDraw>(out, eventManager);
 }
+
+void DrawManager::next() {
+    drawUtility->moveNext(time);
+}
+
+void DrawManager::previous() {
+    drawUtility->movePrevious(time);
+}
+
+void DrawManager::setDate(time_t utcTime) {
+    time = *localtime(&utcTime);
+}

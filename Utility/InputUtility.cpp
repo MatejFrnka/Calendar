@@ -38,25 +38,12 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
     return result;
 }
 
-time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) {
-    std::tm time = {};
-    bool firstTry = true;
-    std::stringstream line;
-    do {
-        if (!firstTry) {
-            out << "Invalid date format. Please use 01-01-2000T12:00 format" << std::endl;
-        }
-        out << '\t' << attr << ": " << (firstTry ? currentVal : "");
-        line = getLine(firstTry && !currentVal.empty(), currentVal);
+time_t InputUtility::readDateTime(const std::string &attr, const std::string &currentVal, bool required) {
+    return customReadDate(attr, currentVal, required, "%d-%m-%YT%H:%M", "01-01-2000T12:00");
+}
 
-        if (line.rdbuf()->in_avail() == 0 && !required) {
-            return -1;
-        }
-        line >> std::get_time(&time, "%d-%m-%YT%H:%M");
-        firstTry = false;
-    } while (line.fail());
-    out << "\n";
-    return std::mktime(&time);
+time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) {
+    return customReadDate(attr, currentVal, required, "%d-%m-%Y", "01-01-2000");
 }
 
 time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &currentVal, bool required) {
@@ -92,7 +79,7 @@ int InputUtility::readNumber(const std::string &attr) {
     return result;
 }
 
-int InputUtility::readNumber(const std::string &attr, const std::string& currentVal) {
+int InputUtility::readNumber(const std::string &attr, const std::string &currentVal) {
     int result;
     out << '\t' << attr << ": ";
     std::stringstream input(currentVal);
@@ -117,4 +104,26 @@ void InputUtility::noParameterFound(const std::string &param) {
         out << "No parameter found, type 'help' for all available commands";
     else
         out << "Parameter " + param + "was not found, type 'help' for all available commands";
+}
+
+time_t InputUtility::customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat) {
+    std::tm time = {};
+    bool firstTry = true;
+    std::stringstream line;
+    do {
+        if (!firstTry) {
+            out << "Invalid date format. Please use " << exampleFormat << " format" << std::endl;
+        }
+        out << '\t' << attr << ": " << (firstTry ? currentVal : "");
+        line = getLine(firstTry && !currentVal.empty(), currentVal);
+
+        if (line.rdbuf()->in_avail() == 0 && !required) {
+            return -1;
+        }
+        line >> std::get_time(&time, "%d-%m-%YT%H:%M");
+        firstTry = false;
+    } while (line.fail());
+    out << "\n";
+    return std::mktime(&time);
+
 }

@@ -6,15 +6,13 @@
 
 #include "DayDraw.h"
 
-void DayDraw::drawEvents(time_t time) {
-    //Get utc time_t of day start
-    tm *displayTime = localtime(&time);
-    time_t startTime = DatetimeUtility::getStartRangeTime(DatetimeUtility::Day, displayTime);
+void DayDraw::drawEvents(tm &time) {
+    time_t startTime = DatetimeUtility::getStartRangeTime(DatetimeUtility::Day, &time);
     //Get utc time_t of day end
-    tm copy_displayTime = *displayTime;
+    tm copy_displayTime = time;
     time_t endTime = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &copy_displayTime);
     //Print displayed date
-    out << displayTime->tm_mday << "-" << DatetimeUtility::getMonths()[displayTime->tm_mon] << "-" << displayTime->tm_year + 1900 << endl;
+    out << time.tm_mday << "-" << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
 
     auto events = eventManager.getEvents(startTime, endTime);
     auto eventIt = events.begin();
@@ -94,4 +92,14 @@ string DayDraw::customFill(const string &body, char fillChar, char lborder, char
        << (body.empty() ? fillChar : ' ')
        << setw(customWidth - 3 - static_cast<int>(body.length())) << rborder;
     return ss.str();
+}
+
+void DayDraw::moveNext(tm &time) {
+    time.tm_mday++;
+    mktime(&time);
+}
+
+void DayDraw::movePrevious(tm &time) {
+    time.tm_mday--;
+    mktime(&time);
 }

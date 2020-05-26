@@ -12,21 +12,30 @@
 
 class DrawCommand : public Command {
 public:
-    DrawCommand(InputUtility inputUtility_, DrawManager &drawManager_) : Command("draw", "Draws events", inputUtility_),
-                                                                         drawManager(drawManager_) {
+    DrawCommand(InputUtility &inputUtility_, DrawManager &drawManager_) : Command("draw", "Draws events", inputUtility_),
+                                                                          drawManager(drawManager_) {
     }
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
-        if (parameters.empty()) {
-            drawManager.draw();
-            return commands;
+        if (!parameters.empty()) {
+            if (parameters[0] == "month")
+                drawManager.setMode(DrawManager::DrawMode::month);
+            if (parameters[0] == "week")
+                drawManager.setMode(DrawManager::DrawMode::week);
+            if (parameters[0] == "day")
+                drawManager.setMode(DrawManager::DrawMode::day);
+            if (parameters[0] == "set") {
+                time_t date = inputUtility.readDate("Date", parameters.size() > 1 ? parameters[1] : "", true);
+                drawManager.setDate(date);
+            }
+            if (parameters[0] == "next")
+                drawManager.next();
+            if (parameters[0] == "previous")
+                drawManager.previous();
+
         }
-        if (parameters[0] == "month")
-            drawManager.setMode(DrawManager::DrawMode::month);
-        if (parameters[0] == "week")
-            drawManager.setMode(DrawManager::DrawMode::week);
-        if (parameters[0] == "day")
-            drawManager.setMode(DrawManager::DrawMode::day);
+
+
         drawManager.draw();
         return std::vector<std::shared_ptr<Command>>();
     }
