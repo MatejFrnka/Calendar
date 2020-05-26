@@ -98,6 +98,10 @@ public:
         return startDateUtc < event.startDateUtc;
     }
 
+    friend std::ostream &operator<<(std::ostream &ostream, const Event &event) {
+        return ostream << event.getTitle();
+    }
+
 protected:
 
     bool editable = true;

@@ -41,20 +41,20 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
 time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) {
     std::tm time = {};
     bool firstTry = true;
-    std::stringstream ss;
+    std::stringstream line;
     do {
         if (!firstTry) {
-            out << "Invalid date format. Please use 01-01-2000T12:00:00 format" << std::endl;
+            out << "Invalid date format. Please use 01-01-2000T12:00 format" << std::endl;
         }
         out << '\t' << attr << ": " << (firstTry ? currentVal : "");
-        ss = getLine(firstTry && !currentVal.empty(), currentVal);
+        line = getLine(firstTry && !currentVal.empty(), currentVal);
 
-        if (ss.rdbuf()->in_avail() == 0 && !required) {
+        if (line.rdbuf()->in_avail() == 0 && !required) {
             return -1;
         }
-        ss >> std::get_time(&time, "%d-%m-%YT%H:%M:%S");
+        line >> std::get_time(&time, "%d-%m-%YT%H:%M");
         firstTry = false;
-    } while (ss.fail());
+    } while (line.fail());
     out << "\n";
     return std::mktime(&time);
 }
@@ -83,6 +83,25 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
     }
 }
 
+int InputUtility::readNumber(const std::string &attr) {
+    int result;
+    do {
+        out << '\t' << attr << ": ";
+        in >> result;
+    } while (in.fail());
+    return result;
+}
+
+int InputUtility::readNumber(const std::string &attr, const std::string& currentVal) {
+    int result;
+    out << '\t' << attr << ": ";
+    std::stringstream input(currentVal);
+    input >> result;
+    if (input.fail())
+        return readNumber(attr);
+    return result;
+}
+
 std::stringstream InputUtility::getLine(bool useDefault, const std::string &defaultVal) const {
     if (useDefault)
         return std::stringstream(defaultVal);
@@ -93,8 +112,8 @@ std::stringstream InputUtility::getLine(bool useDefault, const std::string &defa
     }
 }
 
-void InputUtility::noParameterFound(const std::string& param) {
-    if(param.empty())
+void InputUtility::noParameterFound(const std::string &param) {
+    if (param.empty())
         out << "No parameter found, type 'help' for all available commands";
     else
         out << "Parameter " + param + "was not found, type 'help' for all available commands";

@@ -15,6 +15,8 @@ public:
     SelectCommand(InputUtility &inputUtility, EventManager &eventManager);
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override;
+
+    EventManager &eventManager;
 };
 
 

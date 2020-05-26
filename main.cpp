@@ -455,12 +455,12 @@ int main() {
     /*
     {
         EventManager ev;
-        ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 86400 + 57600 - 3600, 8000));
-        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 86400 + 600, 1000));
-        ev.addEvent(SingleEvent::getInstance("Meeting person c", 86400 + 2000, 1000));
-        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 86000 - 3600, 1000));
-        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 86000 * 2 - 3600, 2000));
-        cout << ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600*6));
+        ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 140400, 7980));
+        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 87000, 960));
+        ev.addEvent(SingleEvent::getInstance("Meeting person c", 88380, 1000));
+        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
+        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960*2));
+        ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600 * 6));
 
         cout << "asserts ok" << endl;
         istringstream in("draw day");
@@ -468,18 +468,20 @@ int main() {
         i.start();
 
     }
-     */
+*/
     {
         EventManager ev;
-        ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 86400 + 57600 - 3600, 8000));
-        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 86400 + 600, 1000));
-        ev.addEvent(SingleEvent::getInstance("Meeting person c", 86400 + 2000, 1000));
-        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 86000 - 3600, 1000));
-        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 86000 * 2 - 3600, 2000));
+        ev.addEvent(SingleEvent::getInstance("c", 140400, 7980));
+        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 87000, 960));
+        ev.addEvent(SingleEvent::getInstance("c", 88380, 1000));
+        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
+        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960*2));
+        ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600 * 6));
         Interface i(cin, cout, ev);
         i.start();
     }
 
     cout << "end" << endl;
+
     return 0;
 }

@@ -117,5 +117,28 @@ time_t EventManager::findFreeSpace(time_t start, time_t duration) const {
     return -1;
 }
 
+shared_ptr<SingleEvent> EventManager::findByStart(time_t start) {
+    auto events = getEvents(start, start);
+    if (!events.empty()) {
+        auto a = events.begin();
+        if ((*a)->getStartDateUtc() == start)
+            return *a;
+    }
+    return nullptr;
+}
+
+EventSet<shared_ptr<Event>> EventManager::findByTitle(const string &title) {
+    EventSet<shared_ptr<Event>> result;
+    for (EventsIterator event(singleEvents, recurringEvents); !event.end(); ++event) {
+        if ((*event)->getTitle() == title)
+            result.insert(*event);
+    }
+    return result;
+}
+
+EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
+    return EventSet<shared_ptr<Event>>();
+}
+
 
 

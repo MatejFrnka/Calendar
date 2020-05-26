@@ -46,16 +46,31 @@ public:
      */
     time_t readTimeSpan(const std::string &attr, const std::string &currentVal = "", bool required = true);
 
+    /**
+     * Reads integer from user's input
+     * @param attr Name of attribute that is being set
+     * @param currentVal Value to use instead of waiting for user's input
+     * @return Input of type int
+     */
+    int readNumber(const std::string &attr, const std::string& currentVal);
+
+    /**
+     * Reads integer from user's input
+     * @param attr Name of attribute that is being set
+     * @return Input of type int
+     */
+    int readNumber(const std::string &attr);
+
     std::ostream &out;
 
-    void noParameterFound(const std::string& param = "");
+    void noParameterFound(const std::string &param = "");
+
 private:
     std::istream &in;
 
     std::stringstream getLine(bool useDefault, const std::string &defaultVal) const;
 
     std::map<std::string, int> timeDictionary = {
-            {"second", 1},
             {"minute", 60},
             {"hour",   3600},
             {"day",    86400},

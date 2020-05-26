@@ -48,7 +48,7 @@ void DayDraw::drawEvents(time_t time) {
             }
 
             //Get event end
-            delete tm_eventStart;
+
             time_t eventEnd = (*eventIt)->getEndDateUtc();
             tm *tm_eventEnd = localtime(&eventEnd);
             //Draw body
@@ -68,7 +68,7 @@ void DayDraw::drawEvents(time_t time) {
                 latestHour = tm_eventEnd->tm_hour;
             }
             eventIt++;
-            delete tm_eventEnd;
+
         }
         while (latestHour >= i + timeJump)
             i += timeJump;

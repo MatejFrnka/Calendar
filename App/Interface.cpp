@@ -21,7 +21,6 @@ void Interface::start() {
 Interface::Interface(std::istream &in_, std::ostream &out_, EventManager &eventManager_) : in(in_), out(out_), inputUtility(in_, out_), eventManager(eventManager_),
                                                                                            drawManager(eventManager_, out_) {
     homeCommands.push_back(std::make_shared<CreateCommand>(inputUtility, eventManager));
-    homeCommands.push_back(std::make_shared<DeleteCommand>(inputUtility));
     homeCommands.push_back(std::make_shared<DrawCommand>(inputUtility, drawManager));
     homeCommands.push_back(std::make_shared<SelectCommand>(inputUtility, eventManager));
 }
@@ -29,8 +28,12 @@ Interface::Interface(std::istream &in_, std::ostream &out_, EventManager &eventM
 std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands) {
 
     std::vector<std::string> params = InputUtility::getParams(commandName);
-    if (params.empty())
+
+    if (commandName.empty())
+        return commands;
+    if (commandName == "cancel")
         return std::vector<std::shared_ptr<Command>>();
+
 
     if (commandName == "help") {
         HelpCommand cmd(commands, inputUtility);
@@ -42,6 +45,6 @@ std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string
             return item->executeAction(std::vector<std::string>(params.begin() + 1, params.end()));
     }
     out << params[0] << " not found. Type help for all commands" << std::endl;
-    return std::vector<std::shared_ptr<Command>>();
+    return commands;
 
 }

@@ -23,6 +23,7 @@ public:
      * @return True if adding as successful, false if event collides with another
      */
     bool addEvent(const string &path);
+
     /**
      * @param event Adds event to collection of events
      * @return True if adding as successful, false if event collides with another
@@ -77,11 +78,11 @@ public:
     EventSet<shared_ptr<SingleEvent>> getEvents(time_t start, time_t end);
 
     /**
-     * Finds events that exactly match given name
+     * Finds events that exactly match given title
      * Search speed is linear
-     * @return Set of events that have equal name to @param fullName
+     * @return Set of events that have equal title to @param title
      */
-    EventSet<shared_ptr<Event>> findByName(const string &fullName);
+    EventSet<shared_ptr<Event>> findByTitle(const string &title);
 
     /**
      * Finds events that exactly match given name
@@ -89,6 +90,14 @@ public:
      * @return Set of events that have equal name to @param fullName
      */
     EventSet<shared_ptr<Event>> findByAddress(const string &address);
+
+    /**
+     * Finds events that exactly match given start time
+     * Search speed is logarithmic
+     * @param start Start of event
+     * @return Shared pointer to event that starts at given time
+     */
+    shared_ptr<SingleEvent> findByStart(time_t start);
 
     EventManager operator=(const EventManager &) = delete;
 

@@ -33,7 +33,6 @@ public:
 
 private:
     DrawManager &drawManager;
-    time_t time = 500;
 };
 
 #endif //CALENDAR_DRAWCOMMAND_H
