@@ -34,7 +34,7 @@ public:
 private:
     EventManager &eventManager;
     std::ostream &out;
-    time_t time = 0;
+    time_t time = 86400;
 };
 
 

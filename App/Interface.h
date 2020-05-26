@@ -20,7 +20,7 @@
 
 class Interface {
 public:
-    Interface(std::istream &in, std::ostream &out);
+    Interface(std::istream &in_, std::ostream &out_, EventManager &eventManager_);
 
     Interface(const Interface &) = delete;
 
@@ -35,7 +35,7 @@ private:
 
     std::vector<std::shared_ptr<Command>> homeCommands;
 
-    EventManager eventManager;
+    EventManager &eventManager;
     DrawManager drawManager;
 };
 
