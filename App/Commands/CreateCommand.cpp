@@ -6,9 +6,8 @@
 #include "CreateCommand.h"
 
 CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventManager) : Command("create", "Used to create a new event", inputUtility) {
-    //TODO:ADD PROPER DESCRIPTION
     CustomCommand single("single",
-                         "Single event happens only once.",
+                         "Single event that happens only once.",
                          inputUtility,
                          [&eventManager](const std::vector<std::string> &params, CustomCommand &self) {
                              //Gathering event info

@@ -452,20 +452,32 @@ int main() {
         assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
                                                       "t 900 1000\n");
     }
+    /*
     {
         EventManager ev;
         ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 86400 + 57600 - 3600, 8000));
-        ev.addEvent(SingleEvent::getInstance("Meeting person b", 86400 + 600, 1000));
+        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 86400 + 600, 1000));
         ev.addEvent(SingleEvent::getInstance("Meeting person c", 86400 + 2000, 1000));
         ev.addEvent(SingleEvent::getInstance("this event starts before the day", 86000 - 3600, 1000));
         ev.addEvent(SingleEvent::getInstance("this event ends after the day", 86000 * 2 - 3600, 2000));
         cout << ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600*6));
-        //UI is very unfinished. Only implemented the base structure
+
         cout << "asserts ok" << endl;
         istringstream in("draw day");
         Interface i(in, cout, ev);
         i.start();
 
+    }
+     */
+    {
+        EventManager ev;
+        ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 86400 + 57600 - 3600, 8000));
+        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 86400 + 600, 1000));
+        ev.addEvent(SingleEvent::getInstance("Meeting person c", 86400 + 2000, 1000));
+        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 86000 - 3600, 1000));
+        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 86000 * 2 - 3600, 2000));
+        Interface i(cin, cout, ev);
+        i.start();
     }
 
     cout << "end" << endl;

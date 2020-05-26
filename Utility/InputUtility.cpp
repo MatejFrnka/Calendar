@@ -92,3 +92,10 @@ std::stringstream InputUtility::getLine(bool useDefault, const std::string &defa
         return std::stringstream(input);
     }
 }
+
+void InputUtility::noParameterFound(const std::string& param) {
+    if(param.empty())
+        out << "No parameter found, type 'help' for all available commands";
+    else
+        out << "Parameter " + param + "was not found, type 'help' for all available commands";
+}

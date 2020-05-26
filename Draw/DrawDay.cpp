@@ -15,7 +15,7 @@ void DayDraw::drawEvents(time_t time) {
     time_t endTime = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &copy_displayTime);
     //Print displayed date
     out << displayTime->tm_mday << "-" << DatetimeUtility::getMonths()[displayTime->tm_mon] << "-" << displayTime->tm_year + 1900 << endl;
-    
+
     auto events = eventManager.getEvents(startTime, endTime);
     auto eventIt = events.begin();
 
@@ -90,7 +90,8 @@ void DayDraw::mkTime(ostream &o, int hour, int minute) {
 
 string DayDraw::customFill(const string &body, char fillChar, char lborder, char rborder, int customWidth) const {
     ostringstream ss;
-    ss << setfill(fillChar) << lborder << fillChar << (body.empty() ? fillChar : ' ') << body << (body.empty() ? fillChar : ' ')
+    ss << setfill(fillChar) << lborder << fillChar << (body.empty() ? fillChar : ' ') << (body.length() > customWidth - 6 ? body.substr(0, customWidth - 6) + ".." : body)
+       << (body.empty() ? fillChar : ' ')
        << setw(customWidth - 3 - static_cast<int>(body.length())) << rborder;
     return ss.str();
 }

@@ -47,6 +47,8 @@ public:
     time_t readTimeSpan(const std::string &attr, const std::string &currentVal = "", bool required = true);
 
     std::ostream &out;
+
+    void noParameterFound(const std::string& param = "");
 private:
     std::istream &in;
 

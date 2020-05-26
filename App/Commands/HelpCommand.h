@@ -14,7 +14,6 @@
 class HelpCommand : public Command {
 public:
     HelpCommand(const std::vector<std::shared_ptr<Command>> &commands_, InputUtility &inputUtility_) : Command("help", "", inputUtility_), refCommands(commands_) {
-
     }
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override;

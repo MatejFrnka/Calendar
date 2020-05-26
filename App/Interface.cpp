@@ -5,6 +5,7 @@
 
 #include "Interface.h"
 #include "Commands/DrawCommand.h"
+#include "Commands/SelectCommand.h"
 
 void Interface::start() {
     std::string input;
@@ -22,6 +23,7 @@ Interface::Interface(std::istream &in_, std::ostream &out_, EventManager &eventM
     homeCommands.push_back(std::make_shared<CreateCommand>(inputUtility, eventManager));
     homeCommands.push_back(std::make_shared<DeleteCommand>(inputUtility));
     homeCommands.push_back(std::make_shared<DrawCommand>(inputUtility, drawManager));
+    homeCommands.push_back(std::make_shared<SelectCommand>(inputUtility, eventManager));
 }
 
 std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands) {

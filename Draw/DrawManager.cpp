@@ -25,5 +25,4 @@ void DrawManager::setMode(DrawManager::DrawMode drawMode) {
         drawUtility = std::make_unique<WeekDraw>(out, eventManager);
     if (drawMode == DrawMode::day)
         drawUtility = std::make_unique<DayDraw>(out, eventManager);
-
 }
