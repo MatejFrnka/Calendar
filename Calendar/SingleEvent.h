@@ -66,6 +66,8 @@ public:
      * @return shared_ptr to freed event, nullptr if event could not be freed
      */
     shared_ptr<Event> freeSelf(actionType actionType) override;
+
+    string infoAll() override;
 };
 
 #endif

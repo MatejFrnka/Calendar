@@ -3,6 +3,7 @@
  * @date: 29.04.2020
  */
 
+#include <sstream>
 #include "Event.h"
 
 Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {

@@ -3,6 +3,7 @@
  * @date: 29.04.2020
  */
 
+#include <sstream>
 #include "SingleEvent.h"
 
 SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : Event(move(title_),
@@ -48,4 +49,21 @@ EventSet<shared_ptr<SingleEvent>> SingleEvent::getEvents(time_t start, time_t en
     if (isInRange(start, end))
         result.insert(downcasted_shared_from_this<SingleEvent>());
     return result;
+}
+
+string SingleEvent::infoAll() {
+    tm time{};
+    time_t start = getStartDateUtc();
+    time = *localtime(&start);
+    stringstream ss;
+
+    ss << "Title:\t" << getTitle() << '\n'
+       << "Type:\tSingle Event\n"
+       << "Start:\t" << asctime(&time);
+
+    time_t end = getEndDateUtc();
+    time = *localtime(&end);
+    ss << "End:\t" << asctime(&time)
+       << "Is editable:\t" << (isEditable() ? "true" : "false") << endl;
+    return ss.str();
 }

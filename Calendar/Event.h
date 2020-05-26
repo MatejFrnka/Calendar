@@ -102,6 +102,11 @@ public:
         return ostream << event.getTitle();
     }
 
+    /**
+     * @return Info about event
+     */
+    virtual string infoAll() = 0;
+
 protected:
 
     bool editable = true;

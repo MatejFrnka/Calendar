@@ -6,6 +6,7 @@
 #include "SelectCommand.h"
 #include "CustomCommand.h"
 #include "Selected/DeleteCommand.h"
+#include "Selected/InfoCommand.h"
 
 SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventManager_)
         : Command("select", "Selects an event", inputUtility, std::map<std::string, std::string>{{"date",  "Selects event by date"},
@@ -13,6 +14,8 @@ SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventMana
                                                                                                  {"place", "Selects date by location"}}),
           eventManager(eventManager_) {
     commands.push_back(make_shared<DeleteCommand>(inputUtility, nullptr, eventManager));
+    commands.push_back(make_shared<InfoCommand>(inputUtility, nullptr));
+
 }
 
 std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(const std::vector<std::string> &parameters) {
@@ -55,6 +58,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(const std::ve
     if (result) {
         std::vector<std::shared_ptr<Command>> res;
         res.push_back(make_shared<DeleteCommand>(inputUtility, result, eventManager));
+        res.push_back(make_shared<InfoCommand>(inputUtility, result));
         inputUtility.out << "Event selected" << std::endl;
         return res;
     } else {

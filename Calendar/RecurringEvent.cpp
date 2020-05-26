@@ -3,8 +3,8 @@
  * @date: 29.04.2020
  */
 
+#include <sstream>
 #include "RecurringEvent.h"
-
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
@@ -257,4 +257,30 @@ bool RecurringEvent::isValid() const {
 
 shared_ptr<Event> RecurringEvent::freeSelf(Event::actionType actionType) {
     return shared_from_this();
+}
+
+string RecurringEvent::infoAll() {
+    tm time{};
+    time_t start = getStartDateUtc();
+    time = *localtime(&start);
+    stringstream ss;
+
+    ss << "Title:\t" << getTitle() << '\n'
+       << "Type: Recurring Event\n"
+       << "Start:" << asctime(&time);
+
+    time_t end = getEndDateUtc();
+    time = *localtime(&end);
+    ss << "End:" << asctime(&time)
+       << "Repeat every:" << getTimeBetweenEvents() << '\n';
+    if (repeatToInfinity)
+        ss << "Repeat till: infinity\n";
+    else {
+        time_t repeatEnd = getEndDateUtc();
+        time = *localtime(&repeatEnd);
+        ss << "Repeat till: " << asctime(&time);
+    }
+
+    ss << "Is editable" << isEditable() << endl;
+    return ss.str();
 }

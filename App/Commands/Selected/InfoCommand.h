@@ -18,7 +18,7 @@ public:
     InfoCommand(const InfoCommand &) = delete;
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
-        inputUtility.out <<
+        inputUtility.out << target->infoAll();
         return commands;
     };
 private:
