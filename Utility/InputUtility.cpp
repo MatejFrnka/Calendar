@@ -5,6 +5,7 @@
 
 #include <ctime>
 #include <iomanip>
+#include <chrono>
 #include "InputUtility.h"
 
 std::vector<std::string> InputUtility::getParams(const std::string &input) {
@@ -39,11 +40,11 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
 }
 
 time_t InputUtility::readDateTime(const std::string &attr, const std::string &currentVal, bool required) {
-    return customReadDate(attr, currentVal, required, "%d-%m-%YT%H:%M", "01-01-2000T12:00");
+    return toDateTimeNoSeconds(customReadDate(attr, currentVal, required, "%d-%m-%YT%H:%M", "01-01-2000T12:00"));
 }
 
 time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) {
-    return customReadDate(attr, currentVal, required, "%d-%m-%Y", "01-01-2000");
+    return toDate(customReadDate(attr, currentVal, required, "%d-%m-%Y", "01-01-2000"));
 }
 
 time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &currentVal, bool required) {
@@ -117,6 +118,9 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
         out << '\t' << attr << ": " << (firstTry ? currentVal : "");
         line = getLine(firstTry && !currentVal.empty(), currentVal);
 
+        if (line.str() == "now")
+            return getCurrentTime();
+
         if (line.rdbuf()->in_avail() == 0 && !required) {
             return -1;
         }
@@ -124,6 +128,27 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
         firstTry = false;
     } while (line.fail());
     out << "\n";
-    return std::mktime(&time);
+    time_t result = std::mktime(&time);
 
+    return result;
+
+}
+
+time_t InputUtility::getCurrentTime() {
+    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+    return std::chrono::system_clock::to_time_t(now);
+}
+
+time_t InputUtility::toDate(time_t time) {
+    tm t = *localtime(&time);
+    t.tm_sec = 0;
+    t.tm_min = 0;
+    t.tm_hour = 0;
+    return mktime(&t);
+}
+
+time_t InputUtility::toDateTimeNoSeconds(time_t time) {
+    tm t = *localtime(&time);
+    t.tm_sec = 0;
+    return mktime(&t);
 }

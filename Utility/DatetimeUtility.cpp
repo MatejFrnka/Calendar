@@ -51,7 +51,7 @@ time_t DatetimeUtility::getEndRangeTime(DatetimeUtility::RangeTime range, tm *re
     resultTime->tm_min = 59;
     resultTime->tm_hour = 23;
     if (range == RangeTime::Week) {
-        resultTime->tm_mday -= convertWeekDay(resultTime->tm_wday);
+        resultTime->tm_mday += 7 - resultTime->tm_wday;
     }
     if (range == RangeTime::Month) {
         resultTime->tm_mday = getNumberOfDays(resultTime->tm_mon, resultTime->tm_year);

@@ -71,6 +71,8 @@ public:
      */
     int readNumber(const std::string &attr);
 
+    static time_t getCurrentTime();
+
     std::ostream &out;
 
     void noParameterFound(const std::string &param = "");
@@ -91,6 +93,10 @@ private:
     };
 
     time_t customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat);
+
+    time_t toDate(time_t time);
+
+    time_t toDateTimeNoSeconds(time_t time);
 };
 
 

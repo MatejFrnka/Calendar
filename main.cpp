@@ -452,31 +452,42 @@ int main() {
         assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
                                                       "t 900 1000\n");
     }
-    /*
+/*
     {
         EventManager ev;
         ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 140400, 7980));
         ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 87000, 960));
         ev.addEvent(SingleEvent::getInstance("Meeting person c", 88380, 1000));
         ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
-        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960*2));
+        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960 * 2));
         ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600 * 6));
 
         cout << "asserts ok" << endl;
-        istringstream in("draw day");
+        istringstream in("draw week\ndraw set 02-01-1970");
         Interface i(in, cout, ev);
         i.start();
 
     }
 */
+
     {
         EventManager ev;
         ev.addEvent(SingleEvent::getInstance("c", 140400, 7980));
         ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 87000, 960));
         ev.addEvent(SingleEvent::getInstance("c", 88380, 1000));
         ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
-        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960*2));
-        ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600 * 6));
+        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960 * 2));
+        ev.addEvent(SingleEvent::getInstance("a", 1590562800, 3600 * 6));
+        ev.addEvent(SingleEvent::getInstance("b", 1590361200, 3600 * 6));
+        ev.addEvent(SingleEvent::getInstance("c", 1590706800, 100000));
+        ev.addEvent(SingleEvent::getInstance("d", 1590447600, 3600 * 6));
+        ev.addEvent(SingleEvent::getInstance("e", 1590667200, 3600 * 6));
+        ev.addEvent(SingleEvent::getInstance("f", 108000, 3600 * 6));
+        ev.addEvent(SingleEvent::getInstance("f", 1590505200, 3600 * 8));
+
+
+        cout << "asserts ok" << endl;
+        istringstream in("draw week");
         Interface i(cin, cout, ev);
         i.start();
     }

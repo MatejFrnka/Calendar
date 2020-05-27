@@ -7,11 +7,13 @@
 #include "MonthDraw.h"
 #include "WeekDraw.h"
 #include "DayDraw.h"
-
+#include "../Utility/InputUtility.h"
 #include <utility>
 
 DrawManager::DrawManager(EventManager &eventManager_, std::ostream &out_) : eventManager(eventManager_), out(out_) {
     drawUtility = std::make_unique<MonthDraw>(out_, eventManager_);
+    time_t now = InputUtility::getCurrentTime();
+    time = *localtime(&now);
 }
 
 void DrawManager::draw() {

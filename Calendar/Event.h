@@ -10,8 +10,10 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <vector>
 #include "../Utility/InheritableSharedFromThis.h"
 #include "../Utility/EventSet.h"
+#include "Location.h"
 
 using namespace std;
 
@@ -119,7 +121,13 @@ protected:
      * @param timeBetweenEvents Time between start of event repeats
      * @return Timestamp of start of event happening during or after given date
      */
-    time_t getFirstEventTime(time_t startFrom, time_t startDate, time_t duration, time_t timeBetweenEvents) const;
+    time_t
+    getFirstEventTime(time_t
+                      startFrom,
+                      time_t startDate, time_t
+                      duration,
+                      time_t timeBetweenEvents
+    ) const;
 
 public:
 //SETTERS & GETTERS
