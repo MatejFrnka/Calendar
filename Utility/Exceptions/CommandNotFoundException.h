@@ -3,17 +3,17 @@
  * @date: 22.05.2020
  */
 
-#ifndef CALENDAR_COMMANDNOTFOUND_H
-#define CALENDAR_COMMANDNOTFOUND_H
+#ifndef CALENDAR_COMMANDNOTFOUNDEXCEPTION_H
+#define CALENDAR_COMMANDNOTFOUNDEXCEPTION_H
 
 
 #include <exception>
 #include <string>
 #include <utility>
 
-class CommandNotFound : public std::exception {
+class CommandNotFoundException : public std::exception {
 public:
-    explicit CommandNotFound(const std::string& commandName) {
+    explicit CommandNotFoundException(const std::string& commandName) {
         message = "Command " + commandName + " was not found";
     }
 
@@ -26,4 +26,4 @@ private:
 };
 
 
-#endif //CALENDAR_COMMANDNOTFOUND_H
+#endif //CALENDAR_COMMANDNOTFOUNDEXCEPTION_H

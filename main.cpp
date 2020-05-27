@@ -487,7 +487,7 @@ int main() {
 
 
         cout << "asserts ok" << endl;
-        istringstream in("draw week");
+        istringstream in("select title a\nedit\ntitle\nkarel");
         Interface i(cin, cout, ev);
         i.start();
     }

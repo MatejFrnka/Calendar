@@ -3,4 +3,4 @@
  * @date: 02.05.2020
  */
 
-#include "EventNotInRecurringEvent.h"
+#include "EventNotInRecurringEventException.h"

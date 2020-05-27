@@ -11,7 +11,7 @@
 #include "Event.h"
 #include "SingleEvent.h"
 #include "RecurringItemEvent.h"
-#include "../Utility/Exceptions/EventNotInRecurringEvent.h"
+#include "../Utility/Exceptions/EventNotInRecurringEventException.h"
 #include "../Utility/EventSet.h"
 #include <utility>
 #include <memory>

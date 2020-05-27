@@ -118,7 +118,7 @@ time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time
 
 shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start) {
     if (start % getTimeBetweenEvents() != getStartDateUtc() % getTimeBetweenEvents())
-        throw EventNotInRecurringEvent();
+        throw EventNotInRecurringEventException();
     return RecurringItemEvent::getInstance(getTitle(), start, getDurationUtc(), downcasted_shared_from_this<RecurringEvent>());
 }
 
@@ -163,7 +163,7 @@ shared_ptr<Event> RecurringEvent::freeRecurringItemEvent(const shared_ptr<Recurr
     //GET RECURRING EVENT FROM SEQUENCE THAT GENERATES RECURRING ITEM EVENT
     auto owner = getParentOfItem(event);
     if (!owner)
-        throw EventNotInRecurringEvent();
+        throw EventNotInRecurringEventException();
     if (owner != shared_from_this())
         return owner->freeRecurringItemEvent(event, actionType);
 

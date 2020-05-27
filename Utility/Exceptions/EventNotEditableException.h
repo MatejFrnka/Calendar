@@ -11,7 +11,7 @@
 /**
  * Used when trying to edit attribute of event that can not be edited
  */
-class EventNotEditable : std::exception {
+class EventNotEditableException : std::exception {
 //todo: implement
 };
 

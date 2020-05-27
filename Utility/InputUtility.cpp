@@ -35,7 +35,7 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
             out << std::endl;
         }
         firstTry = false;
-    } while (result.empty() || !required);
+    } while (result.empty() && required);
     return result;
 }
 
@@ -100,13 +100,6 @@ std::stringstream InputUtility::getLine(bool useDefault, const std::string &defa
     }
 }
 
-void InputUtility::noParameterFound(const std::string &param) {
-    if (param.empty())
-        out << "No parameter found, type 'help' for all available commands";
-    else
-        out << "Parameter " + param + "was not found, type 'help' for all available commands";
-}
-
 time_t InputUtility::customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat) {
     std::tm time = {};
     bool firstTry = true;
@@ -151,4 +144,15 @@ time_t InputUtility::toDateTimeNoSeconds(time_t time) {
     tm t = *localtime(&time);
     t.tm_sec = 0;
     return mktime(&t);
+}
+
+void InputUtility::noParameterFound(const std::string &param) const {
+    if (param.empty())
+        out << "No parameter found, type 'help' for all available commands" << std::endl;
+    else
+        out << "Parameter " + param + "was not found, type 'help' for all available commands" << std::endl;
+}
+
+void InputUtility::eventNotEditable() const {
+    out << "Event is not editable" << std::endl;
 }

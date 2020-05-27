@@ -17,6 +17,12 @@ public:
     CustomCommand(string name, string description, InputUtility &inputUtility_, function<vector<shared_ptr<Command>>(vector<string>, CustomCommand &self)> function)
             : Command(move(name), move(description), inputUtility_), fn(move(function)) {}
 
+    CustomCommand(string name, string description, InputUtility &inputUtility_, function<vector<shared_ptr<Command>>(vector<string>, CustomCommand &self)> function,
+                  std::vector<std::shared_ptr<Command>> commands_)
+            : Command(move(name), move(description), inputUtility_), fn(move(function)) {
+        commands = std::move(commands_);
+    }
+
     vector<shared_ptr<Command>> executeAction(const vector<string> &parameters) override {
         return fn(parameters, *this);
     };

@@ -75,7 +75,9 @@ public:
 
     std::ostream &out;
 
-    void noParameterFound(const std::string &param = "");
+    void noParameterFound(const std::string &param = "") const;
+
+    void eventNotEditable() const;
 
 private:
 
