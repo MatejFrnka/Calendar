@@ -13,7 +13,7 @@
 #include <vector>
 #include "../Utility/InheritableSharedFromThis.h"
 #include "../Utility/EventSet.h"
-#include "Location.h"
+#include "Person.h"
 
 using namespace std;
 
@@ -96,6 +96,7 @@ public:
 
     void exportEvent(const string &path);
 
+
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;
     }
@@ -109,8 +110,13 @@ public:
      */
     virtual string infoAll() = 0;
 
-protected:
+    bool addPerson(const shared_ptr<Person> &toAdd);
 
+    bool removePerson(const shared_ptr<Person> &toRemove);
+
+    vector<shared_ptr<Person>> getPeople();
+
+protected:
     bool editable = true;
 
     /**
@@ -149,10 +155,16 @@ public:
 
     time_t getEndDateUtc() const;
 
+    const string &getLocation() const;
+
+    void setLocation(const string &location);
+
 private:
     string title;
     time_t startDateUtc;
     time_t durationUtc;
+    string location;
+    vector<shared_ptr<Person>> people;
 };
 
 #endif

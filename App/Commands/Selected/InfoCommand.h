@@ -11,9 +11,9 @@
 
 class InfoCommand : public Command {
 public:
-    InfoCommand(InputUtility &inputUtility_, shared_ptr<Event> toInfo) :
+    InfoCommand(InputUtility &inputUtility_, shared_ptr<Event> toEdit) :
             Command("info", "Prints out info about event", inputUtility_),
-            target(std::move(toInfo)) {}
+            target(std::move(toEdit)) {}
 
     InfoCommand(const InfoCommand &) = delete;
 

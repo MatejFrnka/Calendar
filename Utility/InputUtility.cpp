@@ -129,9 +129,9 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
     } while (line.fail());
     out << "\n";
     time_t result = std::mktime(&time);
-
-    return result;
-
+    //Converting to current timezone
+    tm *tmp = gmtime(&result);
+    return mktime(tmp);
 }
 
 time_t InputUtility::getCurrentTime() {

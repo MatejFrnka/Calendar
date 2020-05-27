@@ -76,3 +76,34 @@ bool Event::isEditable() const {
 void Event::setEditable(bool editable) {
     Event::editable = editable;
 }
+
+const string &Event::getLocation() const {
+    return location;
+}
+
+void Event::setLocation(const string &location) {
+    Event::location = location;
+}
+
+bool Event::addPerson(const shared_ptr<Person> &toAdd) {
+    for (const auto &person : people) {
+        if (toAdd == person)
+            return false;
+    }
+    people.push_back(toAdd);
+    return true;
+}
+
+bool Event::removePerson(const shared_ptr<Person> &toRemove) {
+    for (auto personIt = people.begin(); personIt != people.end(); personIt++) {
+        if (toRemove == *personIt) {
+            people.erase(personIt);
+            return true;
+        }
+    }
+    return false;
+}
+
+vector<shared_ptr<Person>> Event::getPeople() {
+    return people;
+}

@@ -35,6 +35,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(const std::ve
         return std::vector<std::shared_ptr<Command>>();
     }
     size_t index = 0;
+    // Selecting event in case of duplicates
     if (events.size() > 1) {
         inputUtility.out << "Multiple events found" << std::endl;
         for (const auto &event : events) {
