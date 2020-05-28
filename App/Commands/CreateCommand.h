@@ -17,7 +17,7 @@ class CreateCommand : public Command {
 public:
     CreateCommand(InputUtility &inputUtility, EventManager &eventManager);
 
-    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override;
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override;
 };
 
 

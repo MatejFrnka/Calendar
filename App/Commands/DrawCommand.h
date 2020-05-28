@@ -16,26 +16,25 @@ public:
                                                                           drawManager(drawManager_) {
     }
 
-    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         if (!parameters.empty()) {
-            if (parameters[0] == "month")
+            if (parameters.front() == "month")
                 drawManager.setMode(DrawManager::DrawMode::month);
-            if (parameters[0] == "week")
+            if (parameters.front() == "week")
                 drawManager.setMode(DrawManager::DrawMode::week);
-            if (parameters[0] == "day")
+            if (parameters.front() == "day")
                 drawManager.setMode(DrawManager::DrawMode::day);
-            if (parameters[0] == "set") {
-                time_t date = inputUtility.readDate("Date", parameters.size() > 1 ? parameters[1] : "", true);
+            if (parameters.front() == "set") {
+                time_t date = inputUtility.readDate("Date", parameters, true);
                 drawManager.setDate(date);
             }
-            if (parameters[0] == "next")
+            if (parameters.front() == "next")
                 drawManager.next();
-            if (parameters[0] == "previous")
+            if (parameters.front() == "previous")
                 drawManager.previous();
 
+            parameters.pop();
         }
-
-
         drawManager.draw();
         return std::vector<std::shared_ptr<Command>>();
     }

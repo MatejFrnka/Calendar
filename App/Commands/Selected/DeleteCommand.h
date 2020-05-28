@@ -21,16 +21,16 @@ public:
 
     DeleteCommand(const DeleteCommand &) = delete;
 
-    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) override {
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         if (!parameters.empty()) {
-            if (parameters[0] == "all")
+            if (parameters.front() == "all")
                 eventManager.removeEvent(target, Event::actionType::AllEvents);
-            else if (parameters[0] == "single")
+            else if (parameters.front() == "single")
                 eventManager.removeEvent(target, Event::actionType::OnlyThis);
-            else if (parameters[0] == "upcoming")
+            else if (parameters.front() == "upcoming")
                 eventManager.removeEvent(target, Event::actionType::ThisAndNext);
             else {
-                inputUtility.noParameterFound(parameters[0]);
+                inputUtility.noParameterFound(parameters.front());
                 return commands;
             }
         } else

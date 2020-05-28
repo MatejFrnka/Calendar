@@ -9,11 +9,11 @@ CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventMana
     CustomCommand single("single",
                          "Single event that happens only once.",
                          inputUtility,
-                         [&eventManager](const std::vector<std::string> &params, CustomCommand &self) {
+                         [&eventManager](std::queue<std::string> &params, CustomCommand &self) {
                              //Gathering event info
-                             auto title = self.inputUtility.readString("Title", params.empty() ? "" : params[0]);
-                             auto startUtc = self.inputUtility.readDateTime("Start", params.size() <= 1 ? "" : params[1]);
-                             auto Duration = self.inputUtility.readTimeSpan("Duration", params.size() <= 2 ? "" : params[2]);
+                             auto title = self.inputUtility.readString("Title", params);
+                             auto startUtc = self.inputUtility.readDateTime("Start", params);
+                             auto Duration = self.inputUtility.readTimeSpan("Duration", params);
 
                              eventManager.addEvent(SingleEvent::getInstance(title, startUtc, Duration));
                              self.inputUtility.out << "creating single event... -  ui not implemented yet\n";
@@ -24,7 +24,7 @@ CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventMana
     CustomCommand recurring("recurring",
                             "todo todo",
                             inputUtility,
-                            [](const std::vector<std::string> &params, CustomCommand &self) {
+                            [](std::queue<std::string> &params, CustomCommand &self) {
                                 std::vector<std::shared_ptr<Command>> result;
                                 self.inputUtility.out << "creating recurring event... -  ui not implemented yet";
                                 return result;
@@ -32,11 +32,13 @@ CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventMana
     commands.push_back(make_shared<CustomCommand>(recurring));
 }
 
-std::vector<std::shared_ptr<Command>> CreateCommand::executeAction(const std::vector<std::string> &parameters) {
+std::vector<std::shared_ptr<Command>> CreateCommand::executeAction(std::queue<std::string> &parameters) {
     if (!parameters.empty())
         for (const auto &command : getSubCommands()) {
-            if (command->name == parameters[0])
-                return command->executeAction(std::vector<std::string>(parameters.begin() + 1, parameters.end()));
+            if (command->name == parameters.front()) {
+                parameters.pop();
+                return command->executeAction(parameters);
+            }
         }
     return commands;
 }

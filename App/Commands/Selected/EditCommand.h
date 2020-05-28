@@ -22,11 +22,11 @@ public:
         CustomCommand personAdd("add",
                                 "Adds a new person",
                                 inputUtility,
-                                [toEdit](const std::vector<std::string> &params, CustomCommand &self) {
-                                    shared_ptr<Person> person = make_shared<Person>(self.inputUtility.readString("Name", params.empty() ? "" : params[0]),
-                                                                                    self.inputUtility.readString("Surname", params.size() <= 1 ? "" : params[1]));
-                                    person->email = self.inputUtility.readString("Email", params.size() <= 2 ? "" : params[2], false);
-                                    person->phone = self.inputUtility.readString("Phone", params.size() <= 3 ? "" : params[3], false);
+                                [toEdit](std::queue<std::string> &params, CustomCommand &self) {
+                                    shared_ptr<Person> person = make_shared<Person>(self.inputUtility.readString("Name", params),
+                                                                                    self.inputUtility.readString("Surname", params));
+                                    person->email = self.inputUtility.readString("Email", params, false);
+                                    person->phone = self.inputUtility.readString("Phone", params, false);
                                     toEdit->addPerson(person);
                                     return std::vector<std::shared_ptr<Command>>();
                                 });
@@ -36,7 +36,7 @@ public:
         CustomCommand person("person",
                              "Edits people in event",
                              inputUtility,
-                             [personCommands](const std::vector<std::string> &params, CustomCommand &self) {
+                             [personCommands](std::queue<std::string> &params, CustomCommand &self) {
                                  return personCommands;
                              }, personCommands);
 
@@ -45,8 +45,8 @@ public:
         CustomCommand location("location",
                                "Changes location",
                                inputUtility,
-                               [toEdit](const std::vector<std::string> &params, CustomCommand &self) {
-                                   toEdit->setLocation(self.inputUtility.readString("Location", params.empty() ? "" : params[0], false));
+                               [toEdit](std::queue<std::string> &params, CustomCommand &self) {
+                                   toEdit->setLocation(self.inputUtility.readString("Location", params, false));
                                    return std::vector<std::shared_ptr<Command>>();
                                });
         commands.push_back(make_shared<CustomCommand>(location));
@@ -54,8 +54,8 @@ public:
         CustomCommand title("title",
                             "Changes title",
                             inputUtility,
-                            [toEdit](const std::vector<std::string> &params, CustomCommand &self) {
-                                toEdit->setTitle(self.inputUtility.readString("Title", params.empty() ? "" : params[0], true));
+                            [toEdit](std::queue<std::string> &params, CustomCommand &self) {
+                                toEdit->setTitle(self.inputUtility.readString("Title", params, true));
                                 return std::vector<std::shared_ptr<Command>>();
                             });
         commands.push_back(make_shared<CustomCommand>(title));
@@ -63,7 +63,7 @@ public:
 
     EditCommand(const EditCommand &) = delete;
 
-    std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters)
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters)
     override {
         return commands;
     };

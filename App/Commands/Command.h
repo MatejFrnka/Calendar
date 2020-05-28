@@ -31,7 +31,7 @@ public:
      * @param parameters parameters to action
      * @return Options for commands after this commands execution
      */
-    virtual std::vector<std::shared_ptr<Command>> executeAction(const std::vector<std::string> &parameters) = 0;
+    virtual std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) = 0;
 
     /**
      * @return commands that can be executed after executing this command

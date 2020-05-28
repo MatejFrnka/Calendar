@@ -10,6 +10,7 @@
 #include <string>
 #include <sstream>
 #include <map>
+#include <queue>
 
 class InputUtility {
 public:
@@ -22,7 +23,7 @@ public:
      * @param input Command to get parameters from
      * @return Parameters extracted from input
      */
-    static std::vector<std::string> getParams(const std::string &input);
+    static std::queue<std::string> getParams(const std::string &input);
 
     /**
      * Reads string from user's input
@@ -32,6 +33,8 @@ public:
      */
     std::string readString(const std::string &attr, const std::string &currentVal = "", bool required = true);
 
+    std::string readString(const std::string &attr, std::queue<std::string> &params, bool required = true);
+
     /**
      * Reads date and time from user's input
      * @param attr Name of attribute that is being set
@@ -40,6 +43,8 @@ public:
      */
     time_t readDateTime(const std::string &attr, const std::string &currentVal = "", bool required = true);
 
+    time_t readDateTime(const std::string &attr, std::queue<std::string> &params, bool required = true);
+
     /**
      * Reads date from user's input
      * @param attr Name of attribute that is being set
@@ -47,7 +52,7 @@ public:
      * @return Input of type time_t
      */
     time_t readDate(const std::string &attr, const std::string &currentVal = "", bool required = true);
-
+    time_t readDate(const std::string &attr, std::queue<std::string> &params, bool required = true);
     /**
      * Reads timespan from user's input.
      * @param attr Name of attribute that is being set
@@ -55,6 +60,8 @@ public:
      * @return Input of type time_t
      */
     time_t readTimeSpan(const std::string &attr, const std::string &currentVal = "", bool required = true);
+
+    time_t readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required = true);
 
     /**
      * Reads integer from user's input
@@ -99,6 +106,8 @@ private:
     time_t toDate(time_t time);
 
     time_t toDateTimeNoSeconds(time_t time);
+
+    std::string tryGetVal(std::queue<std::string> &params);
 };
 
 

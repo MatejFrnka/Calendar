@@ -21,7 +21,7 @@ void WeekDraw::drawEvents(tm &time) {
             if (event != *todayEvents.begin())
                 out << string(8, ' ');
             if (event->getStartDateUtc() < start)
-                out << string();
+                out << string(5, '.');
             else {
                 time_t t = event->getStartDateUtc();
                 eventTime = localtime(&t);
@@ -30,7 +30,7 @@ void WeekDraw::drawEvents(tm &time) {
             out << " - ";
             // IF EVENT ENDS AFTER THE DAY DOES
             if (event->getEndDateUtc() > end)
-                out << ".....";
+                out << string(5, '.');
             else {
                 time_t t = event->getEndDateUtc();
                 eventTime = localtime(&t);

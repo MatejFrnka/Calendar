@@ -27,7 +27,7 @@ Interface::Interface(std::istream &in_, std::ostream &out_, EventManager &eventM
 
 std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands) {
 
-    std::vector<std::string> params = InputUtility::getParams(commandName);
+    std::queue<std::string> params = InputUtility::getParams(commandName);
 
     if (commandName.empty())
         return commands;
@@ -41,10 +41,13 @@ std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string
     }
 
     for (const auto &item : commands) {
-        if (item->name == params[0])
-            return item->executeAction(std::vector<std::string>(params.begin() + 1, params.end()));
+        if (item->name == params.front()) {
+            params.pop();
+            return item->executeAction(params);
+        }
     }
-    out << params[0] << " not found. Type help for all commands" << std::endl;
+    out << params.front() << " not found. Type help for all commands" << std::endl;
+    params.pop();
     return commands;
 
 }

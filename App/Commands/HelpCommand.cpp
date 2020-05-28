@@ -28,7 +28,7 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
     }
 }
 
-std::vector<std::shared_ptr<Command>> HelpCommand::executeAction(const std::vector<std::string> &parameters) {
+std::vector<std::shared_ptr<Command>> HelpCommand::executeAction(std::queue<std::string> &parameters) {
     inputUtility.out << "cancel:\tCancels current action" << std::endl;
     printCommandsRec(refCommands, 0);
     return refCommands;

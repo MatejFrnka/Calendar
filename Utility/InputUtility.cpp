@@ -8,16 +8,20 @@
 #include <chrono>
 #include "InputUtility.h"
 
-std::vector<std::string> InputUtility::getParams(const std::string &input) {
-    std::vector<std::string> result;
+std::queue<std::string> InputUtility::getParams(const std::string &input) {
+    std::queue<std::string> result;
     std::istringstream iss(input);
     for (std::string s; iss >> s;)
-        result.push_back(s);
+        result.push(s);
     return result;
 }
 
 InputUtility::InputUtility(std::istream &in_, std::ostream &out_) : out(out_), in(in_) {
 
+}
+
+std::string InputUtility::readString(const std::string &attr, std::queue<std::string> &params, bool required) {
+    return readString(attr, tryGetVal(params), required);
 }
 
 std::string InputUtility::readString(const std::string &attr, const std::string &currentVal, bool required) {
@@ -43,8 +47,16 @@ time_t InputUtility::readDateTime(const std::string &attr, const std::string &cu
     return toDateTimeNoSeconds(customReadDate(attr, currentVal, required, "%d-%m-%YT%H:%M", "01-01-2000T12:00"));
 }
 
+time_t InputUtility::readDateTime(const std::string &attr, std::queue<std::string> &params, bool required) {
+    return readDateTime(attr, tryGetVal(params), required);
+}
+
 time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) {
     return toDate(customReadDate(attr, currentVal, required, "%d-%m-%Y", "01-01-2000"));
+}
+
+time_t InputUtility::readDate(const std::string &attr, std::queue<std::string> &params, bool required) {
+    return readDate(attr, tryGetVal(params), required);
 }
 
 time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &currentVal, bool required) {
@@ -69,6 +81,10 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
         out << "in format '5-day'" << std::endl;
         firstTry = false;
     }
+}
+
+time_t InputUtility::readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required) {
+    return readTimeSpan(attr, tryGetVal(params), required);
 }
 
 int InputUtility::readNumber(const std::string &attr) {
@@ -155,4 +171,13 @@ void InputUtility::noParameterFound(const std::string &param) const {
 
 void InputUtility::eventNotEditable() const {
     out << "Event is not editable" << std::endl;
+}
+
+std::string InputUtility::tryGetVal(std::queue<std::string> &params) {
+    std::string currentVal;
+    if (!params.empty()) {
+        currentVal = params.front();
+        params.pop();
+    }
+    return currentVal;
 }
