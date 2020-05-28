@@ -25,17 +25,13 @@ Interface::Interface(std::istream &in_, std::ostream &out_, EventManager &eventM
     homeCommands.push_back(std::make_shared<SelectCommand>(inputUtility, eventManager));
 }
 
-std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands) {
-
-    std::queue<std::string> params = InputUtility::getParams(commandName);
-
-    if (commandName.empty())
+std::vector<std::shared_ptr<Command>> Interface::executeAction(std::queue<std::string> &params, const std::vector<std::shared_ptr<Command>> &commands) {
+    if (params.empty())
         return commands;
-    if (commandName == "cancel")
+    if (params.front() == "cancel")
         return std::vector<std::shared_ptr<Command>>();
 
-
-    if (commandName == "help") {
+    if (params.front() == "help") {
         HelpCommand cmd(commands, inputUtility);
         return cmd.executeAction(params);
     }
@@ -44,18 +40,14 @@ std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string
         if (item->name == params.front()) {
             params.pop();
             auto res = item->executeAction(params);
-            if (!params.empty()) {
-                inputUtility.out << "'";
-                while (!params.empty()) {
-                    inputUtility.out << params.front() << ' ';
-                    params.pop();
-                }
-                inputUtility.out << "' in '" << commandName << "' was discarded and had no effect" << std::endl;
-            }
-            return res;
+            return executeAction(params, res);
         }
     }
-    out << commandName << " not found. Type help for all commands" << std::endl;
+    out << params.front() << " not found. Type help for all commands" << std::endl;
     return commands;
+}
 
+std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands) {
+    std::queue<std::string> params = InputUtility::getParams(commandName);
+    return executeAction(params, commands);
 }

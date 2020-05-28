@@ -17,6 +17,10 @@ public:
     std::string surname;
     std::string phone;
     std::string email;
+
+    friend std::ostream &operator<<(std::ostream &ostream, const Person &person) {
+        return ostream << person.name << " " << person.surname;
+    }
 };
 
 

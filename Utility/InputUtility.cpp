@@ -20,11 +20,11 @@ InputUtility::InputUtility(std::istream &in_, std::ostream &out_) : out(out_), i
 
 }
 
-std::string InputUtility::readString(const std::string &attr, std::queue<std::string> &params, bool required) {
+std::string InputUtility::readString(const std::string &attr, std::queue<std::string> &params, bool required) const {
     return readString(attr, tryGetVal(params), required);
 }
 
-std::string InputUtility::readString(const std::string &attr, const std::string &currentVal, bool required) {
+std::string InputUtility::readString(const std::string &attr, const std::string &currentVal, bool required) const {
     std::string result;
     bool firstTry = true;
     do {
@@ -43,23 +43,23 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
     return result;
 }
 
-time_t InputUtility::readDateTime(const std::string &attr, const std::string &currentVal, bool required) {
+time_t InputUtility::readDateTime(const std::string &attr, const std::string &currentVal, bool required) const {
     return toDateTimeNoSeconds(customReadDate(attr, currentVal, required, "%d-%m-%YT%H:%M", "01-01-2000T12:00"));
 }
 
-time_t InputUtility::readDateTime(const std::string &attr, std::queue<std::string> &params, bool required) {
+time_t InputUtility::readDateTime(const std::string &attr, std::queue<std::string> &params, bool required) const {
     return readDateTime(attr, tryGetVal(params), required);
 }
 
-time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) {
+time_t InputUtility::readDate(const std::string &attr, const std::string &currentVal, bool required) const {
     return toDate(customReadDate(attr, currentVal, required, "%d-%m-%Y", "01-01-2000"));
 }
 
-time_t InputUtility::readDate(const std::string &attr, std::queue<std::string> &params, bool required) {
+time_t InputUtility::readDate(const std::string &attr, std::queue<std::string> &params, bool required) const {
     return readDate(attr, tryGetVal(params), required);
 }
 
-time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &currentVal, bool required) {
+time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &currentVal, bool required) const {
     std::stringstream ss;
     bool firstTry = true;
     while (true) {
@@ -83,11 +83,11 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
     }
 }
 
-time_t InputUtility::readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required) {
+time_t InputUtility::readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required) const {
     return readTimeSpan(attr, tryGetVal(params), required);
 }
 
-int InputUtility::readNumber(const std::string &attr) {
+int InputUtility::readNumber(const std::string &attr) const {
     int result;
     do {
         out << '\t' << attr << ": ";
@@ -96,7 +96,7 @@ int InputUtility::readNumber(const std::string &attr) {
     return result;
 }
 
-int InputUtility::readNumber(const std::string &attr, const std::string &currentVal) {
+int InputUtility::readNumber(const std::string &attr, const std::string &currentVal) const {
     int result;
     out << '\t' << attr << ": ";
     std::stringstream input(currentVal);
@@ -127,13 +127,13 @@ std::stringstream InputUtility::getLine(bool useDefault, const std::string &defa
     }
 }
 
-time_t InputUtility::customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat) {
+time_t InputUtility::customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat) const {
     std::tm time = {};
     bool firstTry = true;
     std::stringstream line;
     do {
         if (!firstTry) {
-            out << "Invalid date format. Please use " << exampleFormat << " format" << std::endl;
+            out << "Invalid date format. Please use " << exampleFormat << " format or 'now' for current date" << std::endl;
         }
         out << '\t' << attr << ": " << (firstTry ? currentVal : "");
         line = getLine(firstTry && !currentVal.empty(), currentVal);
@@ -159,7 +159,7 @@ time_t InputUtility::getCurrentTime() {
     return std::chrono::system_clock::to_time_t(now);
 }
 
-time_t InputUtility::toDate(time_t time) {
+time_t InputUtility::toDate(time_t time) const {
     tm t = *localtime(&time);
     t.tm_sec = 0;
     t.tm_min = 0;
@@ -167,7 +167,7 @@ time_t InputUtility::toDate(time_t time) {
     return mktime(&t);
 }
 
-time_t InputUtility::toDateTimeNoSeconds(time_t time) {
+time_t InputUtility::toDateTimeNoSeconds(time_t time) const {
     tm t = *localtime(&time);
     t.tm_sec = 0;
     return mktime(&t);
@@ -188,11 +188,21 @@ void InputUtility::numberDoesNotMatch() const {
     out << "Given number does not match any option. Use number in (x) at the beginning of each line" << std::endl;
 }
 
-std::string InputUtility::tryGetVal(std::queue<std::string> &params) {
+std::string InputUtility::tryGetVal(std::queue<std::string> &params) const {
     std::string currentVal;
     if (!params.empty()) {
         currentVal = params.front();
         params.pop();
     }
     return currentVal;
+}
+
+
+int InputUtility::readSelect(const std::string &attr, int lenght) const {
+    while (true) {
+        int res = readNumber(attr);
+        if (res >= 0 && res < lenght)
+            return res;
+        numberDoesNotMatch();
+    }
 }

@@ -99,7 +99,6 @@ public:
     void exportEvent(const string &path);
 
 
-
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;
     }
@@ -117,7 +116,7 @@ public:
 
     bool removePerson(const shared_ptr<Person> &toRemove);
 
-    vector<shared_ptr<Person>> getPeople();
+    const vector<shared_ptr<Person>> &getPeople();
 
 protected:
     bool editable = true;

@@ -11,6 +11,8 @@
 #include <sstream>
 #include <map>
 #include <queue>
+#include <memory>
+#include "../Calendar/Person.h"
 
 class InputUtility {
 public:
@@ -31,9 +33,9 @@ public:
      * @param currentVal Value to use instead of waiting for user's input
      * @return Input in type of string
      */
-    std::string readString(const std::string &attr, const std::string &currentVal = "", bool required = true);
+    std::string readString(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
-    std::string readString(const std::string &attr, std::queue<std::string> &params, bool required = true);
+    std::string readString(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads date and time from user's input
@@ -41,9 +43,9 @@ public:
      * @param currentVal Value to use instead of waiting for user's input
      * @return Input of type time_t
      */
-    time_t readDateTime(const std::string &attr, const std::string &currentVal = "", bool required = true);
+    time_t readDateTime(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
-    time_t readDateTime(const std::string &attr, std::queue<std::string> &params, bool required = true);
+    time_t readDateTime(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads date from user's input
@@ -51,9 +53,9 @@ public:
      * @param currentVal Value to use instead of waiting for user's input
      * @return Input of type time_t
      */
-    time_t readDate(const std::string &attr, const std::string &currentVal = "", bool required = true);
+    time_t readDate(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
-    time_t readDate(const std::string &attr, std::queue<std::string> &params, bool required = true);
+    time_t readDate(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads timespan from user's input.
@@ -61,9 +63,9 @@ public:
      * @param currentVal Value to use instead of waiting for user's input
      * @return Input of type time_t
      */
-    time_t readTimeSpan(const std::string &attr, const std::string &currentVal = "", bool required = true);
+    time_t readTimeSpan(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
-    time_t readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required = true);
+    time_t readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads integer from user's input
@@ -71,14 +73,16 @@ public:
      * @param currentVal Value to use instead of waiting for user's input
      * @return Input of type int
      */
-    int readNumber(const std::string &attr, const std::string &currentVal);
+    int readNumber(const std::string &attr, const std::string &currentVal) const;
 
     /**
      * Reads integer from user's input
      * @param attr Name of attribute that is being set
      * @return Input of type int
      */
-    int readNumber(const std::string &attr);
+    int readNumber(const std::string &attr) const;
+
+    int readSelect(const std::string &attr, int lenght) const;
 
     bool readBool(const std::string &attr);
 
@@ -107,13 +111,13 @@ private:
             {"year",   31556926}
     };
 
-    time_t customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat);
+    time_t customReadDate(const std::string &attr, const std::string &currentVal, bool required, const std::string &format, const std::string &exampleFormat) const;
 
-    time_t toDate(time_t time);
+    time_t toDate(time_t time) const;
 
-    time_t toDateTimeNoSeconds(time_t time);
+    time_t toDateTimeNoSeconds(time_t time) const;
 
-    std::string tryGetVal(std::queue<std::string> &params);
+    std::string tryGetVal(std::queue<std::string> &params) const;
 };
 
 

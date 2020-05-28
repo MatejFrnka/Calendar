@@ -14,7 +14,7 @@
 
 class EditCommand : public Command {
 public:
-    EditCommand(InputUtility &inputUtility_, shared_ptr<Event> toEdit) : Command("edit", "Edits an event", inputUtility_), target(toEdit) {
+    EditCommand(InputUtility &inputUtility_, const shared_ptr<Event> &toEdit) : Command("edit", "Edits an event", inputUtility_), target(toEdit) {
         if (target && !target->isEditable()) {
             inputUtility.eventNotEditable();
             return;
@@ -30,8 +30,30 @@ public:
                                     toEdit->addPerson(person);
                                     return std::vector<std::shared_ptr<Command>>();
                                 });
+        CustomCommand personList("list",
+                                 "Shows all people",
+                                 inputUtility,
+                                 [toEdit](std::queue<std::string> &params, CustomCommand &self) {
+                                     self.inputUtility.out << "List of people:" << endl;
+                                     for (const auto &person : toEdit->getPeople())
+                                         self.inputUtility.out << '\t' << *person << endl;
+                                     return std::vector<std::shared_ptr<Command>>();
+                                 });
+        CustomCommand personRemove("delete",
+                                   "Deletes person",
+                                   inputUtility,
+                                   [toEdit](std::queue<std::string> &params, CustomCommand &self) {
+                                       size_t index = 0;
+                                       const auto &people = toEdit->getPeople();
+                                       for (const auto &person : people)
+                                           self.inputUtility.out << "(" << index++ << ") " << *person << endl;
+                                       toEdit->removePerson(people[self.inputUtility.readSelect("Select which to delete", people.size())]);
+                                       return std::vector<std::shared_ptr<Command>>();
+                                   });
         std::vector<std::shared_ptr<Command>> personCommands;
         personCommands.push_back(make_shared<CustomCommand>(personAdd));
+        personCommands.push_back(make_shared<CustomCommand>(personList));
+        personCommands.push_back(make_shared<CustomCommand>(personRemove));
 
         CustomCommand person("person",
                              "Edits people in event",
@@ -63,8 +85,7 @@ public:
 
     EditCommand(const EditCommand &) = delete;
 
-    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters)
-    override {
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         return commands;
     };
 private:

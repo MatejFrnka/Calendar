@@ -477,7 +477,11 @@ int main() {
         ev.addEvent(SingleEvent::getInstance("c", 88380, 1000));
         ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
         ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960 * 2));
-        ev.addEvent(SingleEvent::getInstance("a", 1590562800, 3600 * 6));
+        auto a = SingleEvent::getInstance("a", 1590562800, 3600 * 6);
+        a->addPerson(make_shared<Person>("Karel", "Slepicka"));
+        a->addPerson(make_shared<Person>("Ahoj", "Pepo"));
+        a->addPerson(make_shared<Person>("LE", "Debilo"));
+        ev.addEvent(a);
         ev.addEvent(SingleEvent::getInstance("b", 1590361200, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("c", 1590706800, 100000));
         ev.addEvent(SingleEvent::getInstance("d", 1590447600, 3600 * 6));

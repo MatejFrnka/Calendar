@@ -104,7 +104,7 @@ bool Event::removePerson(const shared_ptr<Person> &toRemove) {
     return false;
 }
 
-vector<shared_ptr<Person>> Event::getPeople() {
+const vector<shared_ptr<Person>> &Event::getPeople() {
     return people;
 }
 

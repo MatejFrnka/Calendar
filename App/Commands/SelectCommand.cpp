@@ -48,16 +48,8 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
             cout << '(' << index << ')' << *event << std::endl;
             index++;
         }
-        int res = 0;
-        inputUtility.out << "Please select which event to select" << std::endl;
-        while (true) {
-            res = inputUtility.readNumber("Index");
-            if (res >= 0 && res < index)
-                break;
-            inputUtility.numberDoesNotMatch();
-        }
         auto it = events.begin();
-        std::advance(it, res);
+        std::advance(it, inputUtility.readSelect("Select which event", index));
         result = *it;
     } else if (events.size() == 1)
         result = *events.begin();
