@@ -33,6 +33,7 @@ int DatetimeUtility::getNumberOfDays(int month, int year) {
 }
 
 time_t DatetimeUtility::getStartRangeTime(DatetimeUtility::RangeTime range, tm *resultTime) {
+    mktime(resultTime);
     resultTime->tm_sec = 0;
     resultTime->tm_min = 0;
     resultTime->tm_hour = 0;

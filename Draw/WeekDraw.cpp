@@ -45,13 +45,13 @@ void WeekDraw::drawEvents(tm &time) {
         mday = time.tm_mday;
         end = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     }
-    time.tm_mday -= 7;
+    movePrevious(time);
 }
 
-void WeekDraw::moveNext(tm &time) {
+void WeekDraw::moveNext(tm &time) const {
     time.tm_mday += 7;
 }
 
-void WeekDraw::movePrevious(tm &time) {
+void WeekDraw::movePrevious(tm &time) const {
     time.tm_mday -= 7;
 }

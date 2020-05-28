@@ -17,9 +17,9 @@ class Draw {
 public:
     Draw(std::ostream &out_, EventManager &eventManager_) : out(out_), eventManager(eventManager_) {};
 
-    virtual void moveNext(tm &time) = 0;
+    virtual void moveNext(tm &time) const = 0;
 
-    virtual void movePrevious(tm &time) = 0;
+    virtual void movePrevious(tm &time) const = 0;
 
     /**
      * Draws events

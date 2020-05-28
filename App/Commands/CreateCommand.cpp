@@ -3,6 +3,7 @@
  * @date: 10.05.2020
  */
 
+#include <cstring>
 #include "CreateCommand.h"
 
 CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventManager) : Command("create", "Used to create a new event", inputUtility) {
@@ -13,10 +14,20 @@ CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventMana
                              //Gathering event info
                              auto title = self.inputUtility.readString("Title", params);
                              auto startUtc = self.inputUtility.readDateTime("Start", params);
-                             auto Duration = self.inputUtility.readTimeSpan("Duration", params);
+                             auto duration = self.inputUtility.readTimeSpan("Duration", params);
 
-                             eventManager.addEvent(SingleEvent::getInstance(title, startUtc, Duration));
-                             self.inputUtility.out << "creating single event... -  ui not implemented yet\n";
+                             if (!eventManager.addEvent(SingleEvent::getInstance(title, startUtc, duration))) {
+                                 time_t firstFree = eventManager.findFreeSpace(startUtc, duration);
+                                 tm tm_firstFree = *localtime(&firstFree);
+                                 self.inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - "
+                                                       << asctime(&tm_firstFree);
+                                 if (self.inputUtility.readBool("Move event"))
+                                     eventManager.addEvent(SingleEvent::getInstance(title, firstFree, duration));
+                                 else {
+                                     return std::vector<std::shared_ptr<Command>>();
+                                 }
+                             }
+                             self.inputUtility.out << "Event was created" << endl;
                              return std::vector<std::shared_ptr<Command>>();
                          });
     commands.push_back(make_shared<CustomCommand>(single));

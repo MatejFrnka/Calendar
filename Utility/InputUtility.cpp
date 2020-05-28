@@ -106,6 +106,17 @@ int InputUtility::readNumber(const std::string &attr, const std::string &current
     return result;
 }
 
+bool InputUtility::readBool(const std::string &attr) {
+    while (true) {
+        out << '\t' << attr << " (y/n): ";
+        std::string input;
+        getline(in, input);
+        if (input == "y" || input == "n")
+            return input == "y";
+        out << "use 'y' (yes) or 'n' (no)";
+    }
+}
+
 std::stringstream InputUtility::getLine(bool useDefault, const std::string &defaultVal) const {
     if (useDefault)
         return std::stringstream(defaultVal);
@@ -166,13 +177,14 @@ void InputUtility::noParameterFound(const std::string &param) const {
     if (param.empty())
         out << "No parameter found, type 'help' for all available commands" << std::endl;
     else
-        out << "Parameter " + param + "was not found, type 'help' for all available commands" << std::endl;
+        out << "Parameter " + param + " was not found, type 'help' for all available commands" << std::endl;
 }
 
 void InputUtility::eventNotEditable() const {
     out << "Event is not editable" << std::endl;
 }
-void InputUtility::numberDoesNotMatch() const{
+
+void InputUtility::numberDoesNotMatch() const {
     out << "Given number does not match any option. Use number in (x) at the beginning of each line" << std::endl;
 }
 

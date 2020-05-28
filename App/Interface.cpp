@@ -43,11 +43,19 @@ std::vector<std::shared_ptr<Command>> Interface::executeAction(const std::string
     for (const auto &item : commands) {
         if (item->name == params.front()) {
             params.pop();
-            return item->executeAction(params);
+            auto res = item->executeAction(params);
+            if (!params.empty()) {
+                inputUtility.out << "'";
+                while (!params.empty()) {
+                    inputUtility.out << params.front() << ' ';
+                    params.pop();
+                }
+                inputUtility.out << "' in '" << commandName << "' was discarded and had no effect" << std::endl;
+            }
+            return res;
         }
     }
-    out << params.front() << " not found. Type help for all commands" << std::endl;
-    params.pop();
+    out << commandName << " not found. Type help for all commands" << std::endl;
     return commands;
 
 }

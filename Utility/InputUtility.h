@@ -80,6 +80,8 @@ public:
      */
     int readNumber(const std::string &attr);
 
+    bool readBool(const std::string &attr);
+
     static time_t getCurrentTime();
 
     std::ostream &out;

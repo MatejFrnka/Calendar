@@ -17,19 +17,28 @@ public:
 
     void drawEvents(tm &time) override;
 
-    void moveNext(tm &time) override;
-    void movePrevious(tm &time) override;
+    void moveNext(tm &time) const override;
+
+    void movePrevious(tm &time) const override;
 
 private:
     char timeBorder = '|';
     char timeBreak = '-';
     int width = 50;
+    int timeJump = 2;
 
-    void drawLine(ostream &o, int hour);
+    void drawLine(ostream &o, int hour) const;
 
-    void mkTime(ostream &o, int hour, int minute);
+    void mkTime(ostream &o, int hour, int minute) const;
 
     string customFill(const string &body, char fillChar, char lborder, char rborder, int customWidth) const;
+
+    void drawEvent(const Event &event, int hourStart, int minuteStart, int hourEnd, int minuteEnd) const;
+
+    void drawEventStart(const Event &event, int hourStart, int minuteStart) const;
+
+    void drawEventEnd(const Event &event, int hourEnd, int minuteEnd) const;
+
 };
 
 

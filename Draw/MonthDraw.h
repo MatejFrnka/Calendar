@@ -14,9 +14,9 @@ class MonthDraw : public Draw {
 public:
     MonthDraw(std::ostream &out_, EventManager &eventManager_) : Draw(out_, eventManager_) {};
 
-    void moveNext(tm &time) override;
+    void moveNext(tm &time) const override;
 
-    void movePrevious(tm &time) override;
+    void movePrevious(tm &time) const override;
 
     void drawEvents(tm &time) override;
 };

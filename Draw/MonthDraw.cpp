@@ -14,11 +14,9 @@ void MonthDraw::drawEvents(tm &time) {
     out << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
     //Draw week days
     for (const auto &dayOfWeek : DatetimeUtility::getWeekDays()) {
-        out << "\t" << dayOfWeek;
+        out <<dayOfWeek << '\t';
     }
     out << endl;
-    //Draw first week number
-    out << 0 << ":\t";
     //Draw empty fields
     for (int i = 0; i < weekDay; ++i) {
         out << "\t";
@@ -28,7 +26,6 @@ void MonthDraw::drawEvents(tm &time) {
         time.tm_mday = i + 1;
         time_t endTime = mktime(&time);
         auto events = eventManager.checkAvailability(startTime, endTime);
-        //week number
         //highlight day if event happens during it
         if (events)
             out << "|";
@@ -42,21 +39,18 @@ void MonthDraw::drawEvents(tm &time) {
         //New line after sunday
         if ((i + weekDay) % 7 == 0) {
             out << '\n' << endl;
-            //Draw week number
-            out << (i / 7) + 1 << ":\t";
         }
         startTime = endTime;
     }
+    out << endl;
     time.tm_mday -= numberOfDays;
     mktime(&time);
 }
 
-void MonthDraw::moveNext(tm &time) {
+void MonthDraw::moveNext(tm &time) const {
     time.tm_mon++;
-    mktime(&time);
 }
 
-void MonthDraw::movePrevious(tm &time) {
+void MonthDraw::movePrevious(tm &time) const {
     time.tm_mon--;
-    mktime(&time);
 }
