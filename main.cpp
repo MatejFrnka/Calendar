@@ -486,8 +486,8 @@ int main() {
 
 
         cout << "asserts ok" << endl;
-        istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");
-        Interface i(in, cout, ev);
+        //istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");
+        Interface i(cin, cout, ev);
         i.start();
     }
 

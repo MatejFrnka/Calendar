@@ -18,6 +18,13 @@ public:
     CreateCommand(InputUtility &inputUtility, EventManager &eventManager);
 
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override;
+
+private:
+    EventManager &eventManager;
+
+    bool createSingle(queue<std::string> &params) const;
+
+    bool createRecurring(queue<std::string> &params) const;
 };
 
 
