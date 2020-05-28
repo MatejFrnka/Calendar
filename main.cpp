@@ -481,7 +481,6 @@ int main() {
         ev.addEvent(SingleEvent::getInstance("b", 1590361200, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("c", 1590706800, 100000));
         ev.addEvent(SingleEvent::getInstance("d", 1590447600, 3600 * 6));
-        ev.addEvent(SingleEvent::getInstance("e", 1590667200, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("f", 108000, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("f", 1590505200, 3600 * 8));
 

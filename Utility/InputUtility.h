@@ -52,7 +52,9 @@ public:
      * @return Input of type time_t
      */
     time_t readDate(const std::string &attr, const std::string &currentVal = "", bool required = true);
+
     time_t readDate(const std::string &attr, std::queue<std::string> &params, bool required = true);
+
     /**
      * Reads timespan from user's input.
      * @param attr Name of attribute that is being set
@@ -85,6 +87,8 @@ public:
     void noParameterFound(const std::string &param = "") const;
 
     void eventNotEditable() const;
+
+    void numberDoesNotMatch() const;
 
 private:
 

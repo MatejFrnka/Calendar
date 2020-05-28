@@ -54,7 +54,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
             res = inputUtility.readNumber("Index");
             if (res >= 0 && res < index)
                 break;
-            inputUtility.out << "Given number does not match any option. Use number in (x) at the beginning of each line" << std::endl;
+            inputUtility.numberDoesNotMatch();
         }
         auto it = events.begin();
         std::advance(it, res);

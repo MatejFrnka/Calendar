@@ -107,3 +107,7 @@ bool Event::removePerson(const shared_ptr<Person> &toRemove) {
 vector<shared_ptr<Person>> Event::getPeople() {
     return people;
 }
+
+vector<Event::actionType> Event::getActionTypes() {
+    return vector<Event::actionType>{Event::actionType::OnlyThis};
+}

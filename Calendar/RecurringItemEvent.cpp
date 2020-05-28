@@ -27,3 +27,9 @@ shared_ptr<Event> RecurringItemEvent::freeSelf(Event::actionType actionType) {
     }
     return shared_from_this();
 }
+
+vector<Event::actionType> RecurringItemEvent::getActionTypes() {
+    if (parentEvent)
+        return vector<Event::actionType>{Event::actionType::OnlyThis, Event::actionType::AllEvents, Event::actionType::ThisAndNext};
+    return Event::getActionTypes();
+}

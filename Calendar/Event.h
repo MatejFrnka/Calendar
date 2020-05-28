@@ -94,7 +94,10 @@ public:
      */
     virtual shared_ptr<Event> freeSelf(actionType actionType) = 0;
 
+    virtual vector<actionType> getActionTypes();
+
     void exportEvent(const string &path);
+
 
 
     bool operator<(const Event &event) const {

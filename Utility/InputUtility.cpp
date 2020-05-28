@@ -172,6 +172,9 @@ void InputUtility::noParameterFound(const std::string &param) const {
 void InputUtility::eventNotEditable() const {
     out << "Event is not editable" << std::endl;
 }
+void InputUtility::numberDoesNotMatch() const{
+    out << "Given number does not match any option. Use number in (x) at the beginning of each line" << std::endl;
+}
 
 std::string InputUtility::tryGetVal(std::queue<std::string> &params) {
     std::string currentVal;

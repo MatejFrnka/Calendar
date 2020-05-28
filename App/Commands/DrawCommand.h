@@ -16,13 +16,13 @@ public:
             Command("draw", "Draws events",
                     inputUtility_,
                     std::map<std::string, std::string>{
-                            {"\"\"", "Draws at previous date at previous mode"},
-                            { "day", "Changes draw mode to day" },
-                            { "week", "Changes draw mode to week" },
-                            { "month", "Changes draw mode to month" },
-                            { "set", "Changes time to display" },
-                            { "next", "Shows next date" },
-                            { "previous", "Shows previous date" }
+                            {"\"\"",     "Draws at previous date at previous mode"},
+                            {"day",      "Changes draw mode to day"},
+                            {"week",     "Changes draw mode to week"},
+                            {"month",    "Changes draw mode to month"},
+                            {"set",      "Changes time to display"},
+                            {"next",     "Shows next date"},
+                            {"previous", "Shows previous date"}
 
                     }),
             drawManager(drawManager_) {
@@ -30,22 +30,25 @@ public:
 
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         if (!parameters.empty()) {
-            if (parameters.front() == "month")
+            auto parameter = parameters.front();
+            parameters.pop();
+            if (parameter == "month")
                 drawManager.setMode(DrawManager::DrawMode::month);
-            if (parameters.front() == "week")
+            else if (parameter == "week")
                 drawManager.setMode(DrawManager::DrawMode::week);
-            if (parameters.front() == "day")
+            else if (parameter == "day")
                 drawManager.setMode(DrawManager::DrawMode::day);
-            if (parameters.front() == "set") {
+            else if (parameter == "next")
+                drawManager.next();
+            else if (parameter == "previous")
+                drawManager.previous();
+            else if (parameter == "set") {
                 time_t date = inputUtility.readDate("Date", parameters, true);
                 drawManager.setDate(date);
+            } else {
+                inputUtility.noParameterFound(parameter);
+                return std::vector<std::shared_ptr<Command>>();
             }
-            if (parameters.front() == "next")
-                drawManager.next();
-            if (parameters.front() == "previous")
-                drawManager.previous();
-
-            parameters.pop();
         }
         drawManager.draw();
         return std::vector<std::shared_ptr<Command>>();

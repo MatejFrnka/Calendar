@@ -29,6 +29,8 @@ public:
      */
     shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis) override;
 
+    vector<Event::actionType> getActionTypes() override;
+
 private:
     shared_ptr<RecurringEvent> parentEvent;
 };
