@@ -12,8 +12,20 @@
 
 class DrawCommand : public Command {
 public:
-    DrawCommand(InputUtility &inputUtility_, DrawManager &drawManager_) : Command("draw", "Draws events", inputUtility_),
-                                                                          drawManager(drawManager_) {
+    DrawCommand(InputUtility &inputUtility_, DrawManager &drawManager_) :
+            Command("draw", "Draws events",
+                    inputUtility_,
+                    std::map<std::string, std::string>{
+                            {"\"\"", "Draws at previous date at previous mode"},
+                            { "day", "Changes draw mode to day" },
+                            { "week", "Changes draw mode to week" },
+                            { "month", "Changes draw mode to month" },
+                            { "set", "Changes time to display" },
+                            { "next", "Shows next date" },
+                            { "previous", "Shows previous date" }
+
+                    }),
+            drawManager(drawManager_) {
     }
 
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {

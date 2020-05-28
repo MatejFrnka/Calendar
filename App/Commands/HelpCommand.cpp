@@ -14,16 +14,19 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
             } else
                 inputUtility.out << "-- ";
         }
-        inputUtility.out << *it << std::endl;
-        for (const auto &param : it->params) {
-            for (int i = 1; i < depth + 1; ++i) {
-                if (i == 1) {
-                    inputUtility.out << "|* ";
-                } else
-                    inputUtility.out << "** ";
-                inputUtility.out << param.first << ":\t" << param.second << std::endl;
-            }
+        inputUtility.out << it->name;
+
+        for (auto param = it->params.begin(); param != it->params.end(); ++param) {
+            if (param == it->params.begin())
+                inputUtility.out << " <";
+            else
+                inputUtility.out << "|";
+            inputUtility.out << param->first;
         }
+        if (!it->params.empty())
+            inputUtility.out << ">";
+        inputUtility.out << ": " << it->description << std::endl;
+
         printCommandsRec(it->getSubCommands(), depth);
     }
 }
