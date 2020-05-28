@@ -9,13 +9,14 @@
 
 void WeekDraw::drawEvents(tm &time) {
     time_t start = DatetimeUtility::getStartRangeTime(DatetimeUtility::Week, &time);
+    int mday = time.tm_mday;
+    out << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
     time_t end = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     tm *eventTime;
-    out << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
     for (int i = 0; i < 7; ++i) {
         out.fill('0');
         auto todayEvents = eventManager.getEvents(start, end);
-        out << std::setw(2) << time.tm_mday << ". " << DatetimeUtility::getWeekDays()[i] << '\t';
+        out << std::setw(2) << mday << ". " << DatetimeUtility::getWeekDays()[i] << '\t';
         for (const auto &event : todayEvents) {
             // IF EVENT STARTS BEFORE THE DAY DOES
             if (event != *todayEvents.begin())
@@ -41,6 +42,7 @@ void WeekDraw::drawEvents(tm &time) {
         if (todayEvents.empty())
             out << "Empty" << std::endl;
         start = end;
+        mday = time.tm_mday;
         end = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     }
     time.tm_mday -= 7;
