@@ -10,7 +10,7 @@
 void WeekDraw::drawEvents(tm &time) {
     time_t start = DatetimeUtility::getStartRangeTime(DatetimeUtility::Week, &time);
     int mday = time.tm_mday;
-    out << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
+    out << setfill('0') << setw(2) << time.tm_mon + 1 << "-" << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")" << endl;
     time_t end = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     tm *eventTime;
     for (int i = 0; i < 7; ++i) {
@@ -45,7 +45,7 @@ void WeekDraw::drawEvents(tm &time) {
         mday = time.tm_mday;
         end = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     }
-    movePrevious(time);
+    time.tm_mday -= 8;
 }
 
 void WeekDraw::moveNext(tm &time) const {

@@ -5,20 +5,6 @@
 
 #include "DatetimeUtility.h"
 
-int DatetimeUtility::getMonth(time_t time) {
-    tm *tmTime = gmtime(&time);
-    int result = tmTime->tm_mon;
-    delete tmTime;
-    return result;
-}
-
-int DatetimeUtility::getDay(time_t time) {
-    tm *tmTime = gmtime(&time);
-    int result = tmTime->tm_mday;
-    delete tmTime;
-    return result;
-}
-
 int DatetimeUtility::getNumberOfDays(int month, int year) {
     if (month == 1) {
         if ((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0))
@@ -34,6 +20,7 @@ int DatetimeUtility::getNumberOfDays(int month, int year) {
 
 time_t DatetimeUtility::getStartRangeTime(DatetimeUtility::RangeTime range, tm *resultTime) {
     mktime(resultTime);
+    int isdst = resultTime->tm_isdst;
     resultTime->tm_sec = 0;
     resultTime->tm_min = 0;
     resultTime->tm_hour = 0;
@@ -43,8 +30,13 @@ time_t DatetimeUtility::getStartRangeTime(DatetimeUtility::RangeTime range, tm *
     if (range == RangeTime::Month) {
         resultTime->tm_mday = 1;
     }
-    return mktime(resultTime);
-
+    time_t result = mktime(resultTime);
+    //If daylight saving changes
+    if (resultTime->tm_isdst == 0 && isdst == 1) {
+        resultTime->tm_hour += 2;
+        result = mktime(resultTime);
+    }
+    return result;
 }
 
 time_t DatetimeUtility::getEndRangeTime(DatetimeUtility::RangeTime range, tm *resultTime) {

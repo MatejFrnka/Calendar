@@ -17,11 +17,6 @@ public:
         Week,
         Month
     };
-
-    static int getMonth(time_t time);
-
-    static int getDay(time_t time);
-
     static time_t getStartRangeTime(RangeTime range, tm *resultTime);
 
     static time_t getEndRangeTime(RangeTime range, tm *resultTime);

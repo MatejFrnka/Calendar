@@ -3,6 +3,7 @@
  * @date: 22.05.2020
  */
 
+#include <iomanip>
 #include "MonthDraw.h"
 
 void MonthDraw::drawEvents(tm &time) {
@@ -11,10 +12,10 @@ void MonthDraw::drawEvents(tm &time) {
     int weekDay = DatetimeUtility::convertWeekDay(time.tm_wday);
     int numberOfDays = DatetimeUtility::getNumberOfDays(time.tm_mon, time.tm_year + 1900);
 
-    out << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
+    out << setfill('0') << setw(2) << time.tm_mon + 1 << "-" << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")" << endl;
     //Draw week days
     for (const auto &dayOfWeek : DatetimeUtility::getWeekDays()) {
-        out <<dayOfWeek << '\t';
+        out << dayOfWeek << '\t';
     }
     out << endl;
     //Draw empty fields

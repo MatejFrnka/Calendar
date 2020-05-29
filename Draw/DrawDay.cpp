@@ -8,11 +8,11 @@
 
 void DayDraw::drawEvents(tm &time) {
     time_t startTime = DatetimeUtility::getStartRangeTime(DatetimeUtility::Day, &time);
+    //Print displayed date
+    out << DatetimeUtility::getWeekDays()[DatetimeUtility::convertWeekDay(time.tm_wday)] << " " << time.tm_mday << "-" << setfill('0') << setw(2) << time.tm_mon + 1 << "-"
+        << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")" << endl;
     //Get utc time_t of day end
     time_t endTime = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
-    //Print displayed date
-    out << time.tm_mday << "-" << DatetimeUtility::getMonths()[time.tm_mon] << "-" << time.tm_year + 1900 << endl;
-
     auto events = eventManager.getEvents(startTime, endTime);
     auto eventIt = events.begin();
     //loop through hours
@@ -44,6 +44,7 @@ void DayDraw::drawEvents(tm &time) {
             out << endl;
         }
     }
+    movePrevious(time);
 }
 
 void DayDraw::drawEvent(const Event &event, int hourStart, int minuteStart, int hourEnd, int minuteEnd) const {
