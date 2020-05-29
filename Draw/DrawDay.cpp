@@ -9,8 +9,7 @@
 void DayDraw::drawEvents(tm &time) {
     time_t startTime = DatetimeUtility::getStartRangeTime(DatetimeUtility::Day, &time);
     //Print displayed date
-    out << DatetimeUtility::getWeekDays()[DatetimeUtility::convertWeekDay(time.tm_wday)] << " " << time.tm_mday << "-" << setfill('0') << setw(2) << time.tm_mon + 1 << "-"
-        << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")" << endl;
+    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Day) << endl;
     //Get utc time_t of day end
     time_t endTime = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     auto events = eventManager.getEvents(startTime, endTime);

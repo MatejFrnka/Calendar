@@ -12,7 +12,8 @@
 SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventManager_)
         : Command("select", "Selects an event", inputUtility, std::map<std::string, std::string>{{"date",  "Selects event by date"},
                                                                                                  {"title", "Selects event by title"},
-                                                                                                 {"place", "Selects date by location"}}),
+                                                                                                 {"place", "Selects event by location"},
+                                                                                                 {"all",   "Selects event by title and location"}}),
           eventManager(eventManager_) {
     commands.push_back(make_shared<DeleteCommand>(inputUtility, nullptr, eventManager));
     commands.push_back(make_shared<InfoCommand>(inputUtility, nullptr));
@@ -35,6 +36,14 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
     } else if (parameters.front() == "place") {
         parameters.pop();
         events = eventManager.findByAddress(inputUtility.readString("Address", parameters));
+    } else if (parameters.front() == "all") {
+        parameters.pop();
+        auto addrEvents = eventManager.findByAddress(inputUtility.readString("Address", parameters));
+        string title = inputUtility.readString("Title", parameters);
+        for (const auto &ev : addrEvents) {
+            if (ev->getTitle() == title)
+                events.insert(ev);
+        }
     } else {
         inputUtility.noParameterFound(parameters.front());
         parameters.pop();
@@ -45,7 +54,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
     if (events.size() > 1) {
         inputUtility.out << "Multiple events found" << std::endl;
         for (const auto &event : events) {
-            cout << '(' << index << ')' << *event << std::endl;
+            cout << '(' << index << ") " << *event << std::endl;
             index++;
         }
         auto it = events.begin();

@@ -12,7 +12,7 @@ void MonthDraw::drawEvents(tm &time) {
     int weekDay = DatetimeUtility::convertWeekDay(time.tm_wday);
     int numberOfDays = DatetimeUtility::getNumberOfDays(time.tm_mon, time.tm_year + 1900);
 
-    out << setfill('0') << setw(2) << time.tm_mon + 1 << "-" << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")" << endl;
+    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Month) << endl;
     //Draw week days
     for (const auto &dayOfWeek : DatetimeUtility::getWeekDays()) {
         out << dayOfWeek << '\t';

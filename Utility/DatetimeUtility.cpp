@@ -3,6 +3,8 @@
  * @date: 19.05.2020
  */
 
+#include <sstream>
+#include <iomanip>
 #include "DatetimeUtility.h"
 
 int DatetimeUtility::getNumberOfDays(int month, int year) {
@@ -55,6 +57,15 @@ time_t DatetimeUtility::getEndRangeTime(DatetimeUtility::RangeTime range, tm *re
 
 int DatetimeUtility::convertWeekDay(int day) {
     return (day + 6) % 7;
+}
+
+std::string DatetimeUtility::drawDate(const tm &time, DatetimeUtility::RangeTime range) {
+    std::stringstream out;
+    if (range == DatetimeUtility::RangeTime::Day)
+        out << DatetimeUtility::getWeekDays()[DatetimeUtility::convertWeekDay(time.tm_wday)] << " " << time.tm_mday << "-";
+    out << std::setfill('0') << std::setw(2) << time.tm_mon + 1
+        << "-" << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")";
+    return out.str();
 }
 
 std::vector<std::string> DatetimeUtility::getWeekDays() {

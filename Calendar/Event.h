@@ -11,9 +11,11 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <iomanip>
 #include "../Utility/InheritableSharedFromThis.h"
 #include "../Utility/EventSet.h"
 #include "Person.h"
+#include "../Utility/DatetimeUtility.h"
 
 using namespace std;
 
@@ -104,7 +106,12 @@ public:
     }
 
     friend std::ostream &operator<<(std::ostream &ostream, const Event &event) {
-        return ostream << event.getTitle();
+        time_t start = event.getStartDateUtc();
+        tm time = *localtime(&start);
+        ostream << "Date: " << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Day) << "\tTitle: " << event.getTitle();
+        if (!event.getLocation().empty())
+            ostream << "\tLocation: elect " << event.getLocation();
+        return ostream;
     }
 
     /**
