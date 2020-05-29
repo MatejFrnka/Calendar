@@ -188,6 +188,10 @@ void InputUtility::numberDoesNotMatch() const {
     out << "Given number does not match any option. Use number in (x) at the beginning of each line" << std::endl;
 }
 
+void InputUtility::success() const {
+    out << "Operation was successful" << std::endl;
+}
+
 std::string InputUtility::tryGetVal(std::queue<std::string> &params) const {
     std::string currentVal;
     if (!params.empty()) {

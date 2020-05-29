@@ -22,26 +22,7 @@ public:
     DeleteCommand(const DeleteCommand &) = delete;
 
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
-        auto actions = target->getActionTypes();
-        if (actions.size() > 1) {
-            inputUtility.out << "How many events should be deleted";
-            for (size_t i = 0; i < actions.size(); ++i) {
-                if (actions[i] == Event::AllEvents)
-                    inputUtility.out << '(' << i << ") " << "All events";
-                if (actions[i] == Event::ThisAndNext)
-                    inputUtility.out << '(' << i << ") " << "This and upcoming events";
-                if (actions[i] == Event::OnlyThis)
-                    inputUtility.out << '(' << i << ") " << "Only this event";
-            }
-            int input;
-            while (true) {
-                input = inputUtility.readNumber("Number");
-                if (input >= 0 && input < actions.size())
-                    break;
-                inputUtility.numberDoesNotMatch();
-            }
-        }
-        eventManager.removeEvent(target);
+        eventManager.removeEvent(target, inputUtility.readActionType(target->getActionTypes()));
         inputUtility.out << "Event " << target->getTitle() << " deleted" << std::endl;
         return commands;
     };

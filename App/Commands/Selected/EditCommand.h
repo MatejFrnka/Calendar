@@ -19,35 +19,31 @@ public:
             inputUtility.eventNotEditable();
             return;
         }
-        CustomCommand personAdd("add",
-                                "Adds a new person",
-                                inputUtility,
+        CustomCommand personAdd("add", "Adds a new person", inputUtility,
                                 [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                     shared_ptr<Person> person = make_shared<Person>(self.inputUtility.readString("Name", params),
                                                                                     self.inputUtility.readString("Surname", params));
                                     person->email = self.inputUtility.readString("Email", params, false);
                                     person->phone = self.inputUtility.readString("Phone", params, false);
                                     toEdit->addPerson(person);
+                                    self.inputUtility.success();
                                     return std::vector<std::shared_ptr<Command>>();
                                 });
-        CustomCommand personList("list",
-                                 "Shows all people",
-                                 inputUtility,
+        CustomCommand personList("list", "Shows all people", inputUtility,
                                  [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                      self.inputUtility.out << "List of people:" << endl;
                                      for (const auto &person : toEdit->getPeople())
                                          self.inputUtility.out << '\t' << *person << endl;
                                      return std::vector<std::shared_ptr<Command>>();
                                  });
-        CustomCommand personRemove("delete",
-                                   "Deletes person",
-                                   inputUtility,
+        CustomCommand personRemove("delete", "Deletes person", inputUtility,
                                    [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                        size_t index = 0;
                                        const auto &people = toEdit->getPeople();
                                        for (const auto &person : people)
                                            self.inputUtility.out << "(" << index++ << ") " << *person << endl;
                                        toEdit->removePerson(people[self.inputUtility.readSelect("Select which to delete", people.size())]);
+                                       self.inputUtility.success();
                                        return std::vector<std::shared_ptr<Command>>();
                                    });
         std::vector<std::shared_ptr<Command>> personCommands;
@@ -55,32 +51,39 @@ public:
         personCommands.push_back(make_shared<CustomCommand>(personList));
         personCommands.push_back(make_shared<CustomCommand>(personRemove));
 
-        CustomCommand person("person",
-                             "Edits people in event",
-                             inputUtility,
+        CustomCommand person("person", "Edits people in event", inputUtility,
                              [personCommands](std::queue<std::string> &params, CustomCommand &self) {
                                  return personCommands;
                              }, personCommands);
 
         commands.push_back(make_shared<CustomCommand>(person));
 
-        CustomCommand location("location",
-                               "Changes location",
-                               inputUtility,
+        CustomCommand location("location", "Changes location", inputUtility,
                                [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                    toEdit->setLocation(self.inputUtility.readString("Location", params, false));
+                                   self.inputUtility.success();
                                    return std::vector<std::shared_ptr<Command>>();
                                });
         commands.push_back(make_shared<CustomCommand>(location));
 
-        CustomCommand title("title",
-                            "Changes title",
-                            inputUtility,
+        CustomCommand title("title", "Changes title", inputUtility,
                             [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                 toEdit->setTitle(self.inputUtility.readString("Title", params, true));
+                                self.inputUtility.success();
                                 return std::vector<std::shared_ptr<Command>>();
                             });
         commands.push_back(make_shared<CustomCommand>(title));
+
+        CustomCommand lock("lock", "Disables editing on event", inputUtility,
+                           [toEdit](std::queue<std::string> &params, CustomCommand &self) {
+                               self.inputUtility.out << "You will not be able to edit the event afterwards" << endl;
+                               if (self.inputUtility.readBool("Are you sure you want to lock the event")) {
+                                   toEdit->setEditable(false);
+                                   self.inputUtility.success();
+                               }
+                               return std::vector<std::shared_ptr<Command>>();
+                           });
+        commands.push_back(make_shared<CustomCommand>(lock));
     }
 
     EditCommand(const EditCommand &) = delete;

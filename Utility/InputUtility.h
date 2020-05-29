@@ -13,6 +13,7 @@
 #include <queue>
 #include <memory>
 #include "../Calendar/Person.h"
+#include "../Calendar/Event.h"
 
 class InputUtility {
 public:
@@ -86,6 +87,25 @@ public:
 
     bool readBool(const std::string &attr);
 
+    Event::actionType readActionType(const vector<Event::actionType> &actions) {
+        if (actions.empty())
+            throw invalid_argument("Actions must not be empty");
+        int input = 0;
+        if (actions.size() > 1) {
+            out << "How many events should be deleted";
+            for (size_t i = 0; i < actions.size(); ++i) {
+                if (actions[i] == Event::AllEvents)
+                    out << '(' << i << ") " << "All events";
+                if (actions[i] == Event::ThisAndNext)
+                    out << '(' << i << ") " << "This and upcoming events";
+                if (actions[i] == Event::OnlyThis)
+                    out << '(' << i << ") " << "Only this event";
+            }
+            return actions[readSelect("Select mode", actions.size())];
+        } else
+            return actions[0];
+    }
+
     static time_t getCurrentTime();
 
     std::ostream &out;
@@ -95,6 +115,8 @@ public:
     void eventNotEditable() const;
 
     void numberDoesNotMatch() const;
+
+    void success() const;
 
 private:
 
