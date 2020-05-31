@@ -4,6 +4,8 @@
  */
 
 #include <sstream>
+#include "../Utility/EventsIterator.h"
+#include "RecurringEvent.h"
 #include "SingleEvent.h"
 
 SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : Event(move(title_),
@@ -66,4 +68,13 @@ string SingleEvent::infoAll() {
     ss << "End:\t" << asctime(&time)
        << "Is editable:\t" << (isEditable() ? "true" : "false") << endl;
     return ss.str();
+}
+
+shared_ptr<SingleEvent> SingleEvent::checkCollision(EventsIterator &ev) const {
+    for (; !ev.end(); ++ev) {
+        auto res = (*ev)->eventExists(getStartDateUtc(), getEndDateUtc());
+        if (res)
+            return res;
+    }
+    return nullptr;
 }

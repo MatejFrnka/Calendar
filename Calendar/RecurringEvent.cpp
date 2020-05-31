@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include "RecurringEvent.h"
+#include "../Utility/EventsIterator.h"
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
@@ -283,4 +284,13 @@ string RecurringEvent::infoAll() {
 
     ss << "Is editable" << isEditable() << endl;
     return ss.str();
+}
+
+shared_ptr<SingleEvent> RecurringEvent::checkCollision(EventsIterator &ev) const{
+    for (; !ev.end(); ++ev) {
+        auto res = (*ev)->eventExists(getStartDateUtc(), getEndDateUtc(), getTimeBetweenEvents(), isRepeatToInfinity() ? getRepeatTill() : -1);
+        if (res)
+            return res;
+    }
+    return nullptr;
 }

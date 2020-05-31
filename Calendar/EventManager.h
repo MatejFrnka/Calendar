@@ -63,11 +63,16 @@ public:
      * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param end  End of range. Events starting exactly at param end will not be included
-     * @param repeat Repetition of event. Time_t difference between start of events
-     * @param repeatTill Time to repeat to. There will be no events happening past this time;
      * @return nullptr if no events were found, else first event found
      */
-    shared_ptr<SingleEvent> checkAvailability(time_t start, time_t end, time_t repeat = -1, time_t repeatTill = -1) const;
+    shared_ptr<SingleEvent> checkAvailability(time_t start, time_t end) const;
+
+    /**
+    * Checks if there are any events happening in given time window. Events ending exactly at param start or starting at param end are not included
+    * @param event Event defining time window
+    * @return nullptr if no events were found, else first event found
+    */
+    shared_ptr<SingleEvent> checkAvailability(const Event &event) const;
 
     /**
      * Used to get events happening between specified time

@@ -67,6 +67,8 @@ public:
      */
     shared_ptr<Event> freeSelf(actionType actionType) override;
 
+    shared_ptr<SingleEvent> checkCollision(EventsIterator &ev) const override;
+
     string infoAll() override;
 };
 

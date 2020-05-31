@@ -21,6 +21,10 @@ using namespace std;
 
 class SingleEvent;
 
+class RecurringEvent;
+
+class EventsIterator;
+
 class Event : public inheritable_enable_shared_from_this<Event> {
 protected:
     Event(string title_, time_t startDateUtc_, time_t endDateUtc_);
@@ -98,8 +102,9 @@ public:
 
     virtual vector<actionType> getActionTypes();
 
-    void exportEvent(const string &path);
+    virtual shared_ptr<SingleEvent> checkCollision(EventsIterator &ev) const = 0;
 
+    void exportEvent(const string &path);
 
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;

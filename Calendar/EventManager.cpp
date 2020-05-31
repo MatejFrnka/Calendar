@@ -7,31 +7,29 @@
 
 
 bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
-    if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc()))
+    if (checkAvailability(*event))
         return false;
     singleEvents.insert(event);
     return true;
 }
 
 bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
-    if (checkAvailability(event->getStartDateUtc(), event->getEndDateUtc(), event->getTimeBetweenEvents(), event->getRepeatTill()))
+    if (checkAvailability(*event))
         return false;
     recurringEvents.insert(event);
     return true;
 }
 
-shared_ptr<SingleEvent> EventManager::checkAvailability(time_t start, time_t end, time_t timeBetweenEvents, time_t repeatTill) const {
+shared_ptr<SingleEvent> EventManager::checkAvailability(const Event &event) const {
+    EventsIterator eventsIterator(singleEvents, recurringEvents);
+    return event.checkCollision(eventsIterator);
+}
+
+shared_ptr<SingleEvent> EventManager::checkAvailability(time_t start, time_t end) const {
     for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
-        shared_ptr<SingleEvent> event;
-        if (timeBetweenEvents == -1)
-            event = (*i)->eventExists(start, end);
-        else if (repeatTill == -1)
-            event = (*i)->eventExists(start, end, timeBetweenEvents);
-        else
-            event = (*i)->eventExists(start, end, timeBetweenEvents, repeatTill);
-        if (event) {
+        auto event = (*i)->eventExists(start, end);
+        if (event)
             return event;
-        }
     }
     return nullptr;
 }
@@ -139,6 +137,5 @@ EventSet<shared_ptr<Event>> EventManager::findByTitle(const string &title) {
 EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
     return EventSet<shared_ptr<Event>>();
 }
-
 
 
