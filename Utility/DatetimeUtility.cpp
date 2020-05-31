@@ -61,10 +61,10 @@ int DatetimeUtility::convertWeekDay(int day) {
 
 std::string DatetimeUtility::drawDate(const tm &time, DatetimeUtility::RangeTime range) {
     std::stringstream out;
+    out.fill('0');
     if (range == DatetimeUtility::RangeTime::Day)
-        out << DatetimeUtility::getWeekDays()[DatetimeUtility::convertWeekDay(time.tm_wday)] << " " << time.tm_mday << "-";
-    out << std::setfill('0') << std::setw(2) << time.tm_mon + 1
-        << "-" << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")";
+        out << DatetimeUtility::getWeekDays()[DatetimeUtility::convertWeekDay(time.tm_wday)] << " " << std::setw(2) << time.tm_mday << "-";
+    out << std::setw(2) << time.tm_mon + 1 << "-" << time.tm_year + 1900 << " (" << DatetimeUtility::getMonths()[time.tm_mon] << ")";
     return out.str();
 }
 

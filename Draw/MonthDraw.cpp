@@ -26,15 +26,15 @@ void MonthDraw::drawEvents(tm &time) {
     for (int i = 1; i <= numberOfDays; ++i) {
         time.tm_mday = i + 1;
         time_t endTime = mktime(&time);
-        auto events = eventManager.checkAvailability(startTime, endTime);
+        auto events = eventManager.getEvents(startTime, endTime);
         //highlight day if event happens during it
-        if (events)
+        if (!events.empty())
             out << "|";
         else
             out << " ";
         //day number
         out << i;
-        if (events)
+        if (!events.empty())
             out << "|";
         out << "\t";
         //New line after sunday

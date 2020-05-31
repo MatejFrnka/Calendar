@@ -48,7 +48,11 @@ void DayDraw::drawEvents(tm &time) {
 
 void DayDraw::drawEvent(const Event &event, int hourStart, int minuteStart, int hourEnd, int minuteEnd) const {
     drawEventStart(event, hourStart, minuteStart);
-    for (int j = hourStart + timeJump; j < hourEnd; j += timeJump) {
+    int j = hourStart + timeJump;
+    if (hourStart > 0)
+        j -= hourStart % timeJump;
+
+    for (; j < hourEnd; j += timeJump) {
         mkTime(out, j, 0);
         out << timeBorder << ' ' << customFill("", ' ', '|', '|', width - 10) << ' ' << timeBorder << endl;
     }
