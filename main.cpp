@@ -7,7 +7,8 @@
 #include "Calendar/EventManager.h"
 #include "App/Interface.h"
 #include "Utility/Exceptions/EventNotEditableException.h"
-
+#include "Calendar/SingleEvent.h"
+#include "Calendar/RecurringEvent.h"
 
 using namespace std;
 

@@ -8,6 +8,7 @@
 #include "Selected/DeleteCommand.h"
 #include "Selected/InfoCommand.h"
 #include "Selected/EditCommand.h"
+#include "../../Calendar/SingleEvent.h"
 
 SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventManager_)
         : Command("select", "Selects an event", inputUtility, std::map<std::string, std::string>{{"date",  "Selects event by date"},

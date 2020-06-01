@@ -5,7 +5,6 @@
 
 #include <sstream>
 #include "RecurringEvent.h"
-#include "../Utility/EventsIterator.h"
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
@@ -291,13 +290,12 @@ string RecurringEvent::infoAll() {
     return ss.str();
 }
 
-shared_ptr<SingleEvent> RecurringEvent::checkCollision(EventsIterator &ev) const {
-    for (; !ev.end(); ++ev) {
-        auto res = (*ev)->eventExists(getStartDateUtc(), getEndDateUtc(), getTimeBetweenEvents(), isRepeatToInfinity() ? getRepeatTill() : -1);
+shared_ptr<SingleEvent> RecurringEvent::checkCollision(const EventSet<shared_ptr<Event>> &ev) const {
+    for (const auto &event :ev) {
+        auto res = event->eventExists(getStartDateUtc(), getEndDateUtc(), getTimeBetweenEvents(), isRepeatToInfinity() ? getRepeatTill() : -1);
         if (res)
             return res;
     }
-    ev.reset();
     if (childNode)
         return childNode->checkCollision(ev);
     return nullptr;

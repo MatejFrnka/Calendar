@@ -13,7 +13,7 @@ Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     durationUtc = durationUtc_;
 }
 
-Event::Event(const Event &event){
+Event::Event(const Event &event) {
     title = event.title;
     startDateUtc = event.startDateUtc;
     durationUtc = event.durationUtc;
@@ -133,4 +133,3 @@ const vector<shared_ptr<Person>> &Event::getPeople() {
 vector<Event::actionType> Event::getActionTypes() {
     return vector<Event::actionType>{Event::actionType::OnlyThis};
 }
-

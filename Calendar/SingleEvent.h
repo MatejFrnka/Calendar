@@ -20,7 +20,9 @@ protected:
 
 public:
     SingleEvent(const SingleEvent &) = default;
+
     shared_ptr<Event> getCopy() override;
+
     static shared_ptr<SingleEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_);
 
     /**
@@ -67,7 +69,7 @@ public:
      */
     shared_ptr<Event> freeSelf(actionType actionType) override;
 
-    shared_ptr<SingleEvent> checkCollision(EventsIterator &ev) const override;
+    shared_ptr<SingleEvent> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
 
     string infoAll() override;
 };

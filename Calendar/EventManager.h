@@ -7,10 +7,7 @@
 #define CALENDAR_EVENT_MANAGER
 
 #include "Event.h"
-#include "SingleEvent.h"
-#include "RecurringEvent.h"
 #include "../Utility/EventSet.h"
-#include "../Utility/EventsIterator.h"
 #include <algorithm>
 #include <memory>
 #include <utility>
@@ -23,12 +20,6 @@ public:
      * @return True if adding as successful, false if event collides with another
      */
     bool addEvent(const string &path);
-
-    /**
-     * @param event Adds event to collection of events
-     * @return True if adding as successful, false if event collides with another
-     */
-    bool addEvent(const shared_ptr<SingleEvent> &event);
 
     /**
      * @param event Adds recurring event to collection of events
@@ -111,9 +102,7 @@ public:
     EventManager() = default;
 
 private:
-
-    EventSet<shared_ptr<SingleEvent>> singleEvents;
-    EventSet<shared_ptr<Event>> recurringEvents;
+    EventSet<shared_ptr<Event>> events;
 };
 
 #endif

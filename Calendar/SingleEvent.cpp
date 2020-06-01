@@ -4,7 +4,6 @@
  */
 
 #include <sstream>
-#include "../Utility/EventsIterator.h"
 #include "RecurringEvent.h"
 #include "SingleEvent.h"
 
@@ -70,9 +69,9 @@ string SingleEvent::infoAll() {
     return ss.str();
 }
 
-shared_ptr<SingleEvent> SingleEvent::checkCollision(EventsIterator &ev) const {
-    for (; !ev.end(); ++ev) {
-        auto res = (*ev)->eventExists(getStartDateUtc(), getEndDateUtc());
+shared_ptr<SingleEvent> SingleEvent::checkCollision(const EventSet<shared_ptr<Event>> &ev) const {
+    for (const auto &event:ev) {
+        auto res = event->eventExists(getStartDateUtc(), getEndDateUtc());
         if (res)
             return res;
     }

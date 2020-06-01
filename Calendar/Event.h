@@ -104,7 +104,7 @@ public:
 
     virtual vector<actionType> getActionTypes();
 
-    virtual shared_ptr<SingleEvent> checkCollision(EventsIterator &ev) const = 0;
+    virtual shared_ptr<SingleEvent> checkCollision(const EventSet<shared_ptr<Event>> &ev) const = 0;
 
     void exportEvent(const string &path);
 
@@ -197,9 +197,9 @@ public:
 
     virtual void setLocation(const string &location);
 
-private:
-    string title;
+protected:
     time_t startDateUtc;
+    string title;
     time_t durationUtc;
     string location;
     vector<shared_ptr<Person>> people;

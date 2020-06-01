@@ -6,6 +6,7 @@
 #include <iomanip>
 #include "WeekDraw.h"
 #include "../Utility/DatetimeUtility.h"
+#include "../Calendar/SingleEvent.h"
 
 void WeekDraw::drawEvents(tm &time) {
     time_t start = DatetimeUtility::getStartRangeTime(DatetimeUtility::Week, &time);

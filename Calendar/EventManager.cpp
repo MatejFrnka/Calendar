@@ -3,52 +3,32 @@
  * @date: 29.04.2020
  */
 
+#include "SingleEvent.h"
 #include "EventManager.h"
-
-
-bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
-    if (checkAvailability(*event))
-        return false;
-    singleEvents.insert(event);
-    return true;
-}
 
 bool EventManager::addEvent(const shared_ptr<Event> &event) {
     if (checkAvailability(*event))
         return false;
-    recurringEvents.insert(event);
+    events.insert(event);
     return true;
 }
 
 shared_ptr<SingleEvent> EventManager::checkAvailability(const Event &event) const {
-    EventsIterator eventsIterator(singleEvents, recurringEvents);
-    return event.checkCollision(eventsIterator);
+    return event.checkCollision(events);
 }
 
 shared_ptr<SingleEvent> EventManager::checkAvailability(time_t start, time_t end) const {
-    for (EventsIterator i(singleEvents, recurringEvents); !i.end(); ++i) {
-        auto event = (*i)->eventExists(start, end);
-        if (event)
-            return event;
+    for (const auto &event:events) {
+        auto check = event->eventExists(start, end);
+        if (check)
+            return check;
     }
     return nullptr;
 }
 
 EventSet<shared_ptr<SingleEvent>> EventManager::getEvents(time_t start, time_t end) {
     EventSet<shared_ptr<SingleEvent>> result;
-    //binary search first relevant event
-    auto firstEvent = lower_bound(singleEvents.begin(),
-                                  singleEvents.end(),
-                                  start,
-                                  [](const shared_ptr<SingleEvent> &event, time_t start) { return event->getEndDateUtc() < start; });
-    while (*firstEvent && firstEvent != singleEvents.end()) {
-        if ((*firstEvent)->isInRange(start, end))
-            result.insert(*firstEvent);
-        else if ((*firstEvent)->getStartDateUtc() > end) //break if event starts after range
-            break;
-        firstEvent++;
-    }
-    for (const auto &recurringEvent : recurringEvents) {
+    for (const auto &recurringEvent : events) {
         EventSet<shared_ptr<SingleEvent>> events = recurringEvent->getEvents(start, end);
         result.insert(events.begin(), events.end());
         //break if event starts after range end
@@ -59,26 +39,11 @@ EventSet<shared_ptr<SingleEvent>> EventManager::getEvents(time_t start, time_t e
 }
 
 void EventManager::removeEvent(const shared_ptr<Event> &event, Event::actionType actionType) {
-
     auto freeEvent = (event)->freeSelf(actionType);
-    if (freeEvent == nullptr)
-        return;
-    //Binary search through single events
-    auto eventIt = lower_bound(singleEvents.begin(), singleEvents.end(), event, [](const shared_ptr<SingleEvent> &a, const shared_ptr<Event> &b) { return *a < *b; });
-    if ((*eventIt) == freeEvent) {
-        singleEvents.erase(eventIt);
-        return;
-    }
-    shared_ptr<Event> ev = nullptr;
-    for (const auto &ptr  : recurringEvents) {
-        if (ev == nullptr || ev->getStartDateUtc() < ptr->getStartDateUtc())
-            ev = ptr;
-    }
-    //Event was not found in single events - must be recurring item event
-    auto recEventIt = lower_bound(recurringEvents.begin(), recurringEvents.end(), freeEvent,
+    auto recEventIt = lower_bound(events.begin(), events.end(), freeEvent,
                                   [](const shared_ptr<Event> &a, const shared_ptr<Event> &b) { return *a < *b; });
     if (*recEventIt == freeEvent) {
-        recurringEvents.erase(recEventIt);
+        events.erase(recEventIt);
     }
 }
 
@@ -116,18 +81,18 @@ shared_ptr<SingleEvent> EventManager::findByStart(time_t start) {
 
 EventSet<shared_ptr<Event>> EventManager::findByTitle(const string &title) {
     EventSet<shared_ptr<Event>> result;
-    for (EventsIterator event(singleEvents, recurringEvents); !event.end(); ++event) {
-        if ((*event)->getTitle() == title)
-            result.insert(*event);
+    for (const auto &event :events) {
+        if (event->getTitle() == title)
+            result.insert(event);
     }
     return result;
 }
 
 EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
     EventSet<shared_ptr<Event>> result;
-    for (EventsIterator event(singleEvents, recurringEvents); !event.end(); ++event) {
-        if ((*event)->getLocation() == address)
-            result.insert(*event);
+    for (const auto &event :events) {
+        if (event->getLocation() == address)
+            result.insert(event);
     }
     return result;
 }

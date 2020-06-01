@@ -5,6 +5,8 @@
 
 #include <cstring>
 #include "CreateCommand.h"
+#include "../../Calendar/SingleEvent.h"
+#include "../../Calendar/RecurringEvent.h"
 
 CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventManager_) :
         Command("create", "Used to create a new event",
