@@ -19,7 +19,12 @@ public:
     std::string email;
 
     friend std::ostream &operator<<(std::ostream &ostream, const Person &person) {
-        return ostream << person.name << " " << person.surname;
+        ostream << person.name << " " << person.surname;
+        if (!person.phone.empty())
+            ostream << ", " << person.phone;
+        if (!person.email.empty())
+            ostream << ", " << person.email;
+        return ostream;
     }
 };
 

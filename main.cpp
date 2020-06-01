@@ -6,6 +6,7 @@
 #include <memory>
 #include "Calendar/EventManager.h"
 #include "App/Interface.h"
+#include "Utility/Exceptions/EventNotEditableException.h"
 
 
 using namespace std;
@@ -25,6 +26,8 @@ int main() {
 
         auto ev = SingleEvent::getInstance("event", 160, 30);
         assert(ev->eventExists(0, 10) == nullptr);
+        assert(ev->eventExists(160, 161) != nullptr);
+
 
         assert(ev->eventExists(160, 170) != nullptr);
         assert(ev->eventExists(150, 160) == nullptr);
@@ -452,6 +455,65 @@ int main() {
         assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
                                                       "t 900 1000\n");
     }
+    // Editing events
+    {
+        auto event = SingleEvent::getInstance("TitleOG", 100, 100);
+        event->addPerson(make_shared<Person>("karel", "pepa"));
+        assert(event->getTitle() == "TitleOG");
+        event->setTitle("Title2");
+        assert(event->getTitle() == "Title2");
+        event->setLocation("location");
+        assert(event->getLocation() == "location");
+        event->setEditable(false);
+        try {
+            event->setTitle("titi");
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+        try {
+            event->setEditable(true);
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+        try {
+            event->setLocation("titi");
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+
+        try {
+            event->setStartDateUtc(50);
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+        try {
+            event->setDurationUtc(50);
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+        try {
+            event->addPerson(make_shared<Person>("name", "surname"));
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+        try {
+            auto a = event->getPeople()[0];
+            event->removePerson(a);
+            assert(false);
+        }
+        catch (EventNotEditableException &e) {}
+    }
+    {
+        auto rec = RecurringEvent::getInstance("T1", 0, 100, 1000);
+        EventManager ev;
+        ev.addEvent(rec);
+        ev.removeEvent(*ev.getEvents(3000, 4000).begin());
+        auto event = *ev.getEvents(4000, 5000).begin();
+        event->setTitle("T2");
+        ev.removeEvent(*ev.getEvents(0, 1000).begin());
+        event = *ev.getEvents(1000, 2000).begin();
+        assert(event->getTitle() == "T2");
+    }
 /*
     {
         EventManager ev;
@@ -469,7 +531,6 @@ int main() {
 
     }
 */
-
     {
         EventManager ev;
         ev.addEvent(SingleEvent::getInstance("c", 140400, 7980));
@@ -487,7 +548,6 @@ int main() {
         ev.addEvent(SingleEvent::getInstance("d", 1590447600, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("f", 108000, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("f", 1590505200, 3600 * 8));
-
 
         cout << "asserts ok" << endl;
         //istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");

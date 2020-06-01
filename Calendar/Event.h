@@ -124,9 +124,15 @@ public:
      */
     virtual string infoAll() = 0;
 
-    bool addPerson(const shared_ptr<Person> &toAdd);
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+    virtual bool addPerson(const shared_ptr<Person> &toAdd);
 
-    bool removePerson(const shared_ptr<Person> &toRemove);
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+    virtual bool removePerson(const shared_ptr<Person> &toRemove);
 
     const vector<shared_ptr<Person>> &getPeople();
 
@@ -151,27 +157,43 @@ protected:
 
 public:
 //SETTERS & GETTERS
-    void setEditable(bool editable);
+    bool getEditable() const;
 
-    bool isEditable() const;
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+    virtual void setEditable(bool editable);
 
     const string &getTitle() const;
 
-    void setTitle(const string &title);
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+    virtual void setTitle(const string &title);
 
     time_t getStartDateUtc() const;
 
-    void setStartDateUtc(time_t startDateUtc);
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+    virtual void setStartDateUtc(time_t startDateUtc);
 
     time_t getDurationUtc() const;
 
-    void setDurationUtc(time_t durationUtc);
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+    virtual void setDurationUtc(time_t durationUtc);
 
     time_t getEndDateUtc() const;
 
     const string &getLocation() const;
 
-    void setLocation(const string &location);
+    /**
+     * @throws EventNotEditableException when editable is set to false
+     */
+
+    virtual void setLocation(const string &location);
 
 private:
     string title;

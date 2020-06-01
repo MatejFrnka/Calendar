@@ -56,7 +56,17 @@ bool CreateCommand::createSingle(std::queue<std::string> &params) const {
 }
 
 bool CreateCommand::createRecurring(std::queue<std::string> &params) const {
-    std::vector<std::shared_ptr<Command>> result;
-    inputUtility.out << "creating recurring event... -  ui not implemented yet";
-    return false;
+    auto title = inputUtility.readString("Title", params);
+    auto startUtc = inputUtility.readDateTime("Start", params);
+    auto duration = inputUtility.readTimeSpan("Duration", params);
+    auto timeBetween = inputUtility.readTimeSpan("Time between events", params);
+    auto repeatTill = inputUtility.readDate("Repeat till", params, false);
+    shared_ptr<RecurringEvent> event;
+    if (repeatTill == -1)
+        event = RecurringEvent::getInstance(title, startUtc, duration, timeBetween);
+    else
+        event = RecurringEvent::getInstance(title, startUtc, duration, timeBetween, repeatTill);
+    if (!eventManager.addEvent(event))
+        return false;
+    return true;
 }

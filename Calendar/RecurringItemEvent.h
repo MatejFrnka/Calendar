@@ -31,6 +31,22 @@ public:
 
     vector<Event::actionType> getActionTypes() override;
 
+    string infoAll() override;
+
+    bool addPerson(const shared_ptr<Person> &toAdd) override;
+
+    bool removePerson(const shared_ptr<Person> &toRemove) override;
+
+    void setEditable(bool editable) override;
+
+    void setTitle(const string &title) override;
+
+    void setStartDateUtc(time_t startDateUtc) override;
+
+    void setDurationUtc(time_t durationUtc) override;
+
+    void setLocation(const string &location) override;
+
 private:
     shared_ptr<RecurringEvent> parentEvent;
 };

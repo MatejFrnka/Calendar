@@ -91,6 +91,9 @@ public:
 
     string infoAll() override;
 
+
+    shared_ptr<SingleEvent> checkCollision(EventsIterator &ev) const override;
+
 private:
 
     shared_ptr<RecurringEvent> getFirstNode();
@@ -163,17 +166,9 @@ private:
 public:
     time_t getRepeatTill() const;
 
-    void setRepeatTill(time_t repeatTill);
-
     bool isRepeatToInfinity() const;
 
-    void setRepeatToInfinity(bool repeatToInfinity);
-
     time_t getTimeBetweenEvents() const;
-
-    void setTimeBetweenEvents(time_t timeBetweenEvents);
-
-    shared_ptr<SingleEvent> checkCollision(EventsIterator &ev) const override;
 };
 
 #endif

@@ -9,10 +9,10 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
     depth++;
     for (const auto &it : toPrint) {
         for (int i = 1; i < depth; ++i) {
-            if (i == 1) {
-                inputUtility.out << "|- ";
+            if (i == depth - 1) {
+                inputUtility.out << "|-";
             } else
-                inputUtility.out << "-- ";
+                inputUtility.out << ". ";
         }
         inputUtility.out << it->name;
 

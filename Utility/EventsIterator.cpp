@@ -27,3 +27,8 @@ std::shared_ptr<Event> EventsIterator::operator*() {
         return std::dynamic_pointer_cast<Event>(*recIt);
 }
 
+void EventsIterator::reset() {
+    singleIt = singleEvents->begin();
+    recIt = recurringEvents->begin();
+}
+

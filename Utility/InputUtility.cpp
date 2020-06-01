@@ -160,6 +160,8 @@ time_t InputUtility::getCurrentTime() {
 }
 
 time_t InputUtility::toDate(time_t time) const {
+    if (time < 0)
+        return time;
     tm t = *localtime(&time);
     t.tm_sec = 0;
     t.tm_min = 0;

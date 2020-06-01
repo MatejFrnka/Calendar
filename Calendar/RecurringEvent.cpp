@@ -41,24 +41,12 @@ time_t RecurringEvent::getRepeatTill() const {
     return repeatTill;
 }
 
-void RecurringEvent::setRepeatTill(time_t repeatTill) {
-    RecurringEvent::repeatTill = repeatTill;
-}
-
 bool RecurringEvent::isRepeatToInfinity() const {
     return repeatToInfinity;
 }
 
-void RecurringEvent::setRepeatToInfinity(bool repeatToInfinity) {
-    RecurringEvent::repeatToInfinity = repeatToInfinity;
-}
-
 time_t RecurringEvent::getTimeBetweenEvents() const {
     return timeBetweenEvents;
-}
-
-void RecurringEvent::setTimeBetweenEvents(time_t timeBetweenEvents) {
-    RecurringEvent::timeBetweenEvents = timeBetweenEvents;
 }
 
 shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end) {
@@ -120,7 +108,7 @@ time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time
 shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start) {
     if (start % getTimeBetweenEvents() != getStartDateUtc() % getTimeBetweenEvents())
         throw EventNotInRecurringEventException();
-    return RecurringItemEvent::getInstance(getTitle(), start, getDurationUtc(), downcasted_shared_from_this<RecurringEvent>());
+    return RecurringItemEvent::getInstance(getTitle(), start, getDurationUtc(), getFirstNode()->downcasted_shared_from_this<RecurringEvent>());
 }
 
 struct mk_shared_RecurringEvent : RecurringEvent {
@@ -218,7 +206,7 @@ shared_ptr<Event> RecurringEvent::freeOnlyOneRecurringItemEvent(const shared_ptr
     }
     //RECURRING ITEM EVENT IS LAST IN SEQUENCE
     if (!repeatToInfinity && event->getEndDateUtc() + timeBetweenEvents > repeatTill) {
-        setRepeatTill(event->getStartDateUtc());
+        repeatTill = event->getStartDateUtc();
         return event;
     }
     //RECURRING ITEM EVENT IS IN THE MIDDLE OF THE SEQUENCE
@@ -228,8 +216,8 @@ shared_ptr<Event> RecurringEvent::freeOnlyOneRecurringItemEvent(const shared_ptr
     next->parentNode = downcasted_shared_from_this<RecurringEvent>();
     childNode = next;
     //SET END OF THIS SEQUENCE TO START OF EVENT
-    setRepeatTill(event->getStartDateUtc());
-    setRepeatToInfinity(false);
+    repeatTill = event->getStartDateUtc();
+    repeatToInfinity = false;
     return event;
 }
 
@@ -244,7 +232,7 @@ shared_ptr<RecurringEvent> RecurringEvent::freeThisAndNextRecurringItemEvent(con
     //OR
     //RECURRING ITEM EVENT IS IN THE MIDDLE OF THE SEQUENCE
     //SET END OF THIS SEQUENCE TO START OF EVENT
-    setRepeatTill(event->getStartDateUtc());
+    repeatTill = event->getStartDateUtc();
     //COPY THIS SEQUENCE AND SET ITS START TO START OF EVENT
     shared_ptr<RecurringEvent> next = make_shared<RecurringEvent>(RecurringEvent(*this));
     next->setStartDateUtc(event->getStartDateUtc());
@@ -267,30 +255,38 @@ string RecurringEvent::infoAll() {
     stringstream ss;
 
     ss << "Title:\t" << getTitle() << '\n'
-       << "Type: Recurring Event\n"
-       << "Start:" << asctime(&time);
+       << "Type:\tRecurring Event\n"
+       << "Start:\t" << asctime(&time);
 
     time_t end = getEndDateUtc();
     time = *localtime(&end);
-    ss << "End:" << asctime(&time)
-       << "Repeat every:" << getTimeBetweenEvents() << '\n';
-    if (repeatToInfinity)
+    ss << "End:\t" << asctime(&time)
+       << "Repeat every:\t" << getTimeBetweenEvents() << "s\n";
+    shared_ptr<RecurringEvent> lastEvent = downcasted_shared_from_this<RecurringEvent>();
+    while (lastEvent->childNode)
+        lastEvent = childNode;
+    if (lastEvent->repeatToInfinity)
         ss << "Repeat till: infinity\n";
     else {
-        time_t repeatEnd = getEndDateUtc();
+        time_t repeatEnd = lastEvent->getRepeatTill();
         time = *localtime(&repeatEnd);
-        ss << "Repeat till: " << asctime(&time);
+        ss << "Repeat till:\t" << asctime(&time);
     }
-
-    ss << "Is editable" << isEditable() << endl;
+    if (editable)
+        ss << "Event is editable" << endl;
+    else
+        ss << "Event is not editable" << endl;
     return ss.str();
 }
 
-shared_ptr<SingleEvent> RecurringEvent::checkCollision(EventsIterator &ev) const{
+shared_ptr<SingleEvent> RecurringEvent::checkCollision(EventsIterator &ev) const {
     for (; !ev.end(); ++ev) {
         auto res = (*ev)->eventExists(getStartDateUtc(), getEndDateUtc(), getTimeBetweenEvents(), isRepeatToInfinity() ? getRepeatTill() : -1);
         if (res)
             return res;
     }
+    ev.reset();
+    if (childNode)
+        return childNode->checkCollision(ev);
     return nullptr;
 }

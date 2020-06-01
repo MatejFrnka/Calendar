@@ -15,7 +15,7 @@
 class EditCommand : public Command {
 public:
     EditCommand(InputUtility &inputUtility_, const shared_ptr<Event> &toEdit) : Command("edit", "Edits an event", inputUtility_), target(toEdit) {
-        if (target && !target->isEditable()) {
+        if (target && !target->getEditable()) {
             inputUtility.eventNotEditable();
             return;
         }

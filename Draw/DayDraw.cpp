@@ -18,7 +18,7 @@ void DayDraw::drawEvents(tm &time) {
     for (int i = 0; i <= 24; i += timeJump) {
         bool drawTimeLine = true;
         int latestHour = -1;
-        while (eventIt != events.end() && (*eventIt)->getStartDateUtc() < startTime + 3600 * i) {
+        while (eventIt != events.end() && (*eventIt)->getStartDateUtc() <= startTime + 3600 * i) {
             drawTimeLine = false;
             //Get event start
             time_t eventStart = (*eventIt)->getStartDateUtc();

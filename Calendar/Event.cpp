@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include "Event.h"
+#include "../Utility/Exceptions/EventNotEditableException.h"
 
 Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     title = move(title_);
@@ -16,7 +17,6 @@ bool Event::isInRange(time_t rangeStart, time_t rangeEnd) const {
     return isInRange(getStartDateUtc(), getEndDateUtc(), rangeStart, rangeEnd);
 }
 
-
 bool Event::isInRange(time_t start, time_t end, time_t rangeStart, time_t rangeEnd) const {
     //event starts in range
     if (start >= rangeStart && start < rangeEnd)
@@ -25,7 +25,7 @@ bool Event::isInRange(time_t start, time_t end, time_t rangeStart, time_t rangeE
     if (end > rangeStart && end <= rangeEnd)
         return true;
     // event happens through range but doesnt start or end in it
-    if (start <= rangeStart && end >= rangeEnd)
+    if (start < rangeStart && end > rangeEnd)
         return true;
     return false;
 }
@@ -46,6 +46,8 @@ const string &Event::getTitle() const {
 }
 
 void Event::setTitle(const string &title) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     Event::title = title;
 }
 
@@ -54,6 +56,8 @@ time_t Event::getStartDateUtc() const {
 }
 
 void Event::setStartDateUtc(time_t startDateUtc) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     Event::startDateUtc = startDateUtc;
 }
 
@@ -62,6 +66,8 @@ time_t Event::getDurationUtc() const {
 }
 
 void Event::setDurationUtc(time_t durationUtc) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     Event::durationUtc = durationUtc;
 }
 
@@ -69,11 +75,13 @@ time_t Event::getEndDateUtc() const {
     return startDateUtc + durationUtc;
 }
 
-bool Event::isEditable() const {
+bool Event::getEditable() const {
     return editable;
 }
 
 void Event::setEditable(bool editable) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     Event::editable = editable;
 }
 
@@ -82,10 +90,14 @@ const string &Event::getLocation() const {
 }
 
 void Event::setLocation(const string &location) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     Event::location = location;
 }
 
 bool Event::addPerson(const shared_ptr<Person> &toAdd) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     for (const auto &person : people) {
         if (toAdd == person)
             return false;
@@ -95,6 +107,8 @@ bool Event::addPerson(const shared_ptr<Person> &toAdd) {
 }
 
 bool Event::removePerson(const shared_ptr<Person> &toRemove) {
+    if (!Event::editable)
+        throw EventNotEditableException();
     for (auto personIt = people.begin(); personIt != people.end(); personIt++) {
         if (toRemove == *personIt) {
             people.erase(personIt);

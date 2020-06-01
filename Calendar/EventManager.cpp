@@ -89,7 +89,7 @@ bool EventManager::moveEvent(shared_ptr<SingleEvent> &event, time_t newStartDate
 
     if (checkAvailability(newStartDateUtc, newStartDateUtc + event->getDurationUtc()))
         return false;
-    if (!event->isEditable())
+    if (!event->getEditable())
         return false;
     event->setStartDateUtc(newStartDateUtc);
     addEvent(event);
@@ -116,11 +116,9 @@ time_t EventManager::findFreeSpace(time_t start, time_t duration) const {
 }
 
 shared_ptr<SingleEvent> EventManager::findByStart(time_t start) {
-    auto events = getEvents(start, start);
+    auto events = getEvents(start, start+1);
     if (!events.empty()) {
-        auto a = events.begin();
-        if ((*a)->getStartDateUtc() == start)
-            return *a;
+        return *events.begin();
     }
     return nullptr;
 }

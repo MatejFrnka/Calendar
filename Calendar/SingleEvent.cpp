@@ -66,7 +66,7 @@ string SingleEvent::infoAll() {
     time_t end = getEndDateUtc();
     time = *localtime(&end);
     ss << "End:\t" << asctime(&time)
-       << "Is editable:\t" << (isEditable() ? "true" : "false") << endl;
+       << "Is editable:\t" << (getEditable() ? "true" : "false") << endl;
     return ss.str();
 }
 

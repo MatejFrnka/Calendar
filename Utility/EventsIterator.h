@@ -31,6 +31,7 @@ public:
     bool end() { return singleIt == singleEvents->end() && recIt == recurringEvents->end(); }
 
     std::shared_ptr<Event> operator*();
+    void reset();
 
 private:
     const EventSet<std::shared_ptr<SingleEvent>> *singleEvents;
