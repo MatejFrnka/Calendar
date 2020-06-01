@@ -9,6 +9,8 @@
 #include "Selected/InfoCommand.h"
 #include "Selected/EditCommand.h"
 #include "../../Calendar/SingleEvent.h"
+#include "Selected/DurationCommand.h"
+#include "Selected/MoveCommand.h"
 
 SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventManager_)
         : Command("select", "Selects an event", inputUtility, std::map<std::string, std::string>{{"date",  "Selects event by date"},
@@ -19,7 +21,8 @@ SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventMana
     commands.push_back(make_shared<DeleteCommand>(inputUtility, nullptr, eventManager));
     commands.push_back(make_shared<InfoCommand>(inputUtility, nullptr));
     commands.push_back(make_shared<EditCommand>(inputUtility, nullptr));
-
+    commands.push_back(make_shared<DurationCommand>(inputUtility, nullptr, eventManager));
+    commands.push_back(make_shared<MoveCommand>(inputUtility, nullptr, eventManager));
 }
 
 std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<std::string> &parameters) {
@@ -69,6 +72,8 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
         res.push_back(make_shared<DeleteCommand>(inputUtility, result, eventManager));
         res.push_back(make_shared<InfoCommand>(inputUtility, result));
         res.push_back(make_shared<EditCommand>(inputUtility, result));
+        res.push_back(make_shared<DurationCommand>(inputUtility, result, eventManager));
+        res.push_back(make_shared<MoveCommand>(inputUtility, result, eventManager));
         inputUtility.out << "Event selected" << std::endl;
         return res;
     } else {

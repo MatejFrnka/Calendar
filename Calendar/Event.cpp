@@ -133,3 +133,17 @@ const vector<shared_ptr<Person>> &Event::getPeople() {
 vector<Event::actionType> Event::getActionTypes() {
     return vector<Event::actionType>{Event::actionType::OnlyThis};
 }
+
+time_t Event::findFreeSpace(const EventSet<shared_ptr<Event>> &events) {
+    time_t originalStart = startDateUtc;
+    for (size_t i = 0; i < 10000; ++i) {
+        auto event = checkCollision(events);
+        if (!event) {
+            time_t result = startDateUtc;
+            startDateUtc = originalStart;
+            return result;
+        }
+        startDateUtc = event->getEndDateUtc();
+    }
+    return -1;
+}

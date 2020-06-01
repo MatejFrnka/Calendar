@@ -13,11 +13,11 @@ bool EventManager::addEvent(const shared_ptr<Event> &event) {
     return true;
 }
 
-shared_ptr<SingleEvent> EventManager::checkAvailability(const Event &event) const {
+shared_ptr<Event> EventManager::checkAvailability(const Event &event) const {
     return event.checkCollision(events);
 }
 
-shared_ptr<SingleEvent> EventManager::checkAvailability(time_t start, time_t end) const {
+shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end) const {
     for (const auto &event:events) {
         auto check = event->eventExists(start, end);
         if (check)
@@ -38,37 +38,44 @@ EventSet<shared_ptr<SingleEvent>> EventManager::getEvents(time_t start, time_t e
     return result;
 }
 
-void EventManager::removeEvent(const shared_ptr<Event> &event, Event::actionType actionType) {
+void EventManager::removeEvent(const shared_ptr<Event> event, Event::actionType actionType) {
     auto freeEvent = (event)->freeSelf(actionType);
     auto recEventIt = lower_bound(events.begin(), events.end(), freeEvent,
                                   [](const shared_ptr<Event> &a, const shared_ptr<Event> &b) { return *a < *b; });
-    if (*recEventIt == freeEvent) {
+
+    if (recEventIt != events.end() && (*recEventIt)->getStartDateUtc() == freeEvent->getStartDateUtc()) {
         events.erase(recEventIt);
     }
 }
 
-bool EventManager::moveEvent(shared_ptr<SingleEvent> &event, time_t newStartDateUtc) {
-    if (newStartDateUtc == -1)
-        newStartDateUtc = findFreeSpace(event->getEndDateUtc(), event->getDurationUtc());
+bool EventManager::moveEvent(shared_ptr<Event> event, time_t newStartDateUtc) {
+    event->saveState();
     removeEvent(event);
-
-    if (checkAvailability(newStartDateUtc, newStartDateUtc + event->getDurationUtc()))
-        return false;
-    if (!event->getEditable())
-        return false;
     event->setStartDateUtc(newStartDateUtc);
+    if (event->checkCollision(events)) {
+        event->restoreState();
+        addEvent(event);
+        return false;
+    }
     addEvent(event);
     return true;
 }
 
-time_t EventManager::findFreeSpace(time_t start, time_t duration) const {
-    for (size_t i = 0; i < 10000; ++i) {
-        auto event = checkAvailability(start, start + duration);
-        if (event == nullptr)
-            return start;
-        start = event->getEndDateUtc();
+bool EventManager::changeDuration(shared_ptr<Event> event, time_t newDuration) {
+    event->saveState();
+    event->setDurationUtc(newDuration);
+    removeEvent(event);
+    if (event->checkCollision(events)) {
+        event->restoreState();
+        addEvent(event);
+        return false;
     }
-    return -1;
+    addEvent(event);
+    return true;
+}
+
+time_t EventManager::findFreeSpace(shared_ptr<Event> event) const {
+    return event->findFreeSpace(events);
 }
 
 shared_ptr<SingleEvent> EventManager::findByStart(time_t start) {
@@ -96,5 +103,3 @@ EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
     }
     return result;
 }
-
-

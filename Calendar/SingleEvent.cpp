@@ -69,7 +69,7 @@ string SingleEvent::infoAll() {
     return ss.str();
 }
 
-shared_ptr<SingleEvent> SingleEvent::checkCollision(const EventSet<shared_ptr<Event>> &ev) const {
+shared_ptr<Event> SingleEvent::checkCollision(const EventSet<shared_ptr<Event>> &ev) const {
     for (const auto &event:ev) {
         auto res = event->eventExists(getStartDateUtc(), getEndDateUtc());
         if (res)
@@ -79,5 +79,13 @@ shared_ptr<SingleEvent> SingleEvent::checkCollision(const EventSet<shared_ptr<Ev
 }
 
 shared_ptr<Event> SingleEvent::getCopy() {
-    return shared_ptr<Event>();
+    return make_shared<SingleEvent>(*this);
+}
+
+void SingleEvent::saveState() {
+    state = make_shared<SingleEvent>(*this);
+}
+
+void SingleEvent::restoreState() {
+    *this = *state;
 }

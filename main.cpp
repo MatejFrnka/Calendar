@@ -7,6 +7,7 @@
 #include "Calendar/EventManager.h"
 #include "App/Interface.h"
 #include "Utility/Exceptions/EventNotEditableException.h"
+#include "Calendar/Event.h"
 #include "Calendar/SingleEvent.h"
 #include "Calendar/RecurringEvent.h"
 
@@ -213,8 +214,6 @@ int main() {
         assert(drawEvents(e1.getEvents(0, 5)) == "1 0 10\n");
         assert(drawEvents(e1.getEvents(5, 7)) == "1 0 10\n");
 
-        cout << drawEvents(e2.getEvents(0, 1000));
-
     }
 
     //EVENT MANAGER
@@ -304,8 +303,6 @@ int main() {
         em.removeEvent(evi3);
         assert(drawEvents(em.getEvents(0, 500)) == "event 400 450\n");
         auto evi4 = *em.getEvents(6000, 7000).begin();
-        em.removeEvent(SingleEvent::getInstance("test", 400, 50));
-        assert(drawEvents(em.getEvents(0, 500)) == "event 400 450\n");
         em.removeEvent(evi4, Event::actionType::AllEvents);
         assert(drawEvents(em.getEvents(0, 500000)) == "");
 
@@ -423,38 +420,71 @@ int main() {
                                                     "title 900 950\n"
                                                     "r 1300 1350\n");
     }
-    //FIND FREE SPACE
+    //Moving events
+    {
+        EventManager em;
+        em.addEvent(SingleEvent::getInstance("single1", 500, 50));
+        assert(drawEvents(em.getEvents(0, 1000)) == "single1 500 550\n");
+        assert(em.moveEvent(*em.getEvents(0, 1000).begin(), 700));
+        assert(drawEvents(em.getEvents(0, 1000)) == "single1 700 750\n");
+        em.addEvent(RecurringEvent::getInstance("recurring1", 1000, 100, 500));
+        assert(em.moveEvent(*em.getEvents(1000, 1200).begin(), 1100));
+        assert(em.moveEvent(*em.getEvents(1500, 1600).begin(), 1510));
+        assert(drawEvents(em.getEvents(0, 2500)) == "single1 700 750\n"
+                                                    "recurring1 1100 1200\n"
+                                                    "recurring1 1510 1610\n"
+                                                    "recurring1 2000 2100\n");
+        assert(em.moveEvent(*em.getEvents(1500, 1610).begin(), 1500));
+        assert(drawEvents(em.getEvents(0, 2500)) == "single1 700 750\n"
+                                                    "recurring1 1100 1200\n"
+                                                    "recurring1 1500 1600\n"
+                                                    "recurring1 2000 2100\n");
+        assert(em.moveEvent(*em.getEvents(2500, 2600).begin(), 2435));
+        assert(drawEvents(em.getEvents(1500, 3500)) == "recurring1 1500 1600\n"
+                                                       "recurring1 2000 2100\n"
+                                                       "recurring1 2435 2535\n"
+                                                       "recurring1 3000 3100\n");
+        em.findByStart(2000)->setTitle("asdf");
+        em.moveEvent(*em.findByTitle("asdf").begin(), 1750);
+        assert(drawEvents(em.getEvents(1750, 3000)) == "asdf 1750 1850\n"
+                                                       "asdf 2250 2350\n"
+                                                       "recurring1 2435 2535\n"
+                                                       "asdf 2750 2850\n");
+        auto e = em.findByStart(2440);
+        assert(em.changeDuration(e, 300));
+        assert(drawEvents(em.getEvents(1750, 3000)) == "asdf 1750 1850\n"
+                                                       "asdf 2250 2350\n"
+                                                       "recurring1 2435 2735\n"
+                                                       "asdf 2750 2850\n");
 
+        assert(!em.changeDuration( em.findByStart(2440), 400));
+        assert(drawEvents(em.getEvents(1750, 3000)) == "asdf 1750 1850\n"
+                                                       "asdf 2250 2350\n"
+                                                       "recurring1 2435 2735\n"
+                                                       "asdf 2750 2850\n");
+    }
     {
         EventManager em;
         assert(em.addEvent(RecurringEvent::getInstance("r1", 0, 50, 100)));
         em.removeEvent(*em.getEvents(300, 400).begin());
-        assert(em.findFreeSpace(100, 100) == 250);
         em.removeEvent(*em.getEvents(0, 400).begin(), Event::actionType::AllEvents);
         assert(drawEvents(em.getEvents(0, 1000)).empty());
-        assert(em.addEvent(SingleEvent::getInstance("t", 200, 100)));
-        assert(em.addEvent(SingleEvent::getInstance("t", 301, 100)));
-        assert(em.findFreeSpace(200, 1) == 300);
-        assert(em.addEvent(SingleEvent::getInstance("t", 300, 1)));
-        assert(em.findFreeSpace(200, 1) == 401);
-        assert(em.findFreeSpace(100, 1) == 100);
-        assert(em.addEvent(RecurringEvent::getInstance("t", 500, 100, 200)));
-        assert(em.findFreeSpace(600, 500) == -1);
-        assert(em.findFreeSpace(557, 100) == 600);
-        assert(em.findFreeSpace(557, 101) == -1);
-        auto a = *em.getEvents(700, 800).begin();
+        assert(em.addEvent(SingleEvent::getInstance("e1", 200, 100)));
+        assert(em.addEvent(SingleEvent::getInstance("e2", 301, 100)));
+        assert(em.addEvent(SingleEvent::getInstance("e3", 300, 1)));
+        assert(em.addEvent(RecurringEvent::getInstance("r2", 500, 100, 200)));
+        shared_ptr<Event> a = *em.getEvents(700, 800).begin();
         assert(em.moveEvent(a, 750));
-        assert(drawEvents(em.getEvents(600, 1000)) == "t 750 850\n"
-                                                      "t 900 1000\n");
+        assert(drawEvents(em.getEvents(600, 1000)) == "r2 750 850\n"
+                                                      "r2 900 1000\n");
         a = *em.getEvents(750, 850).begin();
-        assert(em.checkAvailability(801, 901) != nullptr);
         assert(!em.moveEvent(a, 801));
         assert(em.moveEvent(a, 800));
-        assert(drawEvents(em.getEvents(600, 1000)) == "t 800 900\n"
-                                                      "t 900 1000\n");
+        assert(drawEvents(em.getEvents(600, 1000)) == "r2 800 900\n"
+                                                      "r2 900 1000\n");
         assert(em.moveEvent(a, 600));
-        assert(drawEvents(em.getEvents(600, 1000)) == "t 600 700\n"
-                                                      "t 900 1000\n");
+        assert(drawEvents(em.getEvents(600, 1000)) == "r2 600 700\n"
+                                                      "r2 900 1000\n");
     }
     // Editing events
     {

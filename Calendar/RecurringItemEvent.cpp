@@ -96,3 +96,20 @@ string RecurringItemEvent::infoAll() {
        << "Is editable:\t" << (getEditable() ? "true" : "false") << endl;
     return ss.str();
 }
+
+shared_ptr<Event> RecurringItemEvent::getCopy() {
+    shared_ptr<RecurringItemEvent> res = make_shared<RecurringItemEvent>(*this);
+    return res;
+}
+
+void RecurringItemEvent::saveState() {
+    state = make_shared<RecurringItemEvent>(*this);
+    if (parentEvent)
+        parentEvent->saveState();
+}
+
+void RecurringItemEvent::restoreState() {
+    *this = *state;
+    if (parentEvent)
+        parentEvent->restoreState();
+}

@@ -44,8 +44,10 @@ bool CreateCommand::createSingle(std::queue<std::string> &params) const {
     auto startUtc = inputUtility.readDateTime("Start", params);
     auto duration = inputUtility.readTimeSpan("Duration", params);
 
-    if (!eventManager.addEvent(SingleEvent::getInstance(title, startUtc, duration))) {
-        time_t firstFree = eventManager.findFreeSpace(startUtc, duration);
+
+    auto event = SingleEvent::getInstance(title, startUtc, duration);
+    if (!eventManager.addEvent(event)) {
+        time_t firstFree = eventManager.findFreeSpace(event);
         tm tm_firstFree = *localtime(&firstFree);
         inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - "
                          << asctime(&tm_firstFree);
@@ -68,7 +70,8 @@ bool CreateCommand::createRecurring(std::queue<std::string> &params) const {
         event = RecurringEvent::getInstance(title, startUtc, duration, timeBetween);
     else
         event = RecurringEvent::getInstance(title, startUtc, duration, timeBetween, repeatTill);
-    if (!eventManager.addEvent(event))
-        return false;
+    if (!eventManager.addEvent(event)) {
+        time_t firstFree = eventManager.findFreeSpace(event);
+    }
     return true;
 }

@@ -69,9 +69,16 @@ public:
      */
     shared_ptr<Event> freeSelf(actionType actionType) override;
 
-    shared_ptr<SingleEvent> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
+    shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
 
     string infoAll() override;
+
+    void saveState() override;
+
+    void restoreState() override;
+
+private:
+    shared_ptr<SingleEvent> state;
 };
 
 #endif

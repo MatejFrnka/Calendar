@@ -84,6 +84,7 @@ public:
                                return std::vector<std::shared_ptr<Command>>();
                            });
         commands.push_back(make_shared<CustomCommand>(lock));
+
     }
 
     EditCommand(const EditCommand &) = delete;

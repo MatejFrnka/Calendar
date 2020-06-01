@@ -47,8 +47,16 @@ public:
 
     void setLocation(const string &location) override;
 
+    shared_ptr<Event> getCopy() override;
+
+    void saveState() override;
+
+    void restoreState() override;
+
 private:
     shared_ptr<RecurringEvent> parentEvent;
+
+    shared_ptr<RecurringItemEvent> state;
 };
 
 #endif

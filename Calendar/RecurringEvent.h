@@ -92,10 +92,14 @@ public:
 
     string infoAll() override;
 
+    shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
 
-    shared_ptr<SingleEvent> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
+    void saveState() override;
+
+    void restoreState() override;
 
 private:
+    shared_ptr<RecurringEvent> state;
 
     shared_ptr<RecurringEvent> getFirstNode();
 
@@ -162,7 +166,6 @@ private:
 
     //Child node - always has event start after this repeatTill
     shared_ptr<RecurringEvent> childNode = nullptr;
-
 //GETTERS AND SETTERS
 public:
     time_t getRepeatTill() const;
@@ -170,6 +173,10 @@ public:
     bool isRepeatToInfinity() const;
 
     time_t getTimeBetweenEvents() const;
+
+    void setStartDateUtc(time_t startDateUtc) override;
+
+    void setDurationUtc(time_t durationUtc) override;
 };
 
 #endif
