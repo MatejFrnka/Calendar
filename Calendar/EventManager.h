@@ -34,7 +34,7 @@ public:
      * @param event Adds recurring event to collection of events
      * @return True if adding as successful, false if event collides with another
      */
-    bool addEvent(const shared_ptr<RecurringEvent> &event);
+    bool addEvent(const shared_ptr<Event> &event);
 
     /**
      * Removes event from event manager
@@ -113,7 +113,7 @@ public:
 private:
 
     EventSet<shared_ptr<SingleEvent>> singleEvents;
-    EventSet<shared_ptr<RecurringEvent>> recurringEvents;
+    EventSet<shared_ptr<Event>> recurringEvents;
 };
 
 #endif

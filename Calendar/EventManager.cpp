@@ -13,7 +13,7 @@ bool EventManager::addEvent(const shared_ptr<SingleEvent> &event) {
     return true;
 }
 
-bool EventManager::addEvent(const shared_ptr<RecurringEvent> &event) {
+bool EventManager::addEvent(const shared_ptr<Event> &event) {
     if (checkAvailability(*event))
         return false;
     recurringEvents.insert(event);
@@ -69,14 +69,14 @@ void EventManager::removeEvent(const shared_ptr<Event> &event, Event::actionType
         singleEvents.erase(eventIt);
         return;
     }
-    shared_ptr<RecurringEvent> ev = nullptr;
+    shared_ptr<Event> ev = nullptr;
     for (const auto &ptr  : recurringEvents) {
         if (ev == nullptr || ev->getStartDateUtc() < ptr->getStartDateUtc())
             ev = ptr;
     }
     //Event was not found in single events - must be recurring item event
     auto recEventIt = lower_bound(recurringEvents.begin(), recurringEvents.end(), freeEvent,
-                                  [](const shared_ptr<RecurringEvent> &a, const shared_ptr<Event> &b) { return *a < *b; });
+                                  [](const shared_ptr<Event> &a, const shared_ptr<Event> &b) { return *a < *b; });
     if (*recEventIt == freeEvent) {
         recurringEvents.erase(recEventIt);
     }
@@ -97,16 +97,7 @@ bool EventManager::moveEvent(shared_ptr<SingleEvent> &event, time_t newStartDate
 }
 
 time_t EventManager::findFreeSpace(time_t start, time_t duration) const {
-    //Top limit for event in case it is longer than time between recurring event that goes to infinity
-    time_t timeMax = -1;
-    for (const auto &event:recurringEvents) {
-        if (event->isRepeatToInfinity() && event->getTimeBetweenEvents() - event->getDurationUtc() < duration) {
-            if (timeMax == -1 || timeMax > event->getStartDateUtc())
-                timeMax = event->getStartDateUtc();
-        }
-    }
-
-    while (timeMax == -1 || start <= timeMax - duration) {
+    for (size_t i = 0; i < 10000; ++i) {
         auto event = checkAvailability(start, start + duration);
         if (event == nullptr)
             return start;
@@ -116,7 +107,7 @@ time_t EventManager::findFreeSpace(time_t start, time_t duration) const {
 }
 
 shared_ptr<SingleEvent> EventManager::findByStart(time_t start) {
-    auto events = getEvents(start, start+1);
+    auto events = getEvents(start, start + 1);
     if (!events.empty()) {
         return *events.begin();
     }
@@ -133,7 +124,12 @@ EventSet<shared_ptr<Event>> EventManager::findByTitle(const string &title) {
 }
 
 EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
-    return EventSet<shared_ptr<Event>>();
+    EventSet<shared_ptr<Event>> result;
+    for (EventsIterator event(singleEvents, recurringEvents); !event.end(); ++event) {
+        if ((*event)->getLocation() == address)
+            result.insert(*event);
+    }
+    return result;
 }
 
 

@@ -24,20 +24,21 @@ public:
 
     EventsIterator &operator=(const EventsIterator &) = delete;
 
-    EventsIterator(const EventSet<std::shared_ptr<SingleEvent>> &sEvents, const EventSet<std::shared_ptr<RecurringEvent>> &rEvents);
+    EventsIterator(const EventSet<std::shared_ptr<SingleEvent>> &sEvents, const EventSet<std::shared_ptr<Event>> &rEvents);
 
     void operator++();
 
     bool end() { return singleIt == singleEvents->end() && recIt == recurringEvents->end(); }
 
     std::shared_ptr<Event> operator*();
+
     void reset();
 
 private:
     const EventSet<std::shared_ptr<SingleEvent>> *singleEvents;
     EventSet<std::shared_ptr<SingleEvent>>::const_iterator singleIt;
-    const EventSet<std::shared_ptr<RecurringEvent>> *recurringEvents;
-    EventSet<std::shared_ptr<RecurringEvent>>::const_iterator recIt;
+    const EventSet<std::shared_ptr<Event>> *recurringEvents;
+    EventSet<std::shared_ptr<Event>>::const_iterator recIt;
 };
 
 #endif

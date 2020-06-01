@@ -5,7 +5,7 @@
 
 #include "EventsIterator.h"
 
-EventsIterator::EventsIterator(const EventSet<std::shared_ptr<SingleEvent>> &sEvents, const EventSet<std::shared_ptr<RecurringEvent>> &rEvents) {
+EventsIterator::EventsIterator(const EventSet<std::shared_ptr<SingleEvent>> &sEvents, const EventSet<std::shared_ptr<Event>> &rEvents) {
     singleEvents = &sEvents;
     recurringEvents = &rEvents;
     singleIt = singleEvents->begin();

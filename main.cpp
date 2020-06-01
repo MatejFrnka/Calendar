@@ -441,11 +441,11 @@ int main() {
         assert(em.findFreeSpace(600, 500) == -1);
         assert(em.findFreeSpace(557, 100) == 600);
         assert(em.findFreeSpace(557, 101) == -1);
-        auto a = dynamic_pointer_cast<SingleEvent>(*em.getEvents(700, 800).begin());
+        auto a = *em.getEvents(700, 800).begin();
         assert(em.moveEvent(a, 750));
         assert(drawEvents(em.getEvents(600, 1000)) == "t 750 850\n"
                                                       "t 900 1000\n");
-        a = dynamic_pointer_cast<SingleEvent>(*em.getEvents(750, 850).begin());
+        a = *em.getEvents(750, 850).begin();
         assert(em.checkAvailability(801, 901) != nullptr);
         assert(!em.moveEvent(a, 801));
         assert(em.moveEvent(a, 800));
