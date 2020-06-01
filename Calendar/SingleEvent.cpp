@@ -78,3 +78,7 @@ shared_ptr<SingleEvent> SingleEvent::checkCollision(EventsIterator &ev) const {
     }
     return nullptr;
 }
+
+shared_ptr<Event> SingleEvent::getCopy() {
+    return shared_ptr<Event>();
+}

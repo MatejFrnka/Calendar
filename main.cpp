@@ -514,6 +514,43 @@ int main() {
         event = *ev.getEvents(1000, 2000).begin();
         assert(event->getTitle() == "T2");
     }
+    //COPY CONSTRUCTOR
+    {
+        auto rec1 = RecurringEvent::getInstance("Title", 0, 50, 500);
+        auto event1 = (*rec1->getEvents(1000, 1100).begin())->freeSelf(Event::actionType::OnlyThis);
+        shared_ptr<RecurringEvent> ev = make_shared<RecurringEvent>(*rec1);
+        auto event2 = (*rec1->getEvents(5500, 6000).begin())->freeSelf(Event::actionType::ThisAndNext);
+        assert(drawEvents(ev->getEvents(5000, 10000)) == "Title 5000 5050\n"
+                                                         "Title 5500 5550\n"
+                                                         "Title 6000 6050\n"
+                                                         "Title 6500 6550\n"
+                                                         "Title 7000 7050\n"
+                                                         "Title 7500 7550\n"
+                                                         "Title 8000 8050\n"
+                                                         "Title 8500 8550\n"
+                                                         "Title 9000 9050\n"
+                                                         "Title 9500 9550\n");
+        assert(drawEvents(rec1->getEvents(5000, 10000)) == "Title 5000 5050\n");
+
+        EventManager e;
+        e.addEvent(ev);
+        e.removeEvent(*e.getEvents(1500, 2000).begin(), Event::actionType::OnlyThis);
+        (*e.findByTitle("Title").begin())->setEditable(false);
+        e.removeEvent(*e.getEvents(2500, 3000).begin(), Event::actionType::OnlyThis);
+        assert(drawEvents(e.getEvents(2000, 2500)) == "Title 2000 2050\n");
+        e.removeEvent(*e.getEvents(2000, 2500).begin(), Event::actionType::OnlyThis);
+        assert(drawEvents(e.getEvents(2000, 2500)).empty());
+        assert(drawEvents(e.getEvents(0, 2500)) == "Title 0 50\n"
+                                                   "Title 500 550\n");
+
+        auto ev0 = SingleEvent::getInstance("single", 0, 50);
+        ev0->setTitle("test");
+        auto ev1 = make_shared<SingleEvent>(*ev0);
+        ev0->setEditable(false);
+        assert(ev1->getTitle() == "test");
+        ev1->setTitle("tit");
+        assert(ev0->getTitle() == "test");
+    }
 /*
     {
         EventManager ev;

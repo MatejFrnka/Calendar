@@ -12,7 +12,6 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = repeatTill_;
     repeatToInfinity = false;
-
 }
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_)
@@ -20,6 +19,18 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = 0;
     repeatToInfinity = true;
+}
+
+RecurringEvent::RecurringEvent(const RecurringEvent &event) : Event(event) {
+    repeatToInfinity = event.repeatToInfinity;
+    repeatTill = event.repeatTill;
+    timeBetweenEvents = event.timeBetweenEvents;
+    if (event.childNode) {
+        shared_ptr<RecurringEvent> child = make_shared<RecurringEvent>(*event.childNode);
+        auto wptr = std::shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
+        child->parentNode = downcasted_shared_from_this<RecurringEvent>();
+        childNode = child;
+    }
 }
 
 EventSet<shared_ptr<SingleEvent>> RecurringEvent::getEvents(time_t start, time_t end) {
@@ -233,6 +244,7 @@ shared_ptr<RecurringEvent> RecurringEvent::freeThisAndNextRecurringItemEvent(con
     //RECURRING ITEM EVENT IS IN THE MIDDLE OF THE SEQUENCE
     //SET END OF THIS SEQUENCE TO START OF EVENT
     repeatTill = event->getStartDateUtc();
+    repeatToInfinity = false;
     //COPY THIS SEQUENCE AND SET ITS START TO START OF EVENT
     shared_ptr<RecurringEvent> next = make_shared<RecurringEvent>(RecurringEvent(*this));
     next->setStartDateUtc(event->getStartDateUtc());
@@ -288,5 +300,9 @@ shared_ptr<SingleEvent> RecurringEvent::checkCollision(EventsIterator &ev) const
     ev.reset();
     if (childNode)
         return childNode->checkCollision(ev);
+    return nullptr;
+}
+
+shared_ptr<Event> RecurringEvent::getCopy() {
     return nullptr;
 }
