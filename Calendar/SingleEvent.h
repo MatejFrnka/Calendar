@@ -19,7 +19,11 @@ protected:
     SingleEvent(string title_, time_t startDateUtc_, time_t duration_);
 
 public:
-    SingleEvent(const SingleEvent &) = default;
+    SingleEvent(const SingleEvent &);
+
+    explicit SingleEvent(istringstream &input);
+
+    SingleEvent &operator=(const SingleEvent &event);
 
     shared_ptr<Event> getCopy() override;
 
@@ -71,7 +75,9 @@ public:
 
     shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
 
-    string infoAll() override;
+    string exportEvent() const override;
+
+    string infoAll() const override;
 
     void saveState() override;
 

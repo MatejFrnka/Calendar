@@ -10,6 +10,7 @@
 #include "Calendar/Event.h"
 #include "Calendar/SingleEvent.h"
 #include "Calendar/RecurringEvent.h"
+#include "Utility/EventFactory.h"
 
 using namespace std;
 
@@ -457,7 +458,7 @@ int main() {
                                                        "recurring1 2435 2735\n"
                                                        "asdf 2750 2850\n");
 
-        assert(!em.changeDuration( em.findByStart(2440), 400));
+        assert(!em.changeDuration(em.findByStart(2440), 400));
         assert(drawEvents(em.getEvents(1750, 3000)) == "asdf 1750 1850\n"
                                                        "asdf 2250 2350\n"
                                                        "recurring1 2435 2735\n"
@@ -582,6 +583,23 @@ int main() {
         ev1->setTitle("tit");
         assert(ev0->getTitle() == "test");
     }
+    //Export import
+    {
+        auto event = SingleEvent::getInstance("title", 0, 100);
+        event->addPerson(make_shared<Person>("name", "surname"));
+        event->setLocation("praha");
+        string e = event->exportEvent();
+        auto import = EventFactory::fromString(e);
+        assert(import->infoAll() == event->infoAll());
+        auto recurring = RecurringEvent::getInstance("title-recurring", 500, 100, 1000, 3000);
+        e = recurring->exportEvent();
+        import = import = EventFactory::fromString(e);
+        (*recurring->getEvents(1500, 2000).begin())->freeSelf(Event::actionType::OnlyThis);
+        cout << recurring->infoAll();
+        e = recurring->exportEvent();
+        import = import = EventFactory::fromString(e);
+        assert(import->infoAll() == recurring->infoAll());
+    }
 /*
     {
         EventManager ev;
@@ -609,7 +627,7 @@ int main() {
         auto a = SingleEvent::getInstance("a", 1590562800, 3600 * 6);
         a->addPerson(make_shared<Person>("Karel", "Slepicka"));
         a->addPerson(make_shared<Person>("Ahoj", "Pepo"));
-        a->addPerson(make_shared<Person>("LE", "Debilo"));
+        a->addPerson(make_shared<Person>("areg", "adsflj"));
         ev.addEvent(a);
         ev.addEvent(SingleEvent::getInstance("b", 1590361200, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("c", 1590706800, 100000));
@@ -618,9 +636,10 @@ int main() {
         ev.addEvent(SingleEvent::getInstance("f", 1590505200, 3600 * 8));
 
         cout << "asserts ok" << endl;
+        ev.exportEvents();
         //istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");
-        Interface i(cin, cout, ev);
-        i.start();
+        //Interface i(cin, cout, ev);
+        //i.start();
     }
 
     cout << "end" << endl;

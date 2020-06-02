@@ -12,7 +12,9 @@
  * Used when trying to edit attribute of event that can not be edited
  */
 class EventNotEditableException : std::exception {
-//todo: implement
+    virtual const char *what() const throw() {
+        return "Event is not editable";
+    }
 };
 
 

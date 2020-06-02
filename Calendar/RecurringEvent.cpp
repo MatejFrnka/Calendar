@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include "RecurringEvent.h"
+#include "../Utility/EventFactory.h"
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
@@ -27,7 +28,7 @@ RecurringEvent::RecurringEvent(const RecurringEvent &event) : Event(event) {
     if (event.childNode) {
         shared_ptr<RecurringEvent> child = make_shared<RecurringEvent>(*event.childNode);
         auto wptr = std::shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
-        child->parentNode = downcasted_shared_from_this<RecurringEvent>();
+        child->parentNode = wptr;
         childNode = child;
     }
 }
@@ -45,6 +46,42 @@ EventSet<shared_ptr<SingleEvent>> RecurringEvent::getEvents(time_t start, time_t
         result.insert(childEvents.begin(), childEvents.end());
     }
     return result;
+}
+
+RecurringEvent::RecurringEvent(istringstream &input) : Event(input) {
+    string test = input.str();
+    input >> repeatToInfinity;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    input >> repeatTill;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    input >> timeBetweenEvents;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    bool child;
+    input >> child;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    if (child) {
+        EventFactory::readNext(input, sep);
+        RecurringEvent rec(input);
+        childNode = make_shared<RecurringEvent>(rec);
+        auto wptr = std::shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
+        childNode->parentNode = wptr;
+    }
+}
+
+string RecurringEvent::exportEvent() const {
+    stringstream result;
+    result << "recurringevent" << sep << Event::exportEvent()
+           << repeatToInfinity << sep
+           << repeatTill << sep
+           << timeBetweenEvents << sep
+           << (childNode != nullptr) << sep;
+    if (childNode)
+        result << childNode->exportEvent();
+    return result.str();
 }
 
 time_t RecurringEvent::getRepeatTill() const {
@@ -66,6 +103,7 @@ shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end) {
     return nullptr;
 }
 
+
 shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
     return eventExists(start, end, repeat, -1);
 }
@@ -83,7 +121,6 @@ shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end, ti
     time -= (time - getStartDateUtc()) % getTimeBetweenEvents();
     return getSingle(time);
 }
-
 
 time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time_t repeatTill_) const {
     bool repeatToInfinity_ = (repeatTill_ == -1);
@@ -260,34 +297,32 @@ shared_ptr<Event> RecurringEvent::freeSelf(Event::actionType actionType) {
     return shared_from_this();
 }
 
-string RecurringEvent::infoAll() {
+string RecurringEvent::infoAll() const {
     tm time{};
-    time_t start = getStartDateUtc();
-    time = *localtime(&start);
     stringstream ss;
-
-    ss << "Title:\t" << getTitle() << '\n'
-       << "Type:\tRecurring Event\n"
-       << "Start:\t" << asctime(&time);
-
+    ss << "Type:\tRecurring event" << endl
+       << Event::infoAllBody();
     time_t end = getEndDateUtc();
     time = *localtime(&end);
     ss << "End:\t" << asctime(&time)
        << "Repeat every:\t" << getTimeBetweenEvents() << "s\n";
-    shared_ptr<RecurringEvent> lastEvent = downcasted_shared_from_this<RecurringEvent>();
-    while (lastEvent->childNode)
-        lastEvent = childNode;
-    if (lastEvent->repeatToInfinity)
-        ss << "Repeat till: infinity\n";
+    bool toInf = repeatToInfinity;
+    time_t till = repeatTill;
+    if (childNode) {
+        shared_ptr<RecurringEvent> lastEvent = childNode;
+        while (lastEvent->childNode)
+            lastEvent = childNode;
+        toInf = lastEvent->repeatToInfinity;
+        till = lastEvent->repeatTill;
+    }
+    if (toInf)
+        ss << "Repeat till:\tinfinity\n";
     else {
-        time_t repeatEnd = lastEvent->getRepeatTill();
+        time_t repeatEnd = till;
         time = *localtime(&repeatEnd);
         ss << "Repeat till:\t" << asctime(&time);
     }
-    if (editable)
-        ss << "Event is editable" << endl;
-    else
-        ss << "Event is not editable" << endl;
+
     return ss.str();
 }
 

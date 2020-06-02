@@ -103,3 +103,8 @@ EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
     }
     return result;
 }
+
+void EventManager::exportEvents() {
+    for (const auto &event :events)
+        cout << event->exportEvent() << endl;
+}

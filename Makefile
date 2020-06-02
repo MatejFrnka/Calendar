@@ -10,4 +10,4 @@ all: $(LIST)
 	$(CC) $(CFLAGS) $@.cpp -c -o $@
 
 clean:
-	rm $(LIST)
+	rm $(LIS

@@ -80,20 +80,10 @@ void RecurringItemEvent::setLocation(const string &location) {
     Event::setLocation(location);
 }
 
-string RecurringItemEvent::infoAll() {
-    tm time{};
-    time_t start = getStartDateUtc();
-    time = *localtime(&start);
+string RecurringItemEvent::infoAll() const {
     stringstream ss;
-
-    ss << "Title:\t" << getTitle() << '\n'
-       << "Type:\tRecurring event item\n"
-       << "Start:\t" << asctime(&time);
-
-    time_t end = getEndDateUtc();
-    time = *localtime(&end);
-    ss << "End:\t" << asctime(&time)
-       << "Is editable:\t" << (getEditable() ? "true" : "false") << endl;
+    ss << "Type:\tItem of a Recurring event" << endl
+       << SingleEvent::infoAllBody();
     return ss.str();
 }
 

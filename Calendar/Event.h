@@ -23,8 +23,6 @@ class SingleEvent;
 
 class RecurringEvent;
 
-class EventsIterator;
-
 class Event : public inheritable_enable_shared_from_this<Event> {
 protected:
     Event(string title_, time_t startDateUtc_, time_t durationUtc_);
@@ -32,6 +30,11 @@ protected:
     Event(const Event &event);
 
 public:
+
+    explicit Event(istringstream &input);
+
+    Event &operator=(const Event &event);
+
     enum actionType {
         AllEvents,
         ThisAndNext,
@@ -117,7 +120,7 @@ public:
 
     virtual shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const = 0;
 
-    void exportEvent(const string &path);
+    virtual string exportEvent() const;
 
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;
@@ -135,8 +138,12 @@ public:
     /**
      * @return Info about event
      */
-    virtual string infoAll() = 0;
+    virtual string infoAll() const = 0;
 
+protected:
+    string infoAllBody() const;
+
+public:
     /**
      * @throws EventNotEditableException when editable is set to false
      */
@@ -209,6 +216,10 @@ public:
     virtual void setLocation(const string &location);
 
 protected:
+    const char sep = ';';
+
+    string sanitize(string input) const;
+
     time_t startDateUtc;
     string title;
     time_t durationUtc;

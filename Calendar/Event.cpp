@@ -6,6 +6,9 @@
 #include <sstream>
 #include "Event.h"
 #include "../Utility/Exceptions/EventNotEditableException.h"
+#include "../Utility/EventFactory.h"
+#include "../Utility/Exceptions/InvalidEventSequenceException.h"
+
 
 Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     title = move(title_);
@@ -13,12 +16,65 @@ Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     durationUtc = durationUtc_;
 }
 
-Event::Event(const Event &event) {
+Event::Event(const Event &event) : Event(event.title, event.startDateUtc, event.durationUtc) {
+    location = event.location;
+    people = event.people;
+}
+
+Event::Event(istringstream &input) : Event("t", 0, 1) {
+    title = EventFactory::readNext(input, sep);
+    if (title.empty())
+        throw InvalidEventSequenceException();
+    input >> startDateUtc;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    input >> durationUtc;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    location = EventFactory::readNext(input, sep);
+    int peopleAmount;
+    input >> peopleAmount;
+    if (input.fail() || input.get() != sep)
+        throw InvalidEventSequenceException();
+    for (int i = 0; i < peopleAmount; ++i) {
+        string name = EventFactory::readNext(input, sep);
+        string surname = EventFactory::readNext(input, sep);
+        string phone = EventFactory::readNext(input, sep);
+        string email = EventFactory::readNext(input, sep);
+        if (name.empty() || surname.empty())
+            throw InvalidEventSequenceException();
+        shared_ptr<Person> person = make_shared<Person>(name, surname);
+        person->phone = phone;
+        person->email = email;
+        people.push_back(person);
+    }
+}
+
+string Event::exportEvent() const {
+    stringstream result;
+    result << sanitize(title) << sep
+           << startDateUtc << sep
+           << durationUtc << sep
+           << sanitize(location) << sep
+           << people.size() << sep;
+    for (const auto &person : people) {
+        result << sanitize(person->name) << sep
+               << sanitize(person->surname) << sep
+               << sanitize(person->phone) << sep
+               << sanitize(person->email) << sep;
+    }
+    return result.str();
+}
+
+Event &Event::operator=(const Event &event) {
+    if (&event == this)
+        return *this;
     title = event.title;
     startDateUtc = event.startDateUtc;
     durationUtc = event.durationUtc;
     location = event.location;
     people = event.people;
+    return *this;
 }
 
 bool Event::isInRange(time_t rangeStart, time_t rangeEnd) const {
@@ -147,3 +203,32 @@ time_t Event::findFreeSpace(const EventSet<shared_ptr<Event>> &events) {
     }
     return -1;
 }
+
+string Event::sanitize(string input) const {
+    return input;
+}
+
+
+string Event::infoAllBody() const {
+    tm time{};
+    time_t start = getStartDateUtc();
+    time = *localtime(&start);
+    stringstream ss;
+
+    ss << "Title:\t" << getTitle() << '\n'
+       << "Type:\tSingle Event\n"
+       << "Start:\t" << asctime(&time);
+
+    time_t end = getEndDateUtc();
+    time = *localtime(&end);
+    ss << "End:\t" << asctime(&time)
+       << "Is editable:\t" << (getEditable() ? "true" : "false") << endl;
+    ss << "Location:\t" << location << endl;
+    if (!people.empty()) {
+        ss << "People:" << endl;
+        for (const auto &person : people)
+            ss << *person << endl;
+    }
+    return ss.str();
+}
+

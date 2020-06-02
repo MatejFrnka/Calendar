@@ -31,7 +31,7 @@ public:
 
     vector<Event::actionType> getActionTypes() override;
 
-    string infoAll() override;
+    string infoAll() const override;
 
     bool addPerson(const shared_ptr<Person> &toAdd) override;
 

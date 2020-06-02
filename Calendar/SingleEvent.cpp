@@ -7,10 +7,20 @@
 #include "RecurringEvent.h"
 #include "SingleEvent.h"
 
+SingleEvent::SingleEvent(const SingleEvent &event) : Event(event) {
+    state = event.state;
+}
+
 SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : Event(move(title_),
                                                                                         startDateUtc_,
-                                                                                        duration_) {
+                                                                                        - -duration_) {}
 
+SingleEvent &SingleEvent::operator=(const SingleEvent &event) {
+    if (&event == this)
+        return *this;
+    Event::operator=(event);
+    state = event.state;
+    return *this;
 }
 
 shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end) {
@@ -52,20 +62,10 @@ EventSet<shared_ptr<SingleEvent>> SingleEvent::getEvents(time_t start, time_t en
     return result;
 }
 
-string SingleEvent::infoAll() {
-    tm time{};
-    time_t start = getStartDateUtc();
-    time = *localtime(&start);
+string SingleEvent::infoAll() const {
     stringstream ss;
-
-    ss << "Title:\t" << getTitle() << '\n'
-       << "Type:\tSingle Event\n"
-       << "Start:\t" << asctime(&time);
-
-    time_t end = getEndDateUtc();
-    time = *localtime(&end);
-    ss << "End:\t" << asctime(&time)
-       << "Is editable:\t" << (getEditable() ? "true" : "false") << endl;
+    ss << "Type:\tSingle Event" << endl
+       << Event::infoAllBody();
     return ss.str();
 }
 
@@ -88,4 +88,14 @@ void SingleEvent::saveState() {
 
 void SingleEvent::restoreState() {
     *this = *state;
+}
+
+string SingleEvent::exportEvent() const {
+    stringstream result;
+    result << "singleevent" << sep << Event::exportEvent();
+    return result.str();
+}
+
+SingleEvent::SingleEvent(istringstream &input) : Event(input) {
+
 }

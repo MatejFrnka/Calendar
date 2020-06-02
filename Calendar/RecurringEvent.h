@@ -31,6 +31,7 @@ protected:
 public:
     RecurringEvent(const RecurringEvent &event);
 
+    RecurringEvent(istringstream &input);
     static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_);
 
     static shared_ptr<RecurringEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
@@ -90,7 +91,7 @@ public:
      */
     virtual shared_ptr<Event> freeSelf(actionType actionType);
 
-    string infoAll() override;
+    string infoAll() const override;
 
     shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
 
@@ -98,6 +99,7 @@ public:
 
     void restoreState() override;
 
+    string exportEvent() const override;
 private:
     shared_ptr<RecurringEvent> state;
 

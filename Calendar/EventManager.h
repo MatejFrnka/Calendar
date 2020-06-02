@@ -96,6 +96,8 @@ public:
      */
     shared_ptr<SingleEvent> findByStart(time_t start);
 
+    void exportEvents();
+
     EventManager operator=(const EventManager &) = delete;
 
     EventManager(const EventManager &) = delete;
