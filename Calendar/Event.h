@@ -164,10 +164,9 @@ public:
      */
     virtual bool removePerson(const shared_ptr<Person> &toRemove);
 
-    const vector<shared_ptr<Person>> &getPeople();
+    const vector<shared_ptr<Person>> &getPeople() const;
 
 protected:
-    bool editable = true;
 
     /**
      * Get first event happening during or after time specified by startFrom
@@ -233,6 +232,7 @@ protected:
     time_t startDateUtc;
     string title;
     time_t durationUtc;
+    bool editable = true;
     string location;
     vector<shared_ptr<Person>> people;
 };

@@ -89,3 +89,10 @@ void RecurringItemEvent::restoreState() {
     if (parentEvent)
         parentEvent->restoreState();
 }
+
+RecurringItemEvent::RecurringItemEvent(shared_ptr<RecurringEvent> parent, time_t startDateUtc_) : SingleEvent(parent->getTitle(), startDateUtc_, parent->getDurationUtc()),
+                                                                                                  parentEvent(move(parent)) {
+    location = parentEvent->getLocation();
+    people = parentEvent->getPeople();
+    editable = parentEvent->getEditable();
+}

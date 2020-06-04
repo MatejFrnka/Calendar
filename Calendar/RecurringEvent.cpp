@@ -160,7 +160,7 @@ shared_ptr<RecurringItemEvent> RecurringEvent::getSingle(time_t start) {
     if (start % getTimeBetweenEvents() != getStartDateUtc() % getTimeBetweenEvents())
         throw EventNotInRecurringEventException();
     auto firstNode = getFirstNode();
-    return make_shared<RecurringItemEvent>(firstNode->getTitle(), start, firstNode->getDurationUtc(), firstNode);
+    return make_shared<RecurringItemEvent>(firstNode, start);
 }
 
 shared_ptr<RecurringEvent> RecurringEvent::getParentOfItem(const shared_ptr<RecurringItemEvent> &recurringItem) {

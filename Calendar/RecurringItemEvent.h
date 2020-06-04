@@ -24,6 +24,8 @@ public:
      */
     RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
 
+    RecurringItemEvent(shared_ptr<RecurringEvent>, time_t startDateUtc_);
+
     RecurringItemEvent() = delete;
 
     /**

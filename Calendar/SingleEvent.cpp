@@ -74,6 +74,7 @@ shared_ptr<Event> SingleEvent::checkCollision(const EventSet<shared_ptr<Event>> 
     return nullptr;
 }
 
+
 void SingleEvent::saveState() {
     state = make_shared<SingleEvent>(*this);
 }
