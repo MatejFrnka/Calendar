@@ -11,7 +11,7 @@
 #include "Calendar/SingleEvent.h"
 #include "Calendar/RecurringEvent.h"
 #include "Utility/FileUtility.h"
-#include "App.h"
+#include "CalendarApp.h"
 
 using namespace std;
 
@@ -627,7 +627,7 @@ int main() {
     }
 
     {
-        App app;
+        CalendarApp app;
         app.start();
     }
     cout << "end" << endl;

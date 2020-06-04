@@ -3,18 +3,18 @@
  * @date: 03.06.2020
  */
 
-#ifndef CALENDAR_APP_H
-#define CALENDAR_APP_H
+#ifndef CALENDAR_CALENDARAPP_H
+#define CALENDAR_CALENDARAPP_H
 
 #include "Calendar/EventManager.h"
 
-class App {
+class CalendarApp {
 public:
-    App() = default;
+    CalendarApp() = default;
 
-    App &operator=(const App &app) = delete;
+    CalendarApp &operator=(const CalendarApp &app) = delete;
 
-    App(const App &) = delete;
+    CalendarApp(const CalendarApp &) = delete;
 
     void start() const;
 
@@ -26,4 +26,4 @@ private:
 };
 
 
-#endif //CALENDAR_APP_H
+#endif //CALENDAR_CALENDARAPP_H

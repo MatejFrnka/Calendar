@@ -63,7 +63,7 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
     std::stringstream ss;
     bool firstTry = true;
     while (true) {
-        out << '\t' << attr << ": " << (firstTry ? currentVal : "");
+        out << '\t' << attr << ": " << (firstTry ? currentVal + "\n" : "");
         ss = getLine(firstTry && !currentVal.empty(), currentVal);
         float value;
         ss >> value;
@@ -130,7 +130,7 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
         if (!firstTry) {
             out << "Invalid date format. Please use " << exampleFormat << " format or 'now' for current date" << std::endl;
         }
-        out << '\t' << attr << ": " << (firstTry ? currentVal : "");
+        out << '\t' << attr << ": " << (firstTry ? currentVal + "\n" : "");
         line = getLine(firstTry && !currentVal.empty(), currentVal);
 
         if (line.str() == "now")

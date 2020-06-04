@@ -3,12 +3,12 @@
  * @date: 03.06.2020
  */
 
-#include "App.h"
+#include "CalendarApp.h"
 #include "Calendar/EventManager.h"
 #include "Utility/FileUtility.h"
 #include "App/Interface.h"
 
-void App::start() const {
+void CalendarApp::start() const {
     cout << "Calendar running" << endl;
     EventManager ev;
     if (!load(ev))
@@ -22,7 +22,7 @@ void App::start() const {
         cout << "Events saved" << endl;
 }
 
-bool App::load(EventManager &eventManager) const {
+bool CalendarApp::load(EventManager &eventManager) const {
     auto data = FileUtility::readData();
     size_t failedLoads = 0;
     for (const auto &f:data) {
@@ -39,6 +39,6 @@ bool App::load(EventManager &eventManager) const {
     return true;
 }
 
-bool App::save(EventManager &eventManager) const {
+bool CalendarApp::save(EventManager &eventManager) const {
     return FileUtility::saveData(eventManager.exportEvents());
 }

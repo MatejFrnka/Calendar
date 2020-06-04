@@ -82,7 +82,6 @@ public:
     Event::actionType readActionType(const vector<Event::actionType> &actions) {
         if (actions.empty())
             throw invalid_argument("Actions must not be empty");
-        int input = 0;
         if (actions.size() > 1) {
             out << "How many events should be deleted" << endl;
             for (size_t i = 0; i < actions.size(); ++i) {

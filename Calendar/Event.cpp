@@ -26,6 +26,10 @@ Event::Event(const Event &event) : Event(event.title, event.startDateUtc, event.
 }
 
 Event::Event(istringstream &input) {
+    startDateUtc = -1;
+    durationUtc = -1;
+    editable = false;
+
     title = FileUtility::readNext(input, sep);
     if (title.empty())
         throw InvalidEventSequenceException();
