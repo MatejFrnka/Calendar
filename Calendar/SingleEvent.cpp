@@ -11,6 +11,10 @@ SingleEvent::SingleEvent(const SingleEvent &event) : Event(event) {
     state = event.state;
 }
 
+SingleEvent::SingleEvent(istringstream &input) : Event(input) {
+
+}
+
 SingleEvent::SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : Event(move(title_),
                                                                                         startDateUtc_,
                                                                                         - -duration_) {}
@@ -94,8 +98,4 @@ string SingleEvent::exportEvent() const {
     stringstream result;
     result << "singleevent" << sep << Event::exportEvent();
     return result.str();
-}
-
-SingleEvent::SingleEvent(istringstream &input) : Event(input) {
-
 }

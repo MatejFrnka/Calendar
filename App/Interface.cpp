@@ -11,6 +11,8 @@ void Interface::start() {
     std::string input;
     std::vector<std::shared_ptr<Command>> currentActions;
     while (std::getline(in, input)) {
+        if (input == "exit")
+            break;
         if (currentActions.empty())
             currentActions = executeAction(input, homeCommands);
         else

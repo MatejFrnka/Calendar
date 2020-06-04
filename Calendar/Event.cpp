@@ -6,7 +6,7 @@
 #include <sstream>
 #include "Event.h"
 #include "../Utility/Exceptions/EventNotEditableException.h"
-#include "../Utility/EventFactory.h"
+#include "../Utility/FileUtility.h"
 #include "../Utility/Exceptions/InvalidEventSequenceException.h"
 
 
@@ -22,7 +22,7 @@ Event::Event(const Event &event) : Event(event.title, event.startDateUtc, event.
 }
 
 Event::Event(istringstream &input) : Event("t", 0, 1) {
-    title = EventFactory::readNext(input, sep);
+    title = FileUtility::readNext(input, sep);
     if (title.empty())
         throw InvalidEventSequenceException();
     input >> startDateUtc;
@@ -31,16 +31,16 @@ Event::Event(istringstream &input) : Event("t", 0, 1) {
     input >> durationUtc;
     if (input.fail() || input.get() != sep)
         throw InvalidEventSequenceException();
-    location = EventFactory::readNext(input, sep);
+    location = FileUtility::readNext(input, sep);
     int peopleAmount;
     input >> peopleAmount;
     if (input.fail() || input.get() != sep)
         throw InvalidEventSequenceException();
     for (int i = 0; i < peopleAmount; ++i) {
-        string name = EventFactory::readNext(input, sep);
-        string surname = EventFactory::readNext(input, sep);
-        string phone = EventFactory::readNext(input, sep);
-        string email = EventFactory::readNext(input, sep);
+        string name = FileUtility::readNext(input, sep);
+        string surname = FileUtility::readNext(input, sep);
+        string phone = FileUtility::readNext(input, sep);
+        string email = FileUtility::readNext(input, sep);
         if (name.empty() || surname.empty())
             throw InvalidEventSequenceException();
         shared_ptr<Person> person = make_shared<Person>(name, surname);
@@ -204,8 +204,15 @@ time_t Event::findFreeSpace(const EventSet<shared_ptr<Event>> &events) {
     return -1;
 }
 
-string Event::sanitize(string input) const {
-    return input;
+string Event::sanitize(const string& input) const {
+    stringstream res;
+    for (const char &c : input) {
+        if (c == '\\' || c == ';') {
+            res << '\\';
+        }
+        res << c;
+    }
+    return res.str();
 }
 
 

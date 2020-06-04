@@ -19,7 +19,7 @@ public:
      * @param path Path to event file to add
      * @return True if adding as successful, false if event collides with another
      */
-    bool addEvent(const string &path);
+    bool addEvent(const string &string);
 
     /**
      * @param event Adds recurring event to collection of events
@@ -96,7 +96,7 @@ public:
      */
     shared_ptr<SingleEvent> findByStart(time_t start);
 
-    void exportEvents();
+    string exportEvents();
 
     EventManager operator=(const EventManager &) = delete;
 

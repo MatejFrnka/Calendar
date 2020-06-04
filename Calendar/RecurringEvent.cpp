@@ -5,7 +5,7 @@
 
 #include <sstream>
 #include "RecurringEvent.h"
-#include "../Utility/EventFactory.h"
+#include "../Utility/FileUtility.h"
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
@@ -64,7 +64,7 @@ RecurringEvent::RecurringEvent(istringstream &input) : Event(input) {
     if (input.fail() || input.get() != sep)
         throw InvalidEventSequenceException();
     if (child) {
-        EventFactory::readNext(input, sep);
+        FileUtility::readNext(input, sep);
         RecurringEvent rec(input);
         childNode = make_shared<RecurringEvent>(rec);
         auto wptr = std::shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
@@ -362,4 +362,3 @@ void RecurringEvent::saveState() {
 void RecurringEvent::restoreState() {
     *this = *state;
 }
-

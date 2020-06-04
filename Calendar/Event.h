@@ -25,11 +25,11 @@ class RecurringEvent;
 
 class Event : public inheritable_enable_shared_from_this<Event> {
 protected:
+public:
+
     Event(string title_, time_t startDateUtc_, time_t durationUtc_);
 
     Event(const Event &event);
-
-public:
 
     explicit Event(istringstream &input);
 
@@ -218,7 +218,7 @@ public:
 protected:
     const char sep = ';';
 
-    string sanitize(string input) const;
+    string sanitize(const string &input) const;
 
     time_t startDateUtc;
     string title;

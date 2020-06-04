@@ -10,7 +10,8 @@
 #include "Calendar/Event.h"
 #include "Calendar/SingleEvent.h"
 #include "Calendar/RecurringEvent.h"
-#include "Utility/EventFactory.h"
+#include "Utility/FileUtility.h"
+#include "App.h"
 
 using namespace std;
 
@@ -585,38 +586,22 @@ int main() {
     }
     //Export import
     {
-        auto event = SingleEvent::getInstance("title", 0, 100);
+        auto event = SingleEvent::getInstance(R"(\\\\dlakjf\;\\\;\;\\\\\;)", 0, 100);
         event->addPerson(make_shared<Person>("name", "surname"));
         event->setLocation("praha");
         string e = event->exportEvent();
-        auto import = EventFactory::fromString(e);
+        auto import = FileUtility::fromString(e);
         assert(import->infoAll() == event->infoAll());
-        auto recurring = RecurringEvent::getInstance("title-recurring", 500, 100, 1000, 3000);
+        auto recurring = RecurringEvent::getInstance(R"(\;\\\\\\\\\\est\;adlsfja\\)", 500, 100, 1000, 3000);
         e = recurring->exportEvent();
-        import = import = EventFactory::fromString(e);
+        import = import = FileUtility::fromString(e);
         (*recurring->getEvents(1500, 2000).begin())->freeSelf(Event::actionType::OnlyThis);
-        cout << recurring->infoAll();
         e = recurring->exportEvent();
-        import = import = EventFactory::fromString(e);
+        import = import = FileUtility::fromString(e);
         assert(import->infoAll() == recurring->infoAll());
-    }
-/*
-    {
-        EventManager ev;
-        ev.addEvent(SingleEvent::getInstance("nazdaaaar karle", 140400, 7980));
-        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 87000, 960));
-        ev.addEvent(SingleEvent::getInstance("Meeting person c", 88380, 1000));
-        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
-        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960 * 2));
-        ev.addEvent(SingleEvent::getInstance("long event", 108000, 3600 * 6));
 
-        cout << "asserts ok" << endl;
-        istringstream in("draw week\ndraw set 02-01-1970");
-        Interface i(in, cout, ev);
-        i.start();
 
     }
-*/
     {
         EventManager ev;
         ev.addEvent(SingleEvent::getInstance("c", 140400, 7980));
@@ -635,13 +620,16 @@ int main() {
         ev.addEvent(SingleEvent::getInstance("f", 108000, 3600 * 6));
         ev.addEvent(SingleEvent::getInstance("f", 1590505200, 3600 * 8));
 
-        cout << "asserts ok" << endl;
-        ev.exportEvents();
-        //istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");
-        //Interface i(cin, cout, ev);
-        //i.start();
+        istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");
+        ostringstream out;
+        Interface i(in, out, ev);
+        i.start();
     }
 
+    {
+        App app;
+        app.start();
+    }
     cout << "end" << endl;
 
     return 0;

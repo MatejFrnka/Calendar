@@ -5,6 +5,12 @@
 
 #include "SingleEvent.h"
 #include "EventManager.h"
+#include "../Utility/FileUtility.h"
+
+bool EventManager::addEvent(const string &input) {
+    auto event = FileUtility::fromString(input);
+    return addEvent(event);
+}
 
 bool EventManager::addEvent(const shared_ptr<Event> &event) {
     if (checkAvailability(*event))
@@ -104,7 +110,9 @@ EventSet<shared_ptr<Event>> EventManager::findByAddress(const string &address) {
     return result;
 }
 
-void EventManager::exportEvents() {
+string EventManager::exportEvents() {
+    stringstream result;
     for (const auto &event :events)
-        cout << event->exportEvent() << endl;
+        result << event->exportEvent() << endl;
+    return result.str();
 }
