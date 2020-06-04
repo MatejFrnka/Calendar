@@ -229,10 +229,10 @@ protected:
 
     string sanitize(const string &input) const;
 
-    time_t startDateUtc;
     string title;
+    time_t startDateUtc;
     time_t durationUtc;
-    bool editable = true;
+    bool editable;
     string location;
     vector<shared_ptr<Person>> people;
 };

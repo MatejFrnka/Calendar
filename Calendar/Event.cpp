@@ -16,14 +16,16 @@ Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
         throw invalid_argument("Event must be at least 1 second long");
     startDateUtc = startDateUtc_;
     durationUtc = durationUtc_;
+    editable = true;
 }
 
 Event::Event(const Event &event) : Event(event.title, event.startDateUtc, event.durationUtc) {
     location = event.location;
     people = event.people;
+    editable = event.editable;
 }
 
-Event::Event(istringstream &input) : Event("t", 0, 1) {
+Event::Event(istringstream &input) {
     title = FileUtility::readNext(input, sep);
     if (title.empty())
         throw InvalidEventSequenceException();
@@ -32,6 +34,9 @@ Event::Event(istringstream &input) : Event("t", 0, 1) {
         throw InvalidEventSequenceException();
     input >> durationUtc;
     if (input.fail() || input.get() != sep || durationUtc <= 0)
+        throw InvalidEventSequenceException();
+    input >> editable;
+    if (input.fail() || input.get() != sep)
         throw InvalidEventSequenceException();
     location = FileUtility::readNext(input, sep);
     int peopleAmount;
@@ -57,6 +62,7 @@ string Event::exportEvent() const {
     result << sanitize(title) << sep
            << startDateUtc << sep
            << durationUtc << sep
+           << editable << sep
            << sanitize(location) << sep
            << people.size() << sep;
     for (const auto &person : people) {
