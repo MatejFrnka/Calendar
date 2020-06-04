@@ -15,6 +15,13 @@ class RecurringEvent;
 
 class RecurringItemEvent : public SingleEvent {
 public:
+    /**
+     * @param title_ Title of event
+     * @param startDateUtc_ start date of event
+     * @param durationUtc_ duration of event
+     * @param parentEvent_ Recurring event that generated this event
+     * @throws invalid_argument if duration is smaller than 1
+     */
     RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
 
     RecurringItemEvent() = delete;
@@ -43,8 +50,6 @@ public:
     void setDurationUtc(time_t durationUtc) override;
 
     void setLocation(const string &location) override;
-
-    shared_ptr<Event> getCopy() override;
 
     void saveState() override;
 

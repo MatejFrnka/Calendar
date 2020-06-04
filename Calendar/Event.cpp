@@ -12,6 +12,8 @@
 
 Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     title = move(title_);
+    if (durationUtc_ <= 0)
+        throw invalid_argument("Event must be at least 1 second long");
     startDateUtc = startDateUtc_;
     durationUtc = durationUtc_;
 }
@@ -29,7 +31,7 @@ Event::Event(istringstream &input) : Event("t", 0, 1) {
     if (input.fail() || input.get() != sep)
         throw InvalidEventSequenceException();
     input >> durationUtc;
-    if (input.fail() || input.get() != sep)
+    if (input.fail() || input.get() != sep || durationUtc <= 0)
         throw InvalidEventSequenceException();
     location = FileUtility::readNext(input, sep);
     int peopleAmount;
@@ -204,7 +206,7 @@ time_t Event::findFreeSpace(const EventSet<shared_ptr<Event>> &events) {
     return -1;
 }
 
-string Event::sanitize(const string& input) const {
+string Event::sanitize(const string &input) const {
     stringstream res;
     for (const char &c : input) {
         if (c == '\\' || c == ';') {
@@ -223,7 +225,6 @@ string Event::infoAllBody() const {
     stringstream ss;
 
     ss << "Title:\t" << getTitle() << '\n'
-       << "Type:\tSingle Event\n"
        << "Start:\t" << asctime(&time);
 
     time_t end = getEndDateUtc();

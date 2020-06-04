@@ -78,11 +78,6 @@ string RecurringItemEvent::infoAll() const {
     return ss.str();
 }
 
-shared_ptr<Event> RecurringItemEvent::getCopy() {
-    shared_ptr<RecurringItemEvent> res = make_shared<RecurringItemEvent>(*this);
-    return res;
-}
-
 void RecurringItemEvent::saveState() {
     state = make_shared<RecurringItemEvent>(*this);
     if (parentEvent)

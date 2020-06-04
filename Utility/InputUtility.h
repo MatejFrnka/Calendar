@@ -71,14 +71,6 @@ public:
     /**
      * Reads integer from user's input
      * @param attr Name of attribute that is being set
-     * @param currentVal Value to use instead of waiting for user's input
-     * @return Input of type int
-     */
-    int readNumber(const std::string &attr, const std::string &currentVal) const;
-
-    /**
-     * Reads integer from user's input
-     * @param attr Name of attribute that is being set
      * @return Input of type int
      */
     int readNumber(const std::string &attr) const;

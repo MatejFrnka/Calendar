@@ -9,6 +9,8 @@
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
+    if (timeBetweenEvents_ <= 0)
+        throw invalid_argument("Time between events must be greater than 0");
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = repeatTill_;
     repeatToInfinity = false;
@@ -16,6 +18,8 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
 
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_)
         : Event(move(title_), startDateUtc_, duration_) {
+    if (timeBetweenEvents_ <= 0)
+        throw invalid_argument("Time between events must be greater than 0");
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = 0;
     repeatToInfinity = true;
@@ -319,10 +323,6 @@ shared_ptr<Event> RecurringEvent::checkCollision(const EventSet<shared_ptr<Event
     if (childNode)
         return childNode->checkCollision(ev);
     return nullptr;
-}
-
-shared_ptr<Event> RecurringEvent::getCopy() {
-    return make_shared<RecurringEvent>(*this);
 }
 
 void RecurringEvent::setStartDateUtc(time_t startDateUtc) {

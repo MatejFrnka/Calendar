@@ -46,6 +46,7 @@ bool CreateCommand::createSingle(std::queue<std::string> &params) const {
 
 
     auto event =  make_shared<SingleEvent>(title, startUtc, duration);
+
     if (!eventManager.addEvent(event)) {
         time_t firstFree = eventManager.findFreeSpace(event);
         tm tm_firstFree = *localtime(&firstFree);

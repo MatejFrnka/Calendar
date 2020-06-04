@@ -25,7 +25,7 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
         }
         if (!it->params.empty())
             inputUtility.out << ">";
-        inputUtility.out << "\t:" << it->description << std::endl;
+        inputUtility.out << ":\t" << it->description << std::endl;
 
         printCommandsRec(it->getSubCommands(), depth);
     }

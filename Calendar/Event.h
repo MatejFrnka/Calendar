@@ -23,15 +23,27 @@ class SingleEvent;
 
 class RecurringEvent;
 
+/**
+ * Class event should be stored in smart pointer
+ */
 class Event : public inheritable_enable_shared_from_this<Event> {
 protected:
 public:
 
+    /**
+     * @param title_ Title of event
+     * @param startDateUtc_ start date of event
+     * @param durationUtc_ duration of event
+     * @throws invalid_argument if duration is smaller than 1
+     */
     Event(string title_, time_t startDateUtc_, time_t durationUtc_);
 
-    Event(const Event &event);
-
+    /**
+     * @throws InvalidEventSequenceException if input is invalid
+     */
     explicit Event(istringstream &input);
+
+    Event(const Event &event);
 
     Event &operator=(const Event &event);
 
@@ -40,8 +52,6 @@ public:
         ThisAndNext,
         OnlyThis
     };
-
-    virtual shared_ptr<Event> getCopy() = 0;
 
     virtual void saveState() = 0;
 
