@@ -14,11 +14,8 @@ using namespace std;
 class RecurringEvent;
 
 class RecurringItemEvent : public SingleEvent {
-protected:
-    RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
-
 public:
-    static shared_ptr<RecurringItemEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
+    RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
 
     RecurringItemEvent() = delete;
 

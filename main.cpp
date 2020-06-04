@@ -28,7 +28,7 @@ int main() {
     //EVENT EXISTS TEST
     {
 
-        auto ev = SingleEvent::getInstance("event", 160, 30);
+        auto ev =  make_shared<SingleEvent>("event", 160, 30);
         assert(ev->eventExists(0, 10) == nullptr);
         assert(ev->eventExists(160, 161) != nullptr);
 
@@ -66,7 +66,7 @@ int main() {
         assert(ev->eventExists(70, 80, 50, 180) != nullptr);
         assert(ev->eventExists(360, 370, 50, 700) == nullptr);
 
-        auto ev1 = SingleEvent::getInstance("event", 0, 50);
+        auto ev1 =  make_shared<SingleEvent>("event", 0, 50);
 
         assert(ev1->eventExists(50, 60, 60) == nullptr);
         assert(ev1->eventExists(0, 10) != nullptr);
@@ -75,7 +75,7 @@ int main() {
     }
     //RECURRING EVENT ITEM EXISTS TEST
     {
-        auto ev = RecurringItemEvent::getInstance("event", 160, 30, nullptr);
+        auto ev =  make_shared<RecurringItemEvent>("event", 160, 30, nullptr);
         assert(ev->eventExists(0, 10) == nullptr);
         assert(ev->eventExists(160, 170) != nullptr);
         assert(ev->eventExists(150, 160) == nullptr);
@@ -112,7 +112,7 @@ int main() {
         assert(ev->eventExists(360, 370, 50, 700) == nullptr);
 
 
-        auto ev1 = RecurringItemEvent::getInstance("event", 0, 50, nullptr);
+        auto ev1 =  make_shared<RecurringItemEvent>("event", 0, 50, nullptr);
 
         assert(ev1->eventExists(50, 60, 60) == nullptr);
         assert(ev1->eventExists(0, 10) != nullptr);
@@ -122,7 +122,7 @@ int main() {
     }
     //RECURRING EVENT EXISTS TEST
     {
-        auto rev = RecurringEvent::getInstance("event", 150, 50, 100);
+        auto rev =  make_shared<RecurringEvent>("event", 150, 50, 100);
         assert(rev->eventExists(0, 10) == nullptr);
         assert(rev->eventExists(0, 50) == nullptr);
         assert(rev->eventExists(100, 150) == nullptr);
@@ -139,20 +139,20 @@ int main() {
         assert(rev->eventExists(150, 200, 100) != nullptr);
         assert(rev->eventExists(25, 50, 50) != nullptr);
 
-        auto rev2 = RecurringEvent::getInstance("event", 150, 50, 100, 500);
+        auto rev2 =  make_shared<RecurringEvent>("event", 150, 50, 100, 500);
         assert(rev2->eventExists(500, 5000) == nullptr);
-        assert(RecurringEvent::getInstance("r1", 0, 10, 50, 300)->eventExists(0, 20));
-        assert(RecurringEvent::getInstance("r1", 0, 10, 50, 300)->eventExists(30, 60));
-        assert(RecurringEvent::getInstance("r1", 0, 10, 50, 300)->eventExists(100, 200));
+        assert( make_shared<RecurringEvent>("r1", 0, 10, 50, 300)->eventExists(0, 20));
+        assert( make_shared<RecurringEvent>("r1", 0, 10, 50, 300)->eventExists(30, 60));
+        assert( make_shared<RecurringEvent>("r1", 0, 10, 50, 300)->eventExists(100, 200));
 
     }
     //SINGLE EVENT EVENT MANAGER CHECK
     {
 
         EventManager e1;
-        auto ev1 = SingleEvent::getInstance("1", 10, 10);
-        auto ev3 = SingleEvent::getInstance("3", 100, 100);
-        auto ev2 = SingleEvent::getInstance("2", 30, 30);
+        auto ev1 =  make_shared<SingleEvent>("1", 10, 10);
+        auto ev3 =  make_shared<SingleEvent>("3", 100, 100);
+        auto ev2 =  make_shared<SingleEvent>("2", 30, 30);
 
         assert(e1.addEvent(ev3));
         assert(e1.addEvent(ev1));
@@ -180,7 +180,7 @@ int main() {
     {
         EventManager e1;
 
-        e1.addEvent(RecurringEvent::getInstance("1", 10, 10, 100, 1010));
+        e1.addEvent( make_shared<RecurringEvent>("1", 10, 10, 100, 1010));
         assert(drawEvents(e1.getEvents(550, 800)) == "1 610 620\n"
                                                      "1 710 720\n");
         assert(drawEvents(e1.getEvents(1000, 3000)).empty());
@@ -195,10 +195,10 @@ int main() {
         EventManager e1;
         EventManager e2;
 
-        auto rev1 = RecurringEvent::getInstance("1", 0, 10, 50);
-        auto rev2 = RecurringEvent::getInstance("2", 20, 10, 50, 300);
-        auto rev3 = RecurringEvent::getInstance("3", 240, 10, 50, 1000);
-        auto rev4 = RecurringEvent::getInstance("4", 2110, 10, 50, 3000);
+        auto rev1 =  make_shared<RecurringEvent>("1", 0, 10, 50);
+        auto rev2 =  make_shared<RecurringEvent>("2", 20, 10, 50, 300);
+        auto rev3 =  make_shared<RecurringEvent>("3", 240, 10, 50, 1000);
+        auto rev4 =  make_shared<RecurringEvent>("4", 2110, 10, 50, 3000);
 
         assert(e1.addEvent(rev1));
         assert(e1.addEvent(rev4));
@@ -222,26 +222,26 @@ int main() {
     {
         EventManager e1;
 
-        assert(e1.addEvent(SingleEvent::getInstance("1", 0, 20)));
-        assert(e1.addEvent(SingleEvent::getInstance("2", 30, 60)));
-        assert(e1.addEvent(SingleEvent::getInstance("3", 100, 200)));
-        assert(e1.addEvent(RecurringEvent::getInstance("r1", 300, 10, 50, 600)));
-        assert(!e1.addEvent(RecurringEvent::getInstance("r1", 0, 10, 50, 300)));
+        assert(e1.addEvent( make_shared<SingleEvent>("1", 0, 20)));
+        assert(e1.addEvent( make_shared<SingleEvent>("2", 30, 60)));
+        assert(e1.addEvent( make_shared<SingleEvent>("3", 100, 200)));
+        assert(e1.addEvent( make_shared<RecurringEvent>("r1", 300, 10, 50, 600)));
+        assert(!e1.addEvent( make_shared<RecurringEvent>("r1", 0, 10, 50, 300)));
         assert(drawEvents(e1.getEvents(30, 31)) == "2 30 90\n");
-        assert(!e1.addEvent(SingleEvent::getInstance("2", 30, 31)));
+        assert(!e1.addEvent( make_shared<SingleEvent>("2", 30, 31)));
         assert(drawEvents(e1.getEvents(29, 30)).empty());
-        assert(e1.addEvent(SingleEvent::getInstance("2", 29, 1)));
+        assert(e1.addEvent( make_shared<SingleEvent>("2", 29, 1)));
 
         assert(drawEvents(e1.getEvents(1583859600, 1584223199)).empty());
     }
     //EVENT MANAGER DELETING SINGLE EVENTS
     {
         EventManager e1;
-        auto ev1 = SingleEvent::getInstance("1", 50, 10);
-        auto ev5 = SingleEvent::getInstance("5", 200, 30);
-        auto ev2 = SingleEvent::getInstance("2", 170, 10);
-        auto ev3 = SingleEvent::getInstance("3", 180, 1);
-        auto ev4 = SingleEvent::getInstance("4", 181, 10);
+        auto ev1 =  make_shared<SingleEvent>("1", 50, 10);
+        auto ev5 =  make_shared<SingleEvent>("5", 200, 30);
+        auto ev2 =  make_shared<SingleEvent>("2", 170, 10);
+        auto ev3 =  make_shared<SingleEvent>("3", 180, 1);
+        auto ev4 =  make_shared<SingleEvent>("4", 181, 10);
         assert(e1.addEvent(ev1));
         assert(e1.addEvent(ev2));
         assert(e1.addEvent(ev3));
@@ -268,7 +268,7 @@ int main() {
                                                    "3 180 181\n"
                                                    "4 181 191\n"
                                                    "5 200 230\n");
-        e1.removeEvent(SingleEvent::getInstance("test", 40, 5));
+        e1.removeEvent( make_shared<SingleEvent>("test", 40, 5));
         assert(drawEvents(e1.getEvents(0, 300)) == "1 50 60\n"
                                                    "2 170 180\n"
                                                    "3 180 181\n"
@@ -285,7 +285,7 @@ int main() {
     //EVENT MANAGER DELETING RECURRING EVENTS
     {
         EventManager em;
-        assert(em.addEvent(RecurringEvent::getInstance("event", 100, 50, 100)));
+        assert(em.addEvent( make_shared<RecurringEvent>("event", 100, 50, 100)));
         assert(drawEvents(em.getEvents(0, 500)) == "event 100 150\n"
                                                    "event 200 250\n"
                                                    "event 300 350\n"
@@ -308,7 +308,7 @@ int main() {
         em.removeEvent(evi4, Event::actionType::AllEvents);
         assert(drawEvents(em.getEvents(0, 500000)) == "");
 
-        em.addEvent(RecurringEvent::getInstance("title", 100, 50, 100, 1000));
+        em.addEvent( make_shared<RecurringEvent>("title", 100, 50, 100, 1000));
         assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
                                                     "title 200 250\n"
                                                     "title 300 350\n"
@@ -332,7 +332,7 @@ int main() {
                                                     "title 200 250\n"
                                                     "title 300 350\n"
                                                     "title 400 450\n");
-        assert(em.addEvent(SingleEvent::getInstance("title", 500, 500)));
+        assert(em.addEvent( make_shared<SingleEvent>("title", 500, 500)));
         assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
                                                     "title 200 250\n"
                                                     "title 300 350\n"
@@ -352,29 +352,29 @@ int main() {
         assert(drawEvents(em.getEvents(0, 2000)) == "title 500 1000\n");
         em.removeEvent(*em.getEvents(0, 2000).begin(), Event::actionType::AllEvents);
         assert(drawEvents(em.getEvents(0, 2000)).empty());
-        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 550)));
+        assert(em.addEvent( make_shared<RecurringEvent>("title", 500, 50, 100, 550)));
         assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n");
         em.removeEvent(*em.getEvents(0, 2000).begin(), Event::AllEvents);
         assert(drawEvents(em.getEvents(0, 2000)).empty());
-        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 550)));
+        assert(em.addEvent( make_shared<RecurringEvent>("title", 500, 50, 100, 550)));
         assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n");
         em.removeEvent(*em.getEvents(0, 2000).begin(), Event::ThisAndNext);
         assert(drawEvents(em.getEvents(0, 2000)).empty());
-        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 750)));
+        assert(em.addEvent( make_shared<RecurringEvent>("title", 500, 50, 100, 750)));
         em.removeEvent(*em.getEvents(600, 2000).begin(), Event::OnlyThis);
         assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n"
                                                     "title 700 750\n");
         em.removeEvent(*em.getEvents(400, 2000).begin(), Event::AllEvents);
         assert(drawEvents(em.getEvents(0, 2000)).empty());
 
-        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 750)));
+        assert(em.addEvent( make_shared<RecurringEvent>("title", 500, 50, 100, 750)));
         em.removeEvent(*em.getEvents(600, 2000).begin(), Event::OnlyThis);
         assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n"
                                                     "title 700 750\n");
         em.removeEvent(*em.getEvents(400, 2000).begin(), Event::ThisAndNext);
         assert(drawEvents(em.getEvents(0, 2000)).empty());
 
-        assert(em.addEvent(RecurringEvent::getInstance("title", 500, 50, 100, 750)));
+        assert(em.addEvent( make_shared<RecurringEvent>("title", 500, 50, 100, 750)));
         em.removeEvent(*em.getEvents(600, 2000).begin(), Event::OnlyThis);
         assert(drawEvents(em.getEvents(0, 2000)) == "title 500 550\n"
                                                     "title 700 750\n");
@@ -382,7 +382,7 @@ int main() {
         em.removeEvent(*em.getEvents(400, 2000).begin(), Event::OnlyThis);
         assert(drawEvents(em.getEvents(0, 2000)).empty());
 
-        em.addEvent(RecurringEvent::getInstance("title", 100, 50, 100, 1000));
+        em.addEvent( make_shared<RecurringEvent>("title", 100, 50, 100, 1000));
         em.removeEvent(*em.getEvents(300, 350).begin(), Event::OnlyThis);
         assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
                                                     "title 200 250\n"
@@ -392,7 +392,7 @@ int main() {
                                                     "title 700 750\n"
                                                     "title 800 850\n"
                                                     "title 900 950\n");
-        assert(em.addEvent(SingleEvent::getInstance("single", 300, 50)));
+        assert(em.addEvent( make_shared<SingleEvent>("single", 300, 50)));
         assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
                                                     "title 200 250\n"
                                                     "single 300 350\n"
@@ -411,7 +411,7 @@ int main() {
                                                     "title 700 750\n"
                                                     "title 800 850\n"
                                                     "title 900 950\n");
-        assert(em.addEvent(RecurringEvent::getInstance("r", 300, 50, 1000)));
+        assert(em.addEvent( make_shared<RecurringEvent>("r", 300, 50, 1000)));
         assert(drawEvents(em.getEvents(0, 2000)) == "title 100 150\n"
                                                     "title 200 250\n"
                                                     "r 300 350\n"
@@ -425,11 +425,11 @@ int main() {
     //Moving events
     {
         EventManager em;
-        em.addEvent(SingleEvent::getInstance("single1", 500, 50));
+        em.addEvent( make_shared<SingleEvent>("single1", 500, 50));
         assert(drawEvents(em.getEvents(0, 1000)) == "single1 500 550\n");
         assert(em.moveEvent(*em.getEvents(0, 1000).begin(), 700));
         assert(drawEvents(em.getEvents(0, 1000)) == "single1 700 750\n");
-        em.addEvent(RecurringEvent::getInstance("recurring1", 1000, 100, 500));
+        em.addEvent( make_shared<RecurringEvent>("recurring1", 1000, 100, 500));
         assert(em.moveEvent(*em.getEvents(1000, 1200).begin(), 1100));
         assert(em.moveEvent(*em.getEvents(1500, 1600).begin(), 1510));
         assert(drawEvents(em.getEvents(0, 2500)) == "single1 700 750\n"
@@ -467,14 +467,14 @@ int main() {
     }
     {
         EventManager em;
-        assert(em.addEvent(RecurringEvent::getInstance("r1", 0, 50, 100)));
+        assert(em.addEvent( make_shared<RecurringEvent>("r1", 0, 50, 100)));
         em.removeEvent(*em.getEvents(300, 400).begin());
         em.removeEvent(*em.getEvents(0, 400).begin(), Event::actionType::AllEvents);
         assert(drawEvents(em.getEvents(0, 1000)).empty());
-        assert(em.addEvent(SingleEvent::getInstance("e1", 200, 100)));
-        assert(em.addEvent(SingleEvent::getInstance("e2", 301, 100)));
-        assert(em.addEvent(SingleEvent::getInstance("e3", 300, 1)));
-        assert(em.addEvent(RecurringEvent::getInstance("r2", 500, 100, 200)));
+        assert(em.addEvent( make_shared<SingleEvent>("e1", 200, 100)));
+        assert(em.addEvent( make_shared<SingleEvent>("e2", 301, 100)));
+        assert(em.addEvent( make_shared<SingleEvent>("e3", 300, 1)));
+        assert(em.addEvent( make_shared<RecurringEvent>("r2", 500, 100, 200)));
         shared_ptr<Event> a = *em.getEvents(700, 800).begin();
         assert(em.moveEvent(a, 750));
         assert(drawEvents(em.getEvents(600, 1000)) == "r2 750 850\n"
@@ -490,7 +490,7 @@ int main() {
     }
     // Editing events
     {
-        auto event = SingleEvent::getInstance("TitleOG", 100, 100);
+        auto event =  make_shared<SingleEvent>("TitleOG", 100, 100);
         event->addPerson(make_shared<Person>("karel", "pepa"));
         assert(event->getTitle() == "TitleOG");
         event->setTitle("Title2");
@@ -537,7 +537,7 @@ int main() {
         catch (EventNotEditableException &e) {}
     }
     {
-        auto rec = RecurringEvent::getInstance("T1", 0, 100, 1000);
+        auto rec =  make_shared<RecurringEvent>("T1", 0, 100, 1000);
         EventManager ev;
         ev.addEvent(rec);
         ev.removeEvent(*ev.getEvents(3000, 4000).begin());
@@ -549,7 +549,7 @@ int main() {
     }
     //COPY CONSTRUCTOR
     {
-        auto rec1 = RecurringEvent::getInstance("Title", 0, 50, 500);
+        auto rec1 =  make_shared<RecurringEvent>("Title", 0, 50, 500);
         auto event1 = (*rec1->getEvents(1000, 1100).begin())->freeSelf(Event::actionType::OnlyThis);
         shared_ptr<RecurringEvent> ev = make_shared<RecurringEvent>(*rec1);
         auto event2 = (*rec1->getEvents(5500, 6000).begin())->freeSelf(Event::actionType::ThisAndNext);
@@ -576,7 +576,7 @@ int main() {
         assert(drawEvents(e.getEvents(0, 2500)) == "Title 0 50\n"
                                                    "Title 500 550\n");
 
-        auto ev0 = SingleEvent::getInstance("single", 0, 50);
+        auto ev0 =  make_shared<SingleEvent>("single", 0, 50);
         ev0->setTitle("test");
         auto ev1 = make_shared<SingleEvent>(*ev0);
         ev0->setEditable(false);
@@ -586,13 +586,13 @@ int main() {
     }
     //Export import
     {
-        auto event = SingleEvent::getInstance(R"(\\\\dlakjf\;\\\;\;\\\\\;)", 0, 100);
+        auto event =  make_shared<SingleEvent>(R"(\\\\dlakjf\;\\\;\;\\\\\;)", 0, 100);
         event->addPerson(make_shared<Person>("name", "surname"));
         event->setLocation("praha");
         string e = event->exportEvent();
         auto import = FileUtility::fromString(e);
         assert(import->infoAll() == event->infoAll());
-        auto recurring = RecurringEvent::getInstance(R"(\;\\\\\\\\\\est\;adlsfja\\)", 500, 100, 1000, 3000);
+        auto recurring =  make_shared<RecurringEvent>(R"(\;\\\\\\\\\\est\;adlsfja\\)", 500, 100, 1000, 3000);
         e = recurring->exportEvent();
         import = import = FileUtility::fromString(e);
         (*recurring->getEvents(1500, 2000).begin())->freeSelf(Event::actionType::OnlyThis);
@@ -604,21 +604,21 @@ int main() {
     }
     {
         EventManager ev;
-        ev.addEvent(SingleEvent::getInstance("c", 140400, 7980));
-        ev.addEvent(SingleEvent::getInstance("this event has a very very very long name", 87000, 960));
-        ev.addEvent(SingleEvent::getInstance("c", 88380, 1000));
-        ev.addEvent(SingleEvent::getInstance("this event starts before the day", 82380, 960));
-        ev.addEvent(SingleEvent::getInstance("this event ends after the day", 168360, 960 * 2));
-        auto a = SingleEvent::getInstance("a", 1590562800, 3600 * 6);
+        ev.addEvent( make_shared<SingleEvent>("c", 140400, 7980));
+        ev.addEvent( make_shared<SingleEvent>("this event has a very very very long name", 87000, 960));
+        ev.addEvent( make_shared<SingleEvent>("c", 88380, 1000));
+        ev.addEvent( make_shared<SingleEvent>("this event starts before the day", 82380, 960));
+        ev.addEvent( make_shared<SingleEvent>("this event ends after the day", 168360, 960 * 2));
+        auto a =  make_shared<SingleEvent>("a", 1590562800, 3600 * 6);
         a->addPerson(make_shared<Person>("Karel", "Slepicka"));
         a->addPerson(make_shared<Person>("Ahoj", "Pepo"));
         a->addPerson(make_shared<Person>("areg", "adsflj"));
         ev.addEvent(a);
-        ev.addEvent(SingleEvent::getInstance("b", 1590361200, 3600 * 6));
-        ev.addEvent(SingleEvent::getInstance("c", 1590706800, 100000));
-        ev.addEvent(SingleEvent::getInstance("d", 1590447600, 3600 * 6));
-        ev.addEvent(SingleEvent::getInstance("f", 108000, 3600 * 6));
-        ev.addEvent(SingleEvent::getInstance("f", 1590505200, 3600 * 8));
+        ev.addEvent( make_shared<SingleEvent>("b", 1590361200, 3600 * 6));
+        ev.addEvent( make_shared<SingleEvent>("c", 1590706800, 100000));
+        ev.addEvent( make_shared<SingleEvent>("d", 1590447600, 3600 * 6));
+        ev.addEvent( make_shared<SingleEvent>("f", 108000, 3600 * 6));
+        ev.addEvent( make_shared<SingleEvent>("f", 1590505200, 3600 * 8));
 
         istringstream in("create single t1 28-05-2020T12:01 119-minute\ncreate single t2 28-05-2020T14:00 4-hour\ndraw day");
         ostringstream out;

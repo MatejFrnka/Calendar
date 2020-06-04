@@ -47,14 +47,6 @@ shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end, time_
     return nullptr;
 }
 
-struct mk_shared_SingleEvent : SingleEvent {
-    mk_shared_SingleEvent(string title_, time_t startDateUtc_, time_t duration_) : SingleEvent(move(title_), startDateUtc_, duration_) {}
-};
-
-shared_ptr<SingleEvent> SingleEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_) {
-    return make_shared<mk_shared_SingleEvent>(move(title_), startDateUtc_, duration_);
-}
-
 shared_ptr<Event> SingleEvent::freeSelf(Event::actionType actionType) {
     return shared_from_this();
 }
