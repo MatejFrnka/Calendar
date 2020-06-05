@@ -11,6 +11,8 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
         : Event(move(title_), startDateUtc_, duration_) {
     if (timeBetweenEvents_ <= 0)
         throw invalid_argument("Time between events must be greater than 0");
+    if(timeBetweenEvents_ < duration_)
+        throw invalid_argument("Time between events must be longer than event length");
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = repeatTill_;
     repeatToInfinity = false;
@@ -20,6 +22,8 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
         : Event(move(title_), startDateUtc_, duration_) {
     if (timeBetweenEvents_ <= 0)
         throw invalid_argument("Time between events must be greater than 0");
+    if(timeBetweenEvents_ < duration_)
+        throw invalid_argument("Time between events must be longer than event length");
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = 0;
     repeatToInfinity = true;

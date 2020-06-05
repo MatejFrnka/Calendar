@@ -17,9 +17,7 @@ std::queue<std::string> InputUtility::getParams(const std::string &input) {
     return result;
 }
 
-InputUtility::InputUtility(std::istream &in_, std::ostream &out_) : out(out_), in(in_) {
-
-}
+InputUtility::InputUtility(std::istream &in_, std::ostream &out_) : out(out_), in(in_) {}
 
 std::string InputUtility::readString(const std::string &attr, std::queue<std::string> &params, bool required) const {
     return readString(attr, tryGetVal(params), required);
@@ -32,7 +30,7 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
         if (!firstTry) {
             out << attr << " must not be empty" << std::endl;
         }
-        out << '\t' << attr << ": " << currentVal;
+        out << '\t' << (required ? "*" : "") << attr << ": " << currentVal;
         if (currentVal.empty() || !firstTry) {
             if (in.eof())
                 throw UnexpectedEndOfInputException();
@@ -66,7 +64,7 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
     std::stringstream ss;
     bool firstTry = true;
     while (true) {
-        out << '\t' << attr << ": " << (firstTry && !currentVal.empty() ? currentVal + "\n" : "");
+        out << '\t' << (required ? "*" : "") << attr << ": " << (firstTry && !currentVal.empty() ? currentVal + "\n" : "");
         ss = getLine(firstTry && !currentVal.empty(), currentVal);
         float value;
         ss >> value;
@@ -137,7 +135,7 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
         if (!firstTry) {
             out << "Invad date format. Please use " << exampleFormat << " format or 'now' for current date" << std::endl;
         }
-        out << '\t' << attr << ": " << (firstTry && !currentVal.empty() ? currentVal + "\n" : "");
+        out << '\t' << (required ? "*" : "") << attr << ": " << (firstTry && !currentVal.empty() ? currentVal + "\n" : "");
         line = getLine(firstTry && !currentVal.empty(), currentVal);
 
         if (line.str() == "now")
