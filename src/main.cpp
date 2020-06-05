@@ -40,19 +40,19 @@ int main() {
         assert(ev->eventExists(170, 180) != nullptr);
         assert(ev->eventExists(190, 200) == nullptr);
 
-        assert(ev->eventExists(190, 200, 20, -1)== nullptr);
-        assert(ev->eventExists(189, 200, 5060, -1)!= nullptr);
-        assert(ev->eventExists(200, 210, 10, -1)== nullptr);
-        assert(ev->eventExists(170, 180, 100, -1)!= nullptr);
-        assert(ev->eventExists(0, 10, 10, -1)!= nullptr);
-        assert(ev->eventExists(0, 10, 100, -1)== nullptr);
-        assert(ev->eventExists(70, 80, 100, -1)!= nullptr);
-        assert(ev->eventExists(10, 20, 20, -1)!= nullptr);
-        assert(ev->eventExists(150, 160, 30, -1)!= nullptr);
-        assert(ev->eventExists(150, 160, 40, -1)== nullptr);
-        assert(ev->eventExists(0, 160, 190, -1)== nullptr);
-        assert(ev->eventExists(0, 10, 1000, -1)== nullptr);
-        assert(ev->eventExists(150, 200, 500, -1)!= nullptr);
+        assert(ev->eventExists(190, 200, 20, -1) == nullptr);
+        assert(ev->eventExists(189, 200, 5060, -1) != nullptr);
+        assert(ev->eventExists(200, 210, 10, -1) == nullptr);
+        assert(ev->eventExists(170, 180, 100, -1) != nullptr);
+        assert(ev->eventExists(0, 10, 10, -1) != nullptr);
+        assert(ev->eventExists(0, 10, 100, -1) == nullptr);
+        assert(ev->eventExists(70, 80, 100, -1) != nullptr);
+        assert(ev->eventExists(10, 20, 20, -1) != nullptr);
+        assert(ev->eventExists(150, 160, 30, -1) != nullptr);
+        assert(ev->eventExists(150, 160, 40, -1) == nullptr);
+        assert(ev->eventExists(0, 160, 190, -1) == nullptr);
+        assert(ev->eventExists(0, 10, 1000, -1) == nullptr);
+        assert(ev->eventExists(150, 200, 500, -1) != nullptr);
 
         assert(ev->eventExists(150, 160, 40, 700) == nullptr);
         assert(ev->eventExists(150, 160, 30, 700) != nullptr);
@@ -68,10 +68,10 @@ int main() {
 
         auto ev1 = make_shared<SingleEvent>("event", 0, 50);
 
-        assert(ev1->eventExists(50, 60, 60, -1)== nullptr);
+        assert(ev1->eventExists(50, 60, 60, -1) == nullptr);
         assert(ev1->eventExists(0, 10) != nullptr);
         assert(ev1->eventExists(50, 60) == nullptr);
-        assert(ev1->eventExists(0, 10, 20, -1)!= nullptr);
+        assert(ev1->eventExists(0, 10, 20, -1) != nullptr);
     }
     //RECURRING EVENT ITEM EXISTS TEST
     {
@@ -85,19 +85,19 @@ int main() {
         assert(ev->eventExists(190, 200) == nullptr);
 
 
-        assert(ev->eventExists(190, 200, 20, -1)== nullptr);
-        assert(ev->eventExists(189, 200, 5060, -1)!= nullptr);
-        assert(ev->eventExists(200, 210, 10, -1)== nullptr);
-        assert(ev->eventExists(170, 180, 100, -1)!= nullptr);
-        assert(ev->eventExists(0, 10, 10, -1)!= nullptr);
-        assert(ev->eventExists(0, 10, 100, -1)== nullptr);
-        assert(ev->eventExists(70, 80, 100, -1)!= nullptr);
-        assert(ev->eventExists(10, 20, 20, -1)!= nullptr);
-        assert(ev->eventExists(150, 160, 30, -1)!= nullptr);
-        assert(ev->eventExists(150, 160, 40, -1)== nullptr);
-        assert(ev->eventExists(0, 160, 190, -1)== nullptr);
-        assert(ev->eventExists(0, 10, 1000, -1)== nullptr);
-        assert(ev->eventExists(150, 200, 500, -1)!= nullptr);
+        assert(ev->eventExists(190, 200, 20, -1) == nullptr);
+        assert(ev->eventExists(189, 200, 5060, -1) != nullptr);
+        assert(ev->eventExists(200, 210, 10, -1) == nullptr);
+        assert(ev->eventExists(170, 180, 100, -1) != nullptr);
+        assert(ev->eventExists(0, 10, 10, -1) != nullptr);
+        assert(ev->eventExists(0, 10, 100, -1) == nullptr);
+        assert(ev->eventExists(70, 80, 100, -1) != nullptr);
+        assert(ev->eventExists(10, 20, 20, -1) != nullptr);
+        assert(ev->eventExists(150, 160, 30, -1) != nullptr);
+        assert(ev->eventExists(150, 160, 40, -1) == nullptr);
+        assert(ev->eventExists(0, 160, 190, -1) == nullptr);
+        assert(ev->eventExists(0, 10, 1000, -1) == nullptr);
+        assert(ev->eventExists(150, 200, 500, -1) != nullptr);
 
         assert(ev->eventExists(150, 160, 40, 700) == nullptr);
         assert(ev->eventExists(150, 160, 30, 700) != nullptr);
@@ -114,10 +114,10 @@ int main() {
 
         auto ev1 = make_shared<RecurringItemEvent>("event", 0, 50, nullptr);
 
-        assert(ev1->eventExists(50, 60, 60, -1)== nullptr);
+        assert(ev1->eventExists(50, 60, 60, -1) == nullptr);
         assert(ev1->eventExists(0, 10) != nullptr);
         assert(ev1->eventExists(50, 60) == nullptr);
-        assert(ev1->eventExists(0, 10, 20, -1)!= nullptr);
+        assert(ev1->eventExists(0, 10, 20, -1) != nullptr);
 
     }
     //RECURRING EVENT EXISTS TEST
@@ -133,11 +133,11 @@ int main() {
         assert(rev->eventExists(1055, 1100) != nullptr);
         assert(rev->eventExists(0, 5000) != nullptr);
 
-        assert(rev->eventExists(100, 150, 100, -1)== nullptr);
-        assert(rev->eventExists(200, 250, 100, -1)== nullptr);
-        assert(rev->eventExists(100, 150, 200, -1)== nullptr);
-        assert(rev->eventExists(150, 200, 100, -1)!= nullptr);
-        assert(rev->eventExists(25, 50, 50, -1)!= nullptr);
+        assert(rev->eventExists(100, 150, 100, -1) == nullptr);
+        assert(rev->eventExists(200, 250, 100, -1) == nullptr);
+        assert(rev->eventExists(100, 150, 200, -1) == nullptr);
+        assert(rev->eventExists(150, 200, 100, -1) != nullptr);
+        assert(rev->eventExists(25, 50, 50, -1) != nullptr);
 
         auto rev2 = make_shared<RecurringEvent>("event", 150, 50, 100, 500);
         assert(rev2->eventExists(500, 5000) == nullptr);

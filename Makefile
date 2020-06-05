@@ -18,3 +18,5 @@ run:
 clean:
 	rm $(LIST)
 	rm a.out
+
+doc:
