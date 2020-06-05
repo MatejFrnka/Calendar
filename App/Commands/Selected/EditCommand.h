@@ -101,7 +101,7 @@ public:
         if (target->getEditable())
             return commands;
         else
-            inputUtility.out << "Event is not editable" << endl;
+            inputUtility.eventNotEditable();
         return std::vector<std::shared_ptr<Command>>();
     };
 private:
