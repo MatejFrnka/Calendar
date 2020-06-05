@@ -31,7 +31,7 @@ private:
 
     void mkTime(ostream &o, int hour, int minute) const;
 
-    string customFill(const string &body, char fillChar, char lborder, char rborder, int customWidth) const;
+    string customFill(const string &body, char fillChar, char lborder, char rborder, unsigned int customWidth) const;
 
     void drawEvent(const Event &event, int hourStart, int minuteStart, int hourEnd, int minuteEnd) const;
 

@@ -6,17 +6,23 @@
 #include "Interface.h"
 #include "Commands/DrawCommand.h"
 #include "Commands/SelectCommand.h"
+#include "../Utility/Exceptions/UnexpectedEndOfInputException.h"
 
 void Interface::start() {
     std::string input;
     std::vector<std::shared_ptr<Command>> currentActions;
     while (std::getline(in, input)) {
-        if (input == "exit")
-            break;
-        if (currentActions.empty())
-            currentActions = executeAction(input, homeCommands);
-        else
-            currentActions = executeAction(input, currentActions);
+        try {
+            if (input == "exit")
+                break;
+            if (currentActions.empty())
+                currentActions = executeAction(input, homeCommands);
+            else
+                currentActions = executeAction(input, currentActions);
+        }
+        catch (UnexpectedEndOfInputException &e) {
+            out << "Command was canceled\n";
+        }
     }
 }
 

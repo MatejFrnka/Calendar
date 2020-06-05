@@ -56,15 +56,6 @@ public:
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param End of range. Events starting exactly at param end will not be included
      * @param repeat Repetition of event. Time_t difference between start of events
-     * @return Event happening in given time range or null_ptr
-     */
-    shared_ptr<SingleEvent> eventExists(time_t start, time_t end, time_t repeat) override;
-
-    /**
-     * Return event that happens during given time range
-     * @param start Start of range. Events ending exactly at param start will not be included
-     * @param End of range. Events starting exactly at param end will not be included
-     * @param repeat Repetition of event. Time_t difference between start of events
      * @param repeatTill Time to repeat to. There will be no events happening past this time. Set to -1 if event repeats to infinity
      * @return Event happening in given time range or null_ptr
      */

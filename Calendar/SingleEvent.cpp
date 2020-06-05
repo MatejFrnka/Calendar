@@ -33,10 +33,6 @@ shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end) {
     return nullptr;
 }
 
-shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end, time_t repeat) {
-    return eventExists(start, end, repeat, -1);
-}
-
 shared_ptr<SingleEvent> SingleEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) {
     time_t duration = end - start;
     time_t firstEventTime = getFirstEventTime(getStartDateUtc(), start, duration, repeat);

@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <chrono>
 #include "InputUtility.h"
+#include "Exceptions/UnexpectedEndOfInputException.h"
 
 std::queue<std::string> InputUtility::getParams(const std::string &input) {
     std::queue<std::string> result;
@@ -32,9 +33,11 @@ std::string InputUtility::readString(const std::string &attr, const std::string 
             out << attr << " must not be empty" << std::endl;
         }
         out << '\t' << attr << ": " << currentVal;
-        if (currentVal.empty() || !firstTry)
+        if (currentVal.empty() || !firstTry) {
+            if (in.eof())
+                throw UnexpectedEndOfInputException();
             std::getline(in, result);
-        else {
+        } else {
             result = currentVal;
             out << std::endl;
         }
@@ -63,7 +66,7 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
     std::stringstream ss;
     bool firstTry = true;
     while (true) {
-        out << '\t' << attr << ": " << (firstTry ? currentVal + "\n" : "");
+        out << '\t' << attr << ": " << (firstTry && !currentVal.empty() ? currentVal + "\n" : "");
         ss = getLine(firstTry && !currentVal.empty(), currentVal);
         float value;
         ss >> value;
@@ -105,6 +108,8 @@ bool InputUtility::readBool(const std::string &attr) {
     while (true) {
         out << '\t' << attr << " (y/n): ";
         std::string input;
+        if (in.eof())
+            throw UnexpectedEndOfInputException();
         getline(in, input);
         if (input == "y" || input == "n")
             return input == "y";
@@ -117,6 +122,8 @@ std::stringstream InputUtility::getLine(bool useDefault, const std::string &defa
         return std::stringstream(defaultVal);
     else {
         std::string input;
+        if (in.eof())
+            throw UnexpectedEndOfInputException();
         std::getline(in, input);
         return std::stringstream(input);
     }
@@ -128,9 +135,9 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
     std::stringstream line;
     do {
         if (!firstTry) {
-            out << "Invalid date format. Please use " << exampleFormat << " format or 'now' for current date" << std::endl;
+            out << "Invad date format. Please use " << exampleFormat << " format or 'now' for current date" << std::endl;
         }
-        out << '\t' << attr << ": " << (firstTry ? currentVal + "\n" : "");
+        out << '\t' << attr << ": " << (firstTry && !currentVal.empty() ? currentVal + "\n" : "");
         line = getLine(firstTry && !currentVal.empty(), currentVal);
 
         if (line.str() == "now")
@@ -142,7 +149,6 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
         line >> std::get_time(&time, "%d-%m-%YT%H:%M");
         firstTry = false;
     } while (line.fail());
-    out << "\n";
     time_t result = std::mktime(&time);
     //Converting to current timezone
     tm *tmp = gmtime(&result);

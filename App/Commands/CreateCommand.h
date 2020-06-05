@@ -25,6 +25,8 @@ private:
     bool createSingle(queue<std::string> &params) const;
 
     bool createRecurring(queue<std::string> &params) const;
+
+    bool moveToFree(shared_ptr<Event> event) const;
 };
 
 

@@ -91,7 +91,7 @@ void DayDraw::mkTime(ostream &o, int hour, int minute) const {
     o << setfill('0') << setw(2) << (hour) << ":" << setw(2) << minute << " ";
 }
 
-string DayDraw::customFill(const string &body, char fillChar, char lborder, char rborder, int customWidth) const {
+string DayDraw::customFill(const string &body, char fillChar, char lborder, char rborder, unsigned int customWidth) const {
     ostringstream ss;
     ss << setfill(fillChar) << lborder << fillChar << (body.empty() ? fillChar : ' ') << (body.length() > customWidth - 6 ? body.substr(0, customWidth - 6) + ".." : body)
        << (body.empty() ? fillChar : ' ')

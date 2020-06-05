@@ -107,11 +107,6 @@ shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end) {
     return nullptr;
 }
 
-
-shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat) {
-    return eventExists(start, end, repeat, -1);
-}
-
 shared_ptr<SingleEvent> RecurringEvent::eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill_) {
     time_t time = TimeOfEvent(start, end, repeat, repeatTill_);
     if (time == -1 || (!repeatToInfinity && repeatTill_ != -1 && time + end - start > repeatTill_))
@@ -316,7 +311,7 @@ string RecurringEvent::infoAll() const {
 
 shared_ptr<Event> RecurringEvent::checkCollision(const EventSet<shared_ptr<Event>> &ev) const {
     for (const auto &event :ev) {
-        auto res = event->eventExists(getStartDateUtc(), getEndDateUtc(), getTimeBetweenEvents(), isRepeatToInfinity() ? getRepeatTill() : -1);
+        auto res = event->eventExists(getStartDateUtc(), getEndDateUtc(), getTimeBetweenEvents(), !isRepeatToInfinity() ? getRepeatTill() : -1);
         if (res)
             return res;
     }

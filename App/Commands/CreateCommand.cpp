@@ -34,7 +34,9 @@ std::vector<std::shared_ptr<Command>> CreateCommand::executeAction(std::queue<st
         parameters.pop();
     }
     if (result)
-        inputUtility.out << "Event created" << endl;
+        inputUtility.success();
+    else
+        inputUtility.out << "Cancelled" << endl;
     return commands;
 }
 
@@ -45,17 +47,10 @@ bool CreateCommand::createSingle(std::queue<std::string> &params) const {
     auto duration = inputUtility.readTimeSpan("Duration", params);
 
 
-    auto event =  make_shared<SingleEvent>(title, startUtc, duration);
+    auto event = make_shared<SingleEvent>(title, startUtc, duration);
 
     if (!eventManager.addEvent(event)) {
-        time_t firstFree = eventManager.findFreeSpace(event);
-        tm tm_firstFree = *localtime(&firstFree);
-        inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - "
-                         << asctime(&tm_firstFree);
-        if (inputUtility.readBool("Move event"))
-            eventManager.addEvent( make_shared<SingleEvent>(title, firstFree, duration));
-        else
-            return false;
+        return moveToFree(event);
     }
     return true;
 }
@@ -68,11 +63,28 @@ bool CreateCommand::createRecurring(std::queue<std::string> &params) const {
     auto repeatTill = inputUtility.readDate("Repeat till", params, false);
     shared_ptr<RecurringEvent> event;
     if (repeatTill == -1)
-        event =  make_shared<RecurringEvent>(title, startUtc, duration, timeBetween);
+        event = make_shared<RecurringEvent>(title, startUtc, duration, timeBetween);
     else
-        event =  make_shared<RecurringEvent>(title, startUtc, duration, timeBetween, repeatTill);
+        event = make_shared<RecurringEvent>(title, startUtc, duration, timeBetween, repeatTill);
     if (!eventManager.addEvent(event)) {
-        time_t firstFree = eventManager.findFreeSpace(event);
+        return moveToFree(event);
     }
     return true;
+}
+
+bool CreateCommand::moveToFree(shared_ptr<Event> event) const {
+    time_t firstFree = eventManager.findFreeSpace(event);
+    if (firstFree == -1) {
+        inputUtility.out << "Another event is happening during given time. Unfortunately, no free time to move this event to was found." << endl;
+        return false;
+    }
+    tm tm_firstFree = *localtime(&firstFree);
+
+    inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - "
+                     << asctime(&tm_firstFree);
+    event->setStartDateUtc(firstFree);
+    if (inputUtility.readBool("Move event"))
+        return eventManager.addEvent(event);
+    else
+        return false;
 }

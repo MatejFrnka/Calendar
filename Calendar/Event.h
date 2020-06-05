@@ -105,15 +105,6 @@ public:
      * @param start Start of range. Events ending exactly at param start will not be included
      * @param End of range. Events starting exactly at param end will not be included
      * @param repeat Repetition of event. Time_t difference between start of events
-     * @return Event happening in given time range or null_ptr
-     */
-    virtual shared_ptr<SingleEvent> eventExists(time_t start, time_t end, time_t repeat) = 0;
-
-    /**
-     * Return event that happens during given time range
-     * @param start Start of range. Events ending exactly at param start will not be included
-     * @param End of range. Events starting exactly at param end will not be included
-     * @param repeat Repetition of event. Time_t difference between start of events
      * @param repeatTill Time to repeat to. There will be no events happening past this time; Set repeat till to -1 for repeat to infinity
      * @return Event happening in given time range or null_ptr
      */
@@ -176,13 +167,7 @@ protected:
      * @param timeBetweenEvents Time between start of event repeats
      * @return Timestamp of start of event happening during or after given date
      */
-    time_t
-    getFirstEventTime(time_t
-                      startFrom,
-                      time_t startDate, time_t
-                      duration,
-                      time_t timeBetweenEvents
-    ) const;
+    time_t getFirstEventTime(time_t startFrom, time_t startDate, time_t duration, time_t timeBetweenEvents) const;
 
 public:
 //SETTERS & GETTERS
