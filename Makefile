@@ -6,8 +6,15 @@ LIST=src/main src/Calendar/Event src/Calendar/SingleEvent src/Calendar/Recurring
 all: $(LIST)
 	$(CC) $(CFLAGS) $(LIST)
 
+compile:
+	$(CC) $(CFLAGS) $(addsuffix .cpp,$(LIST)) -o frnkamat
+
+run:
+	./frnkamat
+
 %:	%.cpp
 	$(CC) $(CFLAGS) $@.cpp -c -o $@
 
 clean:
 	rm $(LIST)
+	rm a.out

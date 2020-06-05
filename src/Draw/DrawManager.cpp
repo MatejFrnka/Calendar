@@ -4,14 +4,10 @@
  */
 
 #include "DrawManager.h"
-#include "MonthDraw.h"
-#include "WeekDraw.h"
-#include "DayDraw.h"
 #include "../Utility/InputUtility.h"
-#include <utility>
 
 DrawManager::DrawManager(EventManager &eventManager_, std::ostream &out_) : eventManager(eventManager_), out(out_) {
-    drawUtility = std::make_unique<MonthDraw>(out_, eventManager_);
+    drawUtility = new MonthDraw(out_, eventManager_);
     time_t now = InputUtility::getCurrentTime();
     time = *localtime(&now);
 }
@@ -21,12 +17,13 @@ void DrawManager::draw() {
 }
 
 void DrawManager::setMode(DrawManager::DrawMode drawMode) {
+    delete drawUtility;
     if (drawMode == DrawMode::month)
-        drawUtility = std::make_unique<MonthDraw>(out, eventManager);
+        drawUtility = new MonthDraw(out, eventManager);
     if (drawMode == DrawMode::week)
-        drawUtility = std::make_unique<WeekDraw>(out, eventManager);
+        drawUtility = new WeekDraw(out, eventManager);
     if (drawMode == DrawMode::day)
-        drawUtility = std::make_unique<DayDraw>(out, eventManager);
+        drawUtility = new DayDraw(out, eventManager);
 }
 
 void DrawManager::next() {

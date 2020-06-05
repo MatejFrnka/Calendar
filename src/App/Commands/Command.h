@@ -25,6 +25,7 @@ public:
                                                                                                      inputUtility(inputUtility_),
                                                                                                      params(std::move(parameters_)) {}
 
+    virtual ~Command() = default;
 
     /**
      * Executes command's action

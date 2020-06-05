@@ -38,6 +38,8 @@ public:
      */
     Event(string title_, time_t startDateUtc_, time_t durationUtc_);
 
+    virtual ~Event() = default;
+
     /**
      * @throws InvalidEventSequenceException if input is invalid
      */

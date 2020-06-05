@@ -6,13 +6,19 @@
 #ifndef CALENDAR_DRAWMANAGER_H
 #define CALENDAR_DRAWMANAGER_H
 
-
+#include "MonthDraw.h"
+#include "WeekDraw.h"
+#include "DayDraw.h"
 #include "../Calendar/EventManager.h"
 #include "Draw.h"
 
 class DrawManager {
 public:
     DrawManager(EventManager &eventManager_, std::ostream &out_);
+
+    ~DrawManager() {
+        delete drawUtility;
+    };
 
     enum DrawMode {
         month,
@@ -30,7 +36,7 @@ public:
 
     void draw();
 
-    unique_ptr<Draw> drawUtility;
+    Draw *drawUtility;
 private:
     EventManager &eventManager;
     std::ostream &out;
