@@ -71,14 +71,6 @@ public:
     /**
      * Reads integer from user's input
      * @param attr Name of attribute that is being set
-     * @param currentVal Value to use instead of waiting for user's input
-     * @return Input of type int
-     */
-    int readNumber(const std::string &attr, const std::string &currentVal) const;
-
-    /**
-     * Reads integer from user's input
-     * @param attr Name of attribute that is being set
      * @return Input of type int
      */
     int readNumber(const std::string &attr) const;
@@ -90,7 +82,6 @@ public:
     Event::actionType readActionType(const vector<Event::actionType> &actions) {
         if (actions.empty())
             throw invalid_argument("Actions must not be empty");
-        int input = 0;
         if (actions.size() > 1) {
             out << "How many events should be deleted" << endl;
             for (size_t i = 0; i < actions.size(); ++i) {

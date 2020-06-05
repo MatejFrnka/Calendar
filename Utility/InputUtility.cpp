@@ -63,11 +63,15 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
     std::stringstream ss;
     bool firstTry = true;
     while (true) {
-        out << '\t' << attr << ": " << (firstTry ? currentVal : "");
+        out << '\t' << attr << ": " << (firstTry ? currentVal + "\n" : "");
         ss = getLine(firstTry && !currentVal.empty(), currentVal);
         float value;
         ss >> value;
         if (!ss.fail() && ss.get() == '-') {
+            if (value <= 0) {
+                out << "Value must be greater than 0" << endl;
+                continue;
+            }
             std::string unit;
             ss >> unit;
 
@@ -75,6 +79,7 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
             if (it != timeDictionary.end())
                 return it->second * value;
         }
+
         out << "Date type was not found, use one of following: ";
         for (const auto &iter : timeDictionary)
             out << iter.first << ", ";
@@ -93,16 +98,6 @@ int InputUtility::readNumber(const std::string &attr) const {
         out << '\t' << attr << ": ";
         in >> result;
     } while (in.fail());
-    return result;
-}
-
-int InputUtility::readNumber(const std::string &attr, const std::string &currentVal) const {
-    int result;
-    out << '\t' << attr << ": ";
-    std::stringstream input(currentVal);
-    input >> result;
-    if (input.fail())
-        return readNumber(attr);
     return result;
 }
 
@@ -135,7 +130,7 @@ time_t InputUtility::customReadDate(const std::string &attr, const std::string &
         if (!firstTry) {
             out << "Invalid date format. Please use " << exampleFormat << " format or 'now' for current date" << std::endl;
         }
-        out << '\t' << attr << ": " << (firstTry ? currentVal : "");
+        out << '\t' << attr << ": " << (firstTry ? currentVal + "\n" : "");
         line = getLine(firstTry && !currentVal.empty(), currentVal);
 
         if (line.str() == "now")

@@ -25,7 +25,7 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
         }
         if (!it->params.empty())
             inputUtility.out << ">";
-        inputUtility.out << ": " << it->description << std::endl;
+        inputUtility.out << ":\t" << it->description << std::endl;
 
         printCommandsRec(it->getSubCommands(), depth);
     }
@@ -33,6 +33,7 @@ void HelpCommand::printCommandsRec(const std::vector<std::shared_ptr<Command>> &
 
 std::vector<std::shared_ptr<Command>> HelpCommand::executeAction(std::queue<std::string> &parameters) {
     inputUtility.out << "cancel:\tCancels current action" << std::endl;
+    inputUtility.out << "exit:\tSaves events and exits application" << std::endl;
     printCommandsRec(refCommands, 0);
     return refCommands;
 }

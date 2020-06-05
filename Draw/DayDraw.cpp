@@ -5,6 +5,7 @@
 
 
 #include "DayDraw.h"
+#include "../Calendar/SingleEvent.h"
 
 void DayDraw::drawEvents(tm &time) {
     time_t startTime = DatetimeUtility::getStartRangeTime(DatetimeUtility::Day, &time);

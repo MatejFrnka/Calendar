@@ -14,11 +14,17 @@ using namespace std;
 class RecurringEvent;
 
 class RecurringItemEvent : public SingleEvent {
-protected:
+public:
+    /**
+     * @param title_ Title of event
+     * @param startDateUtc_ start date of event
+     * @param durationUtc_ duration of event
+     * @param parentEvent_ Recurring event that generated this event
+     * @throws invalid_argument if duration is smaller than 1
+     */
     RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
 
-public:
-    static shared_ptr<RecurringItemEvent> getInstance(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
+    RecurringItemEvent(shared_ptr<RecurringEvent>, time_t startDateUtc_);
 
     RecurringItemEvent() = delete;
 
@@ -31,7 +37,7 @@ public:
 
     vector<Event::actionType> getActionTypes() override;
 
-    string infoAll() override;
+    string infoAll() const override;
 
     bool addPerson(const shared_ptr<Person> &toAdd) override;
 
@@ -47,8 +53,14 @@ public:
 
     void setLocation(const string &location) override;
 
+    void saveState() override;
+
+    void restoreState() override;
+
 private:
     shared_ptr<RecurringEvent> parentEvent;
+
+    shared_ptr<RecurringItemEvent> state;
 };
 
 #endif

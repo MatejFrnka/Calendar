@@ -11,14 +11,17 @@
 #include "../Command.h"
 #include "../../../Utility/Exceptions/EventNotEditableException.h"
 #include "../CustomCommand.h"
+#include "DurationCommand.h"
+#include "MoveCommand.h"
 
 class EditCommand : public Command {
 public:
-    EditCommand(InputUtility &inputUtility_, const shared_ptr<Event> &toEdit) : Command("edit", "Edits an event", inputUtility_), target(toEdit) {
-        if (target && !target->getEditable()) {
-            inputUtility.eventNotEditable();
-            return;
-        }
+    /**
+     * @throws EventNotEditableException when target event is not editable
+     */
+    EditCommand(InputUtility &inputUtility_, shared_ptr<Event> toEdit, EventManager &eventManager) : Command("edit", "Edits an event", inputUtility_), target(toEdit) {
+
+        //Person edit commands
         CustomCommand personAdd("add", "Adds a new person", inputUtility,
                                 [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                     shared_ptr<Person> person = make_shared<Person>(self.inputUtility.readString("Name", params),
@@ -51,6 +54,7 @@ public:
         personCommands.push_back(make_shared<CustomCommand>(personList));
         personCommands.push_back(make_shared<CustomCommand>(personRemove));
 
+
         CustomCommand person("person", "Edits people in event", inputUtility,
                              [personCommands](std::queue<std::string> &params, CustomCommand &self) {
                                  return personCommands;
@@ -58,6 +62,7 @@ public:
 
         commands.push_back(make_shared<CustomCommand>(person));
 
+        //Location editing
         CustomCommand location("location", "Changes location", inputUtility,
                                [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                    toEdit->setLocation(self.inputUtility.readString("Location", params, false));
@@ -65,7 +70,7 @@ public:
                                    return std::vector<std::shared_ptr<Command>>();
                                });
         commands.push_back(make_shared<CustomCommand>(location));
-
+        //Title editing
         CustomCommand title("title", "Changes title", inputUtility,
                             [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                 toEdit->setTitle(self.inputUtility.readString("Title", params, true));
@@ -73,7 +78,7 @@ public:
                                 return std::vector<std::shared_ptr<Command>>();
                             });
         commands.push_back(make_shared<CustomCommand>(title));
-
+        //IsEditable editing
         CustomCommand lock("lock", "Disables editing on event", inputUtility,
                            [toEdit](std::queue<std::string> &params, CustomCommand &self) {
                                self.inputUtility.out << "You will not be able to edit the event afterwards" << endl;
@@ -84,12 +89,20 @@ public:
                                return std::vector<std::shared_ptr<Command>>();
                            });
         commands.push_back(make_shared<CustomCommand>(lock));
+
+        commands.push_back(make_shared<DurationCommand>(inputUtility, toEdit, eventManager));
+        commands.push_back(make_shared<MoveCommand>(inputUtility, toEdit, eventManager));
+
     }
 
     EditCommand(const EditCommand &) = delete;
 
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
-        return commands;
+        if (target->getEditable())
+            return commands;
+        else
+            inputUtility.out << "Event is not editable" << endl;
+        return std::vector<std::shared_ptr<Command>>();
     };
 private:
     shared_ptr<Event> target;

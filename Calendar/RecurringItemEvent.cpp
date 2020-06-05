@@ -10,15 +10,6 @@ RecurringItemEvent::RecurringItemEvent(string title_, time_t startDateUtc_, time
 
 }
 
-struct mk_shared_RecurringItemEvent : RecurringItemEvent {
-    mk_shared_RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_)
-            : RecurringItemEvent(move(title_), startDateUtc_, duration_, move(parentEvent_)) {}
-};
-
-shared_ptr<RecurringItemEvent> RecurringItemEvent::getInstance(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_) {
-    return make_shared<mk_shared_RecurringItemEvent>(move(title_), startDateUtc_, duration_, move(parentEvent_));
-}
-
 shared_ptr<Event> RecurringItemEvent::freeSelf(Event::actionType actionType) {
     if (parentEvent) {
         auto result = parentEvent->freeRecurringItemEvent(downcasted_shared_from_this<RecurringItemEvent>(), actionType);
@@ -80,19 +71,28 @@ void RecurringItemEvent::setLocation(const string &location) {
     Event::setLocation(location);
 }
 
-string RecurringItemEvent::infoAll() {
-    tm time{};
-    time_t start = getStartDateUtc();
-    time = *localtime(&start);
+string RecurringItemEvent::infoAll() const {
     stringstream ss;
-
-    ss << "Title:\t" << getTitle() << '\n'
-       << "Type:\tRecurring event item\n"
-       << "Start:\t" << asctime(&time);
-
-    time_t end = getEndDateUtc();
-    time = *localtime(&end);
-    ss << "End:\t" << asctime(&time)
-       << "Is editable:\t" << (getEditable() ? "true" : "false") << endl;
+    ss << "Type:\tItem of a Recurring event" << endl
+       << SingleEvent::infoAllBody();
     return ss.str();
+}
+
+void RecurringItemEvent::saveState() {
+    state = make_shared<RecurringItemEvent>(*this);
+    if (parentEvent)
+        parentEvent->saveState();
+}
+
+void RecurringItemEvent::restoreState() {
+    *this = *state;
+    if (parentEvent)
+        parentEvent->restoreState();
+}
+
+RecurringItemEvent::RecurringItemEvent(shared_ptr<RecurringEvent> parent, time_t startDateUtc_) : SingleEvent(parent->getTitle(), startDateUtc_, parent->getDurationUtc()),
+                                                                                                  parentEvent(move(parent)) {
+    location = parentEvent->getLocation();
+    people = parentEvent->getPeople();
+    editable = parentEvent->getEditable();
 }

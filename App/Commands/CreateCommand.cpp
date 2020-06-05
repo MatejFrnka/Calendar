@@ -5,6 +5,8 @@
 
 #include <cstring>
 #include "CreateCommand.h"
+#include "../../Calendar/SingleEvent.h"
+#include "../../Calendar/RecurringEvent.h"
 
 CreateCommand::CreateCommand(InputUtility &inputUtility, EventManager &eventManager_) :
         Command("create", "Used to create a new event",
@@ -42,13 +44,16 @@ bool CreateCommand::createSingle(std::queue<std::string> &params) const {
     auto startUtc = inputUtility.readDateTime("Start", params);
     auto duration = inputUtility.readTimeSpan("Duration", params);
 
-    if (!eventManager.addEvent(SingleEvent::getInstance(title, startUtc, duration))) {
-        time_t firstFree = eventManager.findFreeSpace(startUtc, duration);
+
+    auto event =  make_shared<SingleEvent>(title, startUtc, duration);
+
+    if (!eventManager.addEvent(event)) {
+        time_t firstFree = eventManager.findFreeSpace(event);
         tm tm_firstFree = *localtime(&firstFree);
         inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - "
                          << asctime(&tm_firstFree);
         if (inputUtility.readBool("Move event"))
-            eventManager.addEvent(SingleEvent::getInstance(title, firstFree, duration));
+            eventManager.addEvent( make_shared<SingleEvent>(title, firstFree, duration));
         else
             return false;
     }
@@ -63,10 +68,11 @@ bool CreateCommand::createRecurring(std::queue<std::string> &params) const {
     auto repeatTill = inputUtility.readDate("Repeat till", params, false);
     shared_ptr<RecurringEvent> event;
     if (repeatTill == -1)
-        event = RecurringEvent::getInstance(title, startUtc, duration, timeBetween);
+        event =  make_shared<RecurringEvent>(title, startUtc, duration, timeBetween);
     else
-        event = RecurringEvent::getInstance(title, startUtc, duration, timeBetween, repeatTill);
-    if (!eventManager.addEvent(event))
-        return false;
+        event =  make_shared<RecurringEvent>(title, startUtc, duration, timeBetween, repeatTill);
+    if (!eventManager.addEvent(event)) {
+        time_t firstFree = eventManager.findFreeSpace(event);
+    }
     return true;
 }
