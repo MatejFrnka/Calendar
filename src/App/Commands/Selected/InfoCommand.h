@@ -7,7 +7,6 @@
 #define CALENDAR_INFOCOMMAND_H
 
 #include "../Command.h"
-#include "../../../Calendar/Event.h"
 
 class InfoCommand : public Command {
 public:

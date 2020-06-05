@@ -1,3 +1,0 @@
-TODO:
-    smazat nepotrebne dependencies
-    const tam kam patří
