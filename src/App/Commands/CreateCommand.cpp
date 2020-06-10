@@ -80,8 +80,7 @@ bool CreateCommand::moveToFree(shared_ptr<Event> event) const {
     }
     tm tm_firstFree = *localtime(&firstFree);
 
-    inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - "
-                     << asctime(&tm_firstFree);
+    inputUtility.out << "Another event is happening during given time. Do you want to move event to next available time - " << asctime(&tm_firstFree);
     event->setStartDateUtc(firstFree);
     if (inputUtility.readBool("Move event"))
         return eventManager.addEvent(event);

@@ -20,3 +20,4 @@ clean:
 	rm a.out
 
 doc:
+	echo documentation already generated separately by doxygen

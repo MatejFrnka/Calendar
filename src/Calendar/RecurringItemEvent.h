@@ -28,11 +28,6 @@ public:
 
     RecurringItemEvent() = delete;
 
-    /**
-     * Removes event from its RecurringEvent parent
-     * @param actionType How many events does function effect
-     * @return shared_ptr to freed event, nullptr if event could not be freed
-     */
     shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis) override;
 
     vector<Event::actionType> getActionTypes() override;

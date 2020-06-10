@@ -6,6 +6,11 @@
 #ifndef CALENDAR_UTILITY_INHERITABLE_ENABLE_SHARED_FROM_THIS
 #define CALENDAR_UTILITY_INHERITABLE_ENABLE_SHARED_FROM_THIS
 
+/**
+ * This file is inspired by answer by Offirmo (https://stackoverflow.com/users/587407/offirmo) from stack overflow
+ * https://stackoverflow.com/questions/16082785/use-of-enable-shared-from-this-with-multiple-inheritance
+ */
+
 #include <memory>
 
 

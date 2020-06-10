@@ -11,7 +11,7 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
         : Event(move(title_), startDateUtc_, duration_) {
     if (timeBetweenEvents_ <= 0)
         throw invalid_argument("Time between events must be greater than 0");
-    if(timeBetweenEvents_ < duration_)
+    if (timeBetweenEvents_ < duration_)
         throw invalid_argument("Time between events must be longer than event length");
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = repeatTill_;
@@ -22,7 +22,7 @@ RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t durat
         : Event(move(title_), startDateUtc_, duration_) {
     if (timeBetweenEvents_ <= 0)
         throw invalid_argument("Time between events must be greater than 0");
-    if(timeBetweenEvents_ < duration_)
+    if (timeBetweenEvents_ < duration_)
         throw invalid_argument("Time between events must be longer than event length");
     timeBetweenEvents = timeBetweenEvents_;
     repeatTill = 0;
@@ -344,4 +344,14 @@ void RecurringEvent::saveState() {
 
 void RecurringEvent::restoreState() {
     *this = *state;
+}
+
+time_t RecurringEvent::findFreeSpace(const EventSet<shared_ptr<Event>> &events) {
+    time_t res = Event::findFreeSpace(events);
+    res = (res - startDateUtc) % timeBetweenEvents + startDateUtc;
+    saveState();
+    startDateUtc = res;
+    res = Event::findFreeSpace(events);
+    restoreState();
+    return res;
 }

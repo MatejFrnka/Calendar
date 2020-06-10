@@ -1,4 +1,2 @@
 InheritableFromThis
 https://stackoverflow.com/questions/16082785/use-of-enable-shared-from-this-with-multiple-inheritance
-Make shared with private constructor
-https://stackoverflow.com/questions/8147027/how-do-i-call-stdmake-shared-on-a-class-with-only-protected-or-private-const/8147213#8147213

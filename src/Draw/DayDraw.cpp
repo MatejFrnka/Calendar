@@ -29,7 +29,7 @@ void DayDraw::drawEvents(tm &time) {
             //Get event end
             time_t eventEnd = (*eventIt)->getEndDateUtc();
             tm tm_eventEnd = *localtime(&eventEnd);
-            latestHour = eventEnd > endTime ? 25 : tm_eventEnd.tm_hour;
+            latestHour = eventEnd >= endTime ? 25 : tm_eventEnd.tm_hour;
             int minuteEnd = tm_eventEnd.tm_min;
             //draw the event
             drawEvent(**eventIt, hourStart, minuteStart, latestHour, minuteEnd);
