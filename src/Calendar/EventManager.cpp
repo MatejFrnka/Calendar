@@ -23,14 +23,6 @@ shared_ptr<Event> EventManager::checkAvailability(const Event &event) const {
     return event.checkCollision(events);
 }
 
-shared_ptr<Event> EventManager::checkAvailability(time_t start, time_t end) const {
-    for (const auto &event:events) {
-        auto check = event->eventExists(start, end);
-        if (check)
-            return check;
-    }
-    return nullptr;
-}
 
 EventSet<shared_ptr<SingleEvent>> EventManager::getEvents(time_t start, time_t end) {
     EventSet<shared_ptr<SingleEvent>> result;
@@ -44,7 +36,7 @@ EventSet<shared_ptr<SingleEvent>> EventManager::getEvents(time_t start, time_t e
     return result;
 }
 
-void EventManager::removeEvent(const shared_ptr<Event> event, Event::actionType actionType) {
+void EventManager::removeEvent(shared_ptr<Event> event, Event::actionType actionType) {
     auto freeEvent = (event)->freeSelf(actionType);
     auto recEventIt = lower_bound(events.begin(), events.end(), freeEvent,
                                   [](const shared_ptr<Event> &a, const shared_ptr<Event> &b) { return *a < *b; });

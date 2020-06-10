@@ -11,16 +11,21 @@
 #include "../Utility/EventSet.h"
 #include "../Calendar/EventManager.h"
 
-class Event;
-
 class Draw {
 public:
     Draw(std::ostream &out_, EventManager &eventManager_) : out(out_), eventManager(eventManager_) {};
 
     virtual ~Draw() = default;
 
+    /**
+     * Set given time to next time range
+     * @param time tm to update
+     */
     virtual void moveNext(tm &time) const = 0;
-
+    /**
+     * Set given time to previous time range
+     * @param time tm to update
+     */
     virtual void movePrevious(tm &time) const = 0;
 
     /**

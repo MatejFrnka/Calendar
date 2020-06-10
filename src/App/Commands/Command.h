@@ -39,7 +39,13 @@ public:
      */
     const std::vector<std::shared_ptr<Command>> &getSubCommands() const { return commands; }
 
+    /**
+     * Command name - command is executed when user enters its name
+     */
     const std::string name;
+    /**
+     * Command description - is displayed by help command, it should describe what the command does
+     */
     const std::string description;
 
 
@@ -48,8 +54,14 @@ public:
     }
 
     InputUtility &inputUtility;
+    /**
+     * Parameters that the function takes
+     */
     const std::map<std::string, std::string> params;
 protected:
+    /**
+     * Commands that the function will return
+     */
     std::vector<std::shared_ptr<Command>> commands;
 };
 

@@ -211,3 +211,21 @@ int InputUtility::readSelect(const std::string &attr, int lenght) const {
         numberDoesNotMatch();
     }
 }
+
+Event::actionType InputUtility::readActionType(const vector<Event::actionType> &actions) {
+        if (actions.empty())
+            throw invalid_argument("Actions must not be empty");
+        if (actions.size() > 1) {
+            out << "How many events should be deleted" << endl;
+            for (size_t i = 0; i < actions.size(); ++i) {
+                if (actions[i] == Event::AllEvents)
+                    out << '(' << i << ") " << "All events" << endl;
+                if (actions[i] == Event::ThisAndNext)
+                    out << '(' << i << ") " << "This and upcoming events" << endl;
+                if (actions[i] == Event::OnlyThis)
+                    out << '(' << i << ") " << "Only this event" << endl;
+            }
+            return actions[readSelect("Select mode", actions.size())];
+        } else
+            return actions[0];
+}

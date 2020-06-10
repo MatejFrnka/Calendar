@@ -28,7 +28,9 @@ public:
      * @throws invalid_argument if duration_ is less than 1 or if timeBetweenEvents_ is less than 1
      */
     RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_);
-
+    /**
+     * @throws invalid_argument if duration_ is less than 1 or if timeBetweenEvents_ is less than 1
+     */
     RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_);
 
     RecurringEvent(const RecurringEvent &event);

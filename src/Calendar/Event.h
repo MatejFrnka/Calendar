@@ -38,8 +38,6 @@ public:
      */
     Event(string title_, time_t startDateUtc_, time_t durationUtc_);
 
-    virtual ~Event() = default;
-
     /**
      * @throws InvalidEventSequenceException if input is invalid
      */
@@ -55,8 +53,14 @@ public:
         OnlyThis
     };
 
+    /**
+     * Saves event state
+     */
     virtual void saveState() = 0;
 
+    /**
+     * Restores event state from previously saved state
+     */
     virtual void restoreState() = 0;
 
     /**
@@ -118,13 +122,27 @@ public:
      * @return shared_ptr to freed event, nullptr if event could not be freed
      */
     virtual shared_ptr<Event> freeSelf(actionType actionType) = 0;
-
+    /**
+     * @return actionTypes that can be applied for this event
+     */
     virtual vector<actionType> getActionTypes();
-
+    /**
+     * Checks if event collides with other events
+     * @param ev Events to check collisions with
+     * @return pointer to first event this event collides with or null pointer if it doenst collide with any events
+     */
     virtual shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const = 0;
 
+    /**
+     * @return string that can later be used to import the event back
+     */
     virtual string exportEvent() const;
 
+    /**
+     * Compares start dates of events
+     * @param event Event to compare this event with
+     * @return true if this event's start date is smaller than other's event start date
+     */
     bool operator<(const Event &event) const {
         return startDateUtc < event.startDateUtc;
     }
@@ -144,6 +162,9 @@ public:
     virtual string infoAll() const = 0;
 
 protected:
+    /**
+     * @return body of infoAll - it is the same for all events
+     */
     string infoAllBody() const;
 
 public:

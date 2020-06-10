@@ -34,8 +34,10 @@ bool CalendarApp::load(EventManager &eventManager) const {
             failedLoads++;
         }
     }
-    if (failedLoads > 0)
+    if (failedLoads > 0) {
         cout << "Failed to load " << failedLoads << " events" << endl;
+        return false;
+    }
     return true;
 }
 

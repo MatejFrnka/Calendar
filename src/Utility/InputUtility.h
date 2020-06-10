@@ -21,6 +21,8 @@ public:
 
     InputUtility(const InputUtility &) = delete;
 
+    InputUtility &operator=(const InputUtility &) = delete;
+
     /**
      * Splits input by spaces
      * @param input Command to get parameters from
@@ -32,81 +34,140 @@ public:
      * Reads string from user's input
      * @param attr Name of attribute that is being set
      * @param currentVal Value to use instead of waiting for user's input
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
      * @return Input in type of string
      */
     std::string readString(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
+    /**
+     * Reads string from user's input
+     * @param attr Name of attribute that is being set
+     * @param params parameters previously specified
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
+     * @param required
+     * @return
+     */
     std::string readString(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads date and time from user's input
      * @param attr Name of attribute that is being set
      * @param currentVal Value to use instead of waiting for user's input
+     * @param required if true, user must provide valid input, if false, function will return -1
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
      * @return Input of type time_t
      */
     time_t readDateTime(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
+    /**
+     * Reads date and time from user's input
+     * @param attr Name of attribute that is being set
+     * @param params Queue of params already specified by user
+     * @param required if true, user must provide valid input, if false, function will return -1
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
+     * @return Input of type time_t
+     */
     time_t readDateTime(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads date from user's input
      * @param attr Name of attribute that is being set
      * @param currentVal Value to use instead of waiting for user's input
+     * @param required if true, user must provide valid input, if false, function will return -1
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
      * @return Input of type time_t
      */
     time_t readDate(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
+    /**
+     * Reads date and time from user's input
+     * @param attr Name of attribute that is being set
+     * @param params Queue of params already specified by user
+     * @param required if true, user must provide valid input, if false, function will return -1
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
+     * @return Input of type time_t
+     */
     time_t readDate(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads timespan from user's input.
      * @param attr Name of attribute that is being set
      * @param currentVal Value to use instead of waiting for user's input
+     * @param required if true, user must provide valid input, if false, function will return -1
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
      * @return Input of type time_t
      */
     time_t readTimeSpan(const std::string &attr, const std::string &currentVal = "", bool required = true) const;
 
+    /**
+     * Reads timespan and time from user's input
+     * @param attr Name of attribute that is being set
+     * @param params Queue of params already specified by user
+     * @param required if true, user must provide valid input, if false, function will return -1
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
+     * @return Input of type time_t
+     */
     time_t readTimeSpan(const std::string &attr, std::queue<std::string> &params, bool required = true) const;
 
     /**
      * Reads integer from user's input
      * @param attr Name of attribute that is being set
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
      * @return Input of type int
      */
     int readNumber(const std::string &attr) const;
 
+    /**
+     * Reads a number between 0 and attribute lenght from user
+     * @param attr Name of attribute that is being set
+     * @param Lenght Lenght of array user is choosing from
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
+     * @return Number between <0, length)
+     */
     int readSelect(const std::string &attr, int lenght) const;
 
+    /**
+     * Reads boolean from user
+     * @param attr Name of attribute that is being set
+     * @throws UnexpectedEndOfInputException when end of file input happens during setting an argument
+     * @return returns true or false
+     */
     bool readBool(const std::string &attr);
 
-    Event::actionType readActionType(const vector<Event::actionType> &actions) {
-        if (actions.empty())
-            throw invalid_argument("Actions must not be empty");
-        if (actions.size() > 1) {
-            out << "How many events should be deleted" << endl;
-            for (size_t i = 0; i < actions.size(); ++i) {
-                if (actions[i] == Event::AllEvents)
-                    out << '(' << i << ") " << "All events" << endl;
-                if (actions[i] == Event::ThisAndNext)
-                    out << '(' << i << ") " << "This and upcoming events" << endl;
-                if (actions[i] == Event::OnlyThis)
-                    out << '(' << i << ") " << "Only this event" << endl;
-            }
-            return actions[readSelect("Select mode", actions.size())];
-        } else
-            return actions[0];
-    }
+    /**
+     * Reads Event::actionType enum from user
+     * @param actions
+     * @throws invalid_argument when no actions were provided
+     * @return actionType selected by user
+     */
+    Event::actionType readActionType(const vector<Event::actionType> &actions);
 
+    /**
+     * @return System datetime timestamp
+     */
     static time_t getCurrentTime();
 
     std::ostream &out;
 
+    /**
+     * Prints error message that no parameter was found
+     * @param param parameter that was not found
+     */
     void noParameterFound(const std::string &param = "") const;
 
+    /**
+     * Prints error message that event is not editable
+     */
     void eventNotEditable() const;
 
+    /**
+     * Prints error message that selected number is not in valid range
+     */
     void numberDoesNotMatch() const;
 
+    /**
+     * Prints success message
+     */
     void success() const;
 
 private:

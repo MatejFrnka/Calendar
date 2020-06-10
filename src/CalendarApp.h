@@ -8,6 +8,9 @@
 
 #include "Calendar/EventManager.h"
 
+/**
+ * Runs calendar application
+ */
 class CalendarApp {
 public:
     CalendarApp() = default;
@@ -16,11 +19,25 @@ public:
 
     CalendarApp(const CalendarApp &) = delete;
 
+    /**
+     * Starts the application
+     */
     void start() const;
 
 private:
+    /**
+     * Loads events from file
+     * @param eventManager event manager to load events into
+     * @return false if loading of at least one event failed
+     */
     bool load(EventManager &eventManager) const;
 
+
+    /**
+     * Saves events to file
+     * @param eventManager event manager to load events from
+     * @return true if success, else false
+     */
     bool save(EventManager &eventManager) const;
 
 };

@@ -26,18 +26,33 @@ public:
         day,
     };
 
+    /**
+     * Set drawn time to next time range
+     */
     void next();
-
+    /**
+     * Set drawn time to previous time range
+     */
     void previous();
-
+    /**
+     * Sets time to draw
+     * @param time to set drawn time to
+     */
     void setDate(time_t time);
 
+    /**
+     * Sets draw mode
+     * @param drawMode new draw mode
+     */
     void setMode(DrawMode drawMode);
 
+    /**
+     * Draws time range using provided mode at provided time
+     */
     void draw();
 
-    Draw *drawUtility;
 private:
+    Draw *drawUtility;
     EventManager &eventManager;
     std::ostream &out;
     tm time{};
