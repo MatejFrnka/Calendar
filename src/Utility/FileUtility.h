@@ -3,9 +3,7 @@
  * @date: 02.06.2020
  */
 
-#ifndef CALENDAR_FILEUTILITY_H
-#define CALENDAR_FILEUTILITY_H
-
+#pragma once
 #include <fstream>
 #include "../Calendar/Event.h"
 #include "../Calendar/SingleEvent.h"
@@ -96,4 +94,3 @@ struct FileUtility {
     }
 };
 
-#endif //CALENDAR_FILEUTILITY_H

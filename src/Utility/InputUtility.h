@@ -3,9 +3,7 @@
  * @date: 10.05.2020
  */
 
-#ifndef CALENDAR_UTILITY_INPUT_UTILITY
-#define CALENDAR_UTILITY_INPUT_UTILITY
-
+#pragma once
 #include <vector>
 #include <string>
 #include <sstream>
@@ -195,4 +193,3 @@ private:
 };
 
 
-#endif

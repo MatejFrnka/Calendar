@@ -3,9 +3,7 @@
  * @date: 03.05.2020
  */
 
-#ifndef CALENDAR_UTILITY_EVENT_SET
-#define CALENDAR_UTILITY_EVENT_SET
-
+#pragma once
 #include <set>
 
 template<typename T>
@@ -18,4 +16,3 @@ struct compare_reference {
 template<typename T>
 using EventSet = std::set<T, compare_reference<T>>;
 
-#endif

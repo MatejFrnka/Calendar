@@ -3,9 +3,7 @@
  * @date: 10.05.2020
  */
 
-#ifndef CALENDAR_DRAW_MONTH_DRAW
-#define CALENDAR_DRAW_MONTH_DRAW
-
+#pragma once
 
 #include "Draw.h"
 #include "../Utility/DatetimeUtility.h"
@@ -21,4 +19,3 @@ public:
     void drawEvents(tm &time) override;
 };
 
-#endif

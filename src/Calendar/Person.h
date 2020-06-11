@@ -3,9 +3,7 @@
  * @date: 27.05.2020
  */
 
-#ifndef CALENDAR_PERSON_H
-#define CALENDAR_PERSON_H
-
+#pragma once
 #include <utility>
 #include <iostream>
 #include "string"
@@ -29,4 +27,3 @@ public:
 };
 
 
-#endif //CALENDAR_PERSON_H

@@ -3,9 +3,7 @@
  * @date: 26.05.2020
  */
 
-#ifndef CALENDAR_INFOCOMMAND_H
-#define CALENDAR_INFOCOMMAND_H
-
+#pragma once
 #include "../Command.h"
 
 class InfoCommand : public Command {
@@ -24,4 +22,3 @@ private:
     std::shared_ptr<Event> target;
 };
 
-#endif //CALENDAR_INFOCOMMAND_H

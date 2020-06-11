@@ -3,9 +3,7 @@
  * @date: 29.04.2020
  */
 
-#ifndef CALENDAR_EVENT_MANAGER
-#define CALENDAR_EVENT_MANAGER
-
+#pragma once
 #include "Event.h"
 #include "../Utility/EventSet.h"
 #include <algorithm>
@@ -111,4 +109,3 @@ private:
     EventSet<std::shared_ptr<Event>> events;
 };
 
-#endif

@@ -3,9 +3,7 @@
  * @date: 29.04.2020
  */
 
-#ifndef CALENDAR_SINGLE_EVENT
-#define CALENDAR_SINGLE_EVENT
-
+#pragma once
 
 #include "Event.h"
 #include <memory>
@@ -53,4 +51,3 @@ private:
     std::shared_ptr<SingleEvent> state;
 };
 
-#endif

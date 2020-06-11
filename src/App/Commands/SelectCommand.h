@@ -3,9 +3,7 @@
  * @date: 26.05.2020
  */
 
-#ifndef CALENDAR_SELECTCOMMAND_H
-#define CALENDAR_SELECTCOMMAND_H
-
+#pragma once
 
 #include "Command.h"
 #include "../../Calendar/EventManager.h"
@@ -20,4 +18,3 @@ public:
 };
 
 
-#endif //CALENDAR_SELECTCOMMAND_H

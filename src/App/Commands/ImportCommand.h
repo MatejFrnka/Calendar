@@ -3,9 +3,7 @@
  * @date: 11.06.2020
  */
 
-#ifndef CALENDAR_IMPORTCOMMAND_H
-#define CALENDAR_IMPORTCOMMAND_H
-
+#pragma once
 #include "Command.h"
 #include "../../Calendar/EventManager.h"
 #include "../../Utility/FileUtility.h"
@@ -26,4 +24,3 @@ std::vector<std::shared_ptr<Command>> ImportCommand::executeAction(std::queue<st
     return commands;
 }
 
-#endif //CALENDAR_IMPORTCOMMAND_H

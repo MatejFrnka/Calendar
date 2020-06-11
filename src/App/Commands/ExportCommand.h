@@ -3,9 +3,7 @@
  * @date: 11.06.2020
  */
 
-#ifndef CALENDAR_EXPORTCOMMAND_H
-#define CALENDAR_EXPORTCOMMAND_H
-
+#pragma once
 #include "Command.h"
 #include "../../Calendar/EventManager.h"
 #include "../../Utility/FileUtility.h"
@@ -30,4 +28,3 @@ std::vector<std::shared_ptr<Command>> ExportCommand::executeAction(std::queue<st
 }
 
 
-#endif //CALENDAR_EXPORTCOMMAND_H

@@ -3,9 +3,7 @@
  * @date: 27.05.2020
  */
 
-#ifndef CALENDAR_EDITCOMMAND_H
-#define CALENDAR_EDITCOMMAND_H
-
+#pragma once
 #include "../../../Utility/InputUtility.h"
 #include "../../../Calendar/Event.h"
 #include "../Command.h"
@@ -108,4 +106,3 @@ private:
     std::shared_ptr<Event> target;
 };
 
-#endif //CALENDAR_EDITCOMMAND_H

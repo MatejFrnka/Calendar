@@ -12,6 +12,8 @@
 #include <assert.h>
 #include <memory>
 
+using namespace std;
+
 string drawEvents(const EventSet<shared_ptr<SingleEvent>> &s) {
     stringstream ss;
     for (const auto &event : s) {
@@ -472,7 +474,7 @@ void test() {
         assert(em.addEvent(make_shared<SingleEvent>("e2", 301, 100)));
         assert(em.addEvent(make_shared<SingleEvent>("e3", 300, 1)));
         assert(em.addEvent(make_shared<RecurringEvent>("r2", 500, 100, 200)));
-        shared_ptr <Event> a = *em.getEvents(700, 800).begin();
+        shared_ptr<Event> a = *em.getEvents(700, 800).begin();
         assert(em.moveEvent(a, 750));
         assert(drawEvents(em.getEvents(600, 1000)) == "r2 750 850\n"
                                                       "r2 900 1000\n");
@@ -548,7 +550,7 @@ void test() {
     {
         auto rec1 = make_shared<RecurringEvent>("Title", 0, 50, 500);
         auto event1 = (*rec1->getEvents(1000, 1100).begin())->freeSelf(Event::actionType::OnlyThis);
-        shared_ptr <RecurringEvent> ev = make_shared<RecurringEvent>(*rec1);
+        shared_ptr<RecurringEvent> ev = make_shared<RecurringEvent>(*rec1);
         auto event2 = (*rec1->getEvents(5500, 6000).begin())->freeSelf(Event::actionType::ThisAndNext);
         assert(drawEvents(ev->getEvents(5000, 10000)) == "Title 5000 5050\n"
                                                          "Title 5500 5550\n"

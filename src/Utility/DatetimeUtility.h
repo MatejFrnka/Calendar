@@ -3,9 +3,7 @@
  * @date: 19.05.2020
  */
 
-#ifndef CALENDAR_DATETIMEUTILITY_H
-#define CALENDAR_DATETIMEUTILITY_H
-
+#pragma once
 #include <ctime>
 #include <string>
 #include <vector>
@@ -34,4 +32,3 @@ public:
 };
 
 
-#endif //CALENDAR_DATETIMEUTILITY_H

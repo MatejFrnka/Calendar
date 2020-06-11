@@ -3,9 +3,7 @@
  * @date: 10.05.2020
  */
 
-#ifndef CALENDAR_DELETECOMMAND_H
-#define CALENDAR_DELETECOMMAND_H
-
+#pragma once
 #include "../Command.h"
 #include <utility>
 #include "../../../Calendar/Event.h"
@@ -30,4 +28,3 @@ private:
     EventManager &eventManager;
 };
 
-#endif

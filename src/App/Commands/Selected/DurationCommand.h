@@ -3,9 +3,7 @@
  * @date: 01.06.2020
  */
 
-#ifndef CALENDAR_DURATIONCOMMAND_H
-#define CALENDAR_DURATIONCOMMAND_H
-
+#pragma once
 
 #include "../Command.h"
 #include "../../../Calendar/EventManager.h"
@@ -32,4 +30,3 @@ private:
     EventManager &eventManager;
 };
 
-#endif //CALENDAR_DURATIONCOMMAND_H

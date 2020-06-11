@@ -3,9 +3,7 @@
  * @date: 09.05.2020
  */
 
-#ifndef CALENDAR_APP_COMMANDS_CREATE_COMMAND
-#define CALENDAR_APP_COMMANDS_CREATE_COMMAND
-
+#pragma once
 #include <utility>
 #include <vector>
 #include "Command.h"
@@ -29,4 +27,3 @@ private:
 };
 
 
-#endif

@@ -3,9 +3,7 @@
  * @date: 22.05.2020
  */
 
-#ifndef CALENDAR_DRAWMANAGER_H
-#define CALENDAR_DRAWMANAGER_H
-
+#pragma once
 #include "MonthDraw.h"
 #include "WeekDraw.h"
 #include "DayDraw.h"
@@ -59,4 +57,3 @@ private:
 };
 
 
-#endif //CALENDAR_DRAWMANAGER_H

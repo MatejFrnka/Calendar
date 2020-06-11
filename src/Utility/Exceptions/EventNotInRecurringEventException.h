@@ -3,9 +3,7 @@
  * @date: 02.05.2020
  */
 
-#ifndef CALENDAR_UTILITY_EXCEPTIONS_EVENT_NOT_IN_RECURRING_EVENT
-#define CALENDAR_UTILITY_EXCEPTIONS_EVENT_NOT_IN_RECURRING_EVENT
-
+#pragma once
 #include <exception>
 
 /**
@@ -17,4 +15,3 @@ class EventNotInRecurringEventException : std::exception {
     }
 };
 
-#endif

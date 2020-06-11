@@ -3,9 +3,7 @@
  * @date: 01.05.2020
  */
 
-#ifndef CALENDAR_UTILITY_EXCEPTIONS_EVENT_NOT_EDITABLE
-#define CALENDAR_UTILITY_EXCEPTIONS_EVENT_NOT_EDITABLE
-
+#pragma once
 #include <exception>
 
 /**
@@ -18,4 +16,3 @@ class EventNotEditableException : std::exception {
 };
 
 
-#endif

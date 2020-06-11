@@ -3,9 +3,7 @@
  * @date: 10.05.2020
  */
 
-#ifndef CALENDAR_DRAW_DAY_DRAW
-#define CALENDAR_DRAW_DAY_DRAW
-
+#pragma once
 
 #include "Draw.h"
 #include "../Utility/DatetimeUtility.h"
@@ -42,4 +40,3 @@ private:
 };
 
 
-#endif

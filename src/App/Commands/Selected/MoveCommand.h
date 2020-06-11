@@ -3,9 +3,7 @@
  * @date: 01.06.2020
  */
 
-#ifndef CALENDAR_MOVECOMMAND_H
-#define CALENDAR_MOVECOMMAND_H
-
+#pragma once
 #include "../Command.h"
 #include "../../../Calendar/EventManager.h"
 
@@ -31,4 +29,3 @@ private:
     EventManager &eventManager;
 };
 
-#endif //CALENDAR_MOVECOMMAND_H

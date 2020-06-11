@@ -3,9 +3,7 @@
  * @date: 06.05.2020
  */
 
-#ifndef CALENDAR_APP_ACTION
-#define CALENDAR_APP_ACTION
-
+#pragma once
 #include <string>
 #include <utility>
 #include <ostream>
@@ -65,4 +63,3 @@ protected:
     std::vector<std::shared_ptr<Command>> commands;
 };
 
-#endif

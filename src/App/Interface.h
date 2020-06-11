@@ -3,9 +3,7 @@
  * @date: 06.05.2020
  */
 
-#ifndef CALENDAR_APP_INTERFACE
-#define CALENDAR_APP_INTERFACE
-
+#pragma once
 #include "string"
 #include "Commands/Command.h"
 #include "Commands/HelpCommand.h"
@@ -41,4 +39,3 @@ private:
     DrawManager drawManager;
 };
 
-#endif

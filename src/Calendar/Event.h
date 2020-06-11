@@ -3,8 +3,7 @@
  * @date: 29.04.2020
  */
 
-#ifndef CALENDAR_EVENT
-#define CALENDAR_EVENT
+#pragma once
 
 #include <ctime>
 #include <string>
@@ -244,5 +243,3 @@ protected:
     std::string location;
     std::vector<std::shared_ptr<Person>> people;
 };
-
-#endif

@@ -3,9 +3,7 @@
  * @date: 29.04.2020
  */
 
-#ifndef CALENDAR_RECURRING_EVENT_ITEM
-#define CALENDAR_RECURRING_EVENT_ITEM
-
+#pragma once
 #include "RecurringEvent.h"
 #include <utility>
 
@@ -56,4 +54,3 @@ private:
     std::shared_ptr<RecurringItemEvent> state;
 };
 
-#endif

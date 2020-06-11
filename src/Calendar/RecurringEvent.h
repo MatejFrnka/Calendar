@@ -3,9 +3,7 @@
  * @date: 29.04.2020
  */
 
-#ifndef CALENDAR_RECURRING_EVENT
-#define CALENDAR_RECURRING_EVENT
-
+#pragma once
 #include <string>
 #include <vector>
 #include "Event.h"
@@ -149,4 +147,3 @@ public:
     void setDurationUtc(time_t durationUtc) override;
 };
 
-#endif

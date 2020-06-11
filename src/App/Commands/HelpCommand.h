@@ -3,9 +3,7 @@
  * @date: 09.05.2020
  */
 
-#ifndef CALENDAR_APP_COMMANDS_HELP_COMMAND
-#define CALENDAR_APP_COMMANDS_HELP_COMMAND
-
+#pragma once
 #include "Command.h"
 #include <utility>
 #include <vector>
@@ -24,5 +22,4 @@ private:
     const std::vector<std::shared_ptr<Command>> &refCommands;
 };
 
-#endif
 

@@ -3,9 +3,7 @@
  * @date: 10.05.2020
  */
 
-#ifndef CALENDAR_APP_COMMANDS_CUSTOM_COMMAND
-#define CALENDAR_APP_COMMANDS_CUSTOM_COMMAND
-
+#pragma once
 #include <functional>
 #include <utility>
 #include "Command.h"
@@ -28,4 +26,3 @@ private:
     const std::function<std::vector<std::shared_ptr<Command>>(std::queue<std::string> &, CustomCommand &self)> fn;
 };
 
-#endif

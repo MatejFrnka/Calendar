@@ -3,9 +3,7 @@
  * @date: 03.06.2020
  */
 
-#ifndef CALENDAR_CALENDARAPP_H
-#define CALENDAR_CALENDARAPP_H
-
+#pragma once
 #include "Calendar/EventManager.h"
 
 /**
@@ -35,4 +33,3 @@ private:
 };
 
 
-#endif //CALENDAR_CALENDARAPP_H

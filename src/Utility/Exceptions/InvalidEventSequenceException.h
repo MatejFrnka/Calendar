@@ -3,9 +3,7 @@
  * @date: 02.06.2020
  */
 
-#ifndef CALENDAR_INVALIDEVENTSEQUENCEEXCEPTION_H
-#define CALENDAR_INVALIDEVENTSEQUENCEEXCEPTION_H
-
+#pragma once
 #include <exception>
 
 /**
@@ -17,4 +15,3 @@ class InvalidEventSequenceException : std::exception {
     }
 };
 
-#endif //CALENDAR_INVALIDEVENTSEQUENCEEXCEPTION_H

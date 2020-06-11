@@ -3,9 +3,7 @@
  * @date: 06.05.2020
  */
 
-#ifndef CALENDAR_DRAW_DRAW
-#define CALENDAR_DRAW_DRAW
-
+#pragma once
 #include <ostream>
 #include <memory>
 #include "../Utility/EventSet.h"
@@ -39,6 +37,5 @@ protected:
     EventManager &eventManager;
 };
 
-#endif
 
 
