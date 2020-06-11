@@ -7,6 +7,8 @@
 #include "Commands/DrawCommand.h"
 #include "Commands/SelectCommand.h"
 #include "../Utility/Exceptions/UnexpectedEndOfInputException.h"
+#include "Commands/ExportCommand.h"
+#include "Commands/ImportCommand.h"
 
 void Interface::start() {
     std::string input;
@@ -34,6 +36,9 @@ Interface::Interface(std::istream &in_, std::ostream &out_, EventManager &eventM
     homeCommands.push_back(std::make_shared<CreateCommand>(inputUtility, eventManager));
     homeCommands.push_back(std::make_shared<DrawCommand>(inputUtility, drawManager));
     homeCommands.push_back(std::make_shared<SelectCommand>(inputUtility, eventManager));
+    homeCommands.push_back(std::make_shared<ExportCommand>(inputUtility, eventManager));
+    homeCommands.push_back(std::make_shared<ImportCommand>(inputUtility, eventManager));
+
 }
 
 std::vector<std::shared_ptr<Command>> Interface::executeAction(std::queue<std::string> &params, const std::vector<std::shared_ptr<Command>> &commands) {

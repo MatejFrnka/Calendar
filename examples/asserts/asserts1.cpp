@@ -631,4 +631,5 @@ void test() {
         Interface i(in, out, e);
         i.start();
     }
+    cout << "tests ok" << endl;
 }

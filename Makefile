@@ -18,6 +18,8 @@ run:
 clean:
 	rm $(LIST)
 	rm a.out
+	rm frnkamat
+	rm events_saved.evs
 
 doc:
 	echo documentation already generated separately by doxygen

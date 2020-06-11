@@ -11,7 +11,7 @@
 void CalendarApp::start() const {
     cout << "Calendar running" << endl;
     EventManager ev;
-    if (!load(ev))
+    if (!FileUtility::load(ev, cout))
         cout << "Calendar failed to load events" << endl;
     Interface inteface(cin, cout, ev);
     inteface.start();
@@ -20,25 +20,6 @@ void CalendarApp::start() const {
         cout << "Failed to save events. Please check program has read-write permissions in its location." << endl;
     else
         cout << "Events saved" << endl;
-}
-
-bool CalendarApp::load(EventManager &eventManager) const {
-    auto data = FileUtility::readData();
-    size_t failedLoads = 0;
-    for (const auto &f:data) {
-        try {
-            if (!eventManager.addEvent(f))
-                failedLoads++;
-        }
-        catch (InvalidEventSequenceException &e) {
-            failedLoads++;
-        }
-    }
-    if (failedLoads > 0) {
-        cout << "Failed to load " << failedLoads << " events" << endl;
-        return false;
-    }
-    return true;
 }
 
 bool CalendarApp::save(EventManager &eventManager) const {

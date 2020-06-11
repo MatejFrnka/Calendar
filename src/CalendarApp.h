@@ -25,13 +25,6 @@ public:
     void start() const;
 
 private:
-    /**
-     * Loads events from file
-     * @param eventManager event manager to load events into
-     * @return false if loading of at least one event failed
-     */
-    bool load(EventManager &eventManager) const;
-
 
     /**
      * Saves events to file
