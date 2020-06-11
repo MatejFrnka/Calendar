@@ -100,24 +100,24 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keyword">auto</span> parameter = parameters.front();</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            parameters.pop();</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">if</span> (parameter == <span class="stringliteral">&quot;month&quot;</span>)</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                drawManager.setMode(DrawManager::DrawMode::month);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                drawManager.<a class="code" href="class_draw_manager.html#a0815eff0a9b61d46d44dc4d1e16883d5">setMode</a>(DrawManager::DrawMode::month);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parameter == <span class="stringliteral">&quot;week&quot;</span>)</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                drawManager.setMode(DrawManager::DrawMode::week);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                drawManager.<a class="code" href="class_draw_manager.html#a0815eff0a9b61d46d44dc4d1e16883d5">setMode</a>(DrawManager::DrawMode::week);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parameter == <span class="stringliteral">&quot;day&quot;</span>)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                drawManager.setMode(DrawManager::DrawMode::day);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                drawManager.<a class="code" href="class_draw_manager.html#a0815eff0a9b61d46d44dc4d1e16883d5">setMode</a>(DrawManager::DrawMode::day);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parameter == <span class="stringliteral">&quot;next&quot;</span>)</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                drawManager.next();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                drawManager.<a class="code" href="class_draw_manager.html#a5e78f58628f0485502e7469dce339fdd">next</a>();</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parameter == <span class="stringliteral">&quot;previous&quot;</span>)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                drawManager.previous();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                drawManager.<a class="code" href="class_draw_manager.html#ae56c9474744791a4728d3b5da55a28d2">previous</a>();</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (parameter == <span class="stringliteral">&quot;set&quot;</span>) {</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                time_t date = inputUtility.<a class="code" href="class_input_utility.html#a830227b725a22934658a5e9790583747">readDate</a>(<span class="stringliteral">&quot;Date&quot;</span>, parameters, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                drawManager.setDate(date);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                drawManager.<a class="code" href="class_draw_manager.html#a111e4bbed03ddb20525ca84537587787">setDate</a>(date);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                inputUtility.<a class="code" href="class_input_utility.html#aeb93efc03eae5f0c24544015d66cb42f">noParameterFound</a>(parameter);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                <span class="keywordflow">return</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt;();</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        drawManager.draw();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        drawManager.<a class="code" href="class_draw_manager.html#a90d299564052e07a433b956d21a5d861">draw</a>();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt;();</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
@@ -128,12 +128,17 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif //CALENDAR_DRAWCOMMAND_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_draw_command_html_ad374b8f59feb255da9cdb2c1a8d372d4"><div class="ttname"><a href="class_draw_command.html#ad374b8f59feb255da9cdb2c1a8d372d4">DrawCommand::executeAction</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; executeAction(std::queue&lt; std::string &gt; &amp;parameters) override</div><div class="ttdef"><b>Definition:</b> DrawCommand.h:31</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a111e4bbed03ddb20525ca84537587787"><div class="ttname"><a href="class_draw_manager.html#a111e4bbed03ddb20525ca84537587787">DrawManager::setDate</a></div><div class="ttdeci">void setDate(time_t time)</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:37</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a5e78f58628f0485502e7469dce339fdd"><div class="ttname"><a href="class_draw_manager.html#a5e78f58628f0485502e7469dce339fdd">DrawManager::next</a></div><div class="ttdeci">void next()</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:29</div></div>
 <div class="ttc" id="aclass_draw_manager_html"><div class="ttname"><a href="class_draw_manager.html">DrawManager</a></div><div class="ttdef"><b>Definition:</b> DrawManager.h:15</div></div>
+<div class="ttc" id="aclass_draw_manager_html_ae56c9474744791a4728d3b5da55a28d2"><div class="ttname"><a href="class_draw_manager.html#ae56c9474744791a4728d3b5da55a28d2">DrawManager::previous</a></div><div class="ttdeci">void previous()</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:33</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a90d299564052e07a433b956d21a5d861"><div class="ttname"><a href="class_draw_manager.html#a90d299564052e07a433b956d21a5d861">DrawManager::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:15</div></div>
 <div class="ttc" id="aclass_input_utility_html_a830227b725a22934658a5e9790583747"><div class="ttname"><a href="class_input_utility.html#a830227b725a22934658a5e9790583747">InputUtility::readDate</a></div><div class="ttdeci">time_t readDate(const std::string &amp;attr, const std::string &amp;currentVal=&quot;&quot;, bool required=true) const</div><div class="ttdef"><b>Definition:</b> InputUtility.cpp:55</div></div>
 <div class="ttc" id="aclass_input_utility_html_aeb93efc03eae5f0c24544015d66cb42f"><div class="ttname"><a href="class_input_utility.html#aeb93efc03eae5f0c24544015d66cb42f">InputUtility::noParameterFound</a></div><div class="ttdeci">void noParameterFound(const std::string &amp;param=&quot;&quot;) const</div><div class="ttdef"><b>Definition:</b> InputUtility.cpp:177</div></div>
 <div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:18</div></div>
 <div class="ttc" id="aclass_draw_command_html"><div class="ttname"><a href="class_draw_command.html">DrawCommand</a></div><div class="ttdef"><b>Definition:</b> DrawCommand.h:13</div></div>
 <div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:17</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a0815eff0a9b61d46d44dc4d1e16883d5"><div class="ttname"><a href="class_draw_manager.html#a0815eff0a9b61d46d44dc4d1e16883d5">DrawManager::setMode</a></div><div class="ttdeci">void setMode(DrawMode drawMode)</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:19</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -114,6 +114,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0eef05cc0e8bede896094e9829cb52a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a828df8a47c129cf1540f2624a94f19ab"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_recurring_event.html#a828df8a47c129cf1540f2624a94f19ab">exportEvent</a> () const override</td></tr>
 <tr class="separator:a828df8a47c129cf1540f2624a94f19ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ddd36facf7c6a0db78768c3bfc82e2f"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_recurring_event.html#a1ddd36facf7c6a0db78768c3bfc82e2f">findFreeSpace</a> (const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;events) override</td></tr>
+<tr class="separator:a1ddd36facf7c6a0db78768c3bfc82e2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a791ea52fc27dc4ebbe4181d8f38c58a3"><td class="memItemLeft" align="right" valign="top"><a id="a791ea52fc27dc4ebbe4181d8f38c58a3"></a>
 time_t&#160;</td><td class="memItemRight" valign="bottom"><b>getRepeatTill</b> () const</td></tr>
 <tr class="separator:a791ea52fc27dc4ebbe4181d8f38c58a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,8 +140,6 @@ time_t&#160;</td><td class="memItemRight" valign="bottom"><b>getTimeBetweenEvent
 <tr class="memitem:af37245d358792cdef34ff4c76c74c022 inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top"><a id="af37245d358792cdef34ff4c76c74c022"></a>
 <a class="el" href="class_event.html">Event</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_event.html">Event</a> &amp;event)</td></tr>
 <tr class="separator:af37245d358792cdef34ff4c76c74c022 inherit pub_methods_class_event"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d0d317a74df27f1b961d633af3c456 inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a74d0d317a74df27f1b961d633af3c456">findFreeSpace</a> (const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;events)</td></tr>
-<tr class="separator:a74d0d317a74df27f1b961d633af3c456 inherit pub_methods_class_event"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42e24e73436729b14188d78ca522982f inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a42e24e73436729b14188d78ca522982f">isInRange</a> (time_t rangeStart, time_t rangeEnd) const</td></tr>
 <tr class="separator:a42e24e73436729b14188d78ca522982f inherit pub_methods_class_event"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b8c720fb401ef90787ed83e814c69cd inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a4b8c720fb401ef90787ed83e814c69cd">isInRange</a> (time_t start, time_t end, time_t rangeStart, time_t rangeEnd) const</td></tr>
@@ -464,7 +464,7 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">time_t&#160;</td>
-          <td class="paramname"><em>repeatTill_</em>&#160;</td>
+          <td class="paramname"><em>repeatTill</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -483,7 +483,7 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
     <tr><td class="paramname">start</td><td>Start of range. Events ending exactly at param start will not be included </td></tr>
     <tr><td class="paramname">End</td><td>of range. Events starting exactly at param end will not be included </td></tr>
     <tr><td class="paramname">repeat</td><td>Repetition of event. Time_t difference between start of events </td></tr>
-    <tr><td class="paramname">repeatTill</td><td>Time to repeat to. There will be no events happening past this time. Set repeat till to -1 for repeat till infinity </td></tr>
+    <tr><td class="paramname">repeatTill</td><td>Time to repeat to. There will be no events happening past this time; Set repeat till to -1 for repeat to infinity </td></tr>
   </table>
   </dd>
 </dl>
@@ -521,6 +521,41 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
 
 </div>
 </div>
+<a id="a1ddd36facf7c6a0db78768c3bfc82e2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ddd36facf7c6a0db78768c3bfc82e2f">&#9670;&nbsp;</a></span>findFreeSpace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">time_t RecurringEvent::findFreeSpace </td>
+          <td>(</td>
+          <td class="paramtype">const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>events</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Finds first next free space </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">events</td><td>List of events to find free space in </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Start of next first free space, -1 if there is no space ever (caused by recurring events repeating to infinity) </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_event.html#a74d0d317a74df27f1b961d633af3c456">Event</a>.</p>
+
+</div>
+</div>
 <a id="a807ab601e6a6f44a280f4f00a5900ebb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a807ab601e6a6f44a280f4f00a5900ebb">&#9670;&nbsp;</a></span>freeRecurringItemEvent()</h2>
 
@@ -546,9 +581,8 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Removes</p><dl class="params"><dt>Parameters</dt><dd>
+<p>Removes event from sequence of events generated by this </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">event</td><td>from sequence of events generated by this </td></tr>
     <tr><td class="paramname">event</td><td>event to free from sequence </td></tr>
     <tr><td class="paramname">actionType</td><td>how many events to free </td></tr>
   </table>
@@ -570,7 +604,7 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
         <tr>
           <td class="memname">shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt; RecurringEvent::freeSelf </td>
           <td>(</td>
-          <td class="paramtype">Event::actionType&#160;</td>
+          <td class="paramtype">actionType&#160;</td>
           <td class="paramname"><em>actionType</em></td><td>)</td>
           <td></td>
         </tr>
@@ -626,13 +660,8 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns events generated by <a class="el" href="class_recurring_event.html">RecurringEvent</a> happening in given time. Includes events not fully included. Eg. start of event happens before</p><dl class="params"><dt>Parameters</dt><dd>
+<p>Returns events generated by <a class="el" href="class_recurring_event.html">RecurringEvent</a> happening in given time. Includes events not fully included. Eg. start of event happens before param start but end happens between param start and param end Events ending at the same time as param start or starting at the same time as param end will not be inlcuded </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">start</td><td>but end happens between</td></tr>
-    <tr><td class="paramname">start</td><td>and</td></tr>
-    <tr><td class="paramname">end</td><td>Events ending at the same time as</td></tr>
-    <tr><td class="paramname">start</td><td>or starting at the same time as</td></tr>
-    <tr><td class="paramname">end</td><td>will not be inlcuded </td></tr>
     <tr><td class="paramname">start</td><td>Start of range </td></tr>
     <tr><td class="paramname">end</td><td>End of range </td></tr>
   </table>

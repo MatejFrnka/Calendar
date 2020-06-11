@@ -93,30 +93,33 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        day,</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    };</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">void</span> next();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span> previous();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> setDate(time_t time);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> setMode(DrawMode drawMode);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> draw();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="class_draw.html">Draw</a> *drawUtility;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::ostream &amp;out;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    tm time{};</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif //CALENDAR_DRAWMANAGER_H</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_draw_manager.html#a5e78f58628f0485502e7469dce339fdd">next</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_draw_manager.html#ae56c9474744791a4728d3b5da55a28d2">previous</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_draw_manager.html#a111e4bbed03ddb20525ca84537587787">setDate</a>(time_t time);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_draw_manager.html#a0815eff0a9b61d46d44dc4d1e16883d5">setMode</a>(DrawMode drawMode);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_draw_manager.html#a90d299564052e07a433b956d21a5d861">draw</a>();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="class_draw.html">Draw</a> *drawUtility;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    std::ostream &amp;out;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    tm time{};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif //CALENDAR_DRAWMANAGER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a111e4bbed03ddb20525ca84537587787"><div class="ttname"><a href="class_draw_manager.html#a111e4bbed03ddb20525ca84537587787">DrawManager::setDate</a></div><div class="ttdeci">void setDate(time_t time)</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:37</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a5e78f58628f0485502e7469dce339fdd"><div class="ttname"><a href="class_draw_manager.html#a5e78f58628f0485502e7469dce339fdd">DrawManager::next</a></div><div class="ttdeci">void next()</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:29</div></div>
 <div class="ttc" id="aclass_draw_manager_html"><div class="ttname"><a href="class_draw_manager.html">DrawManager</a></div><div class="ttdef"><b>Definition:</b> DrawManager.h:15</div></div>
-<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:16</div></div>
+<div class="ttc" id="aclass_draw_manager_html_ae56c9474744791a4728d3b5da55a28d2"><div class="ttname"><a href="class_draw_manager.html#ae56c9474744791a4728d3b5da55a28d2">DrawManager::previous</a></div><div class="ttdeci">void previous()</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:33</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a90d299564052e07a433b956d21a5d861"><div class="ttname"><a href="class_draw_manager.html#a90d299564052e07a433b956d21a5d861">DrawManager::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:15</div></div>
+<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:14</div></div>
 <div class="ttc" id="aclass_draw_manager_html_a4387bb789429ee7cce5d215f483a1b25"><div class="ttname"><a href="class_draw_manager.html#a4387bb789429ee7cce5d215f483a1b25">DrawManager::DrawManager</a></div><div class="ttdeci">DrawManager(EventManager &amp;eventManager_, std::ostream &amp;out_)</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:9</div></div>
+<div class="ttc" id="aclass_draw_manager_html_a0815eff0a9b61d46d44dc4d1e16883d5"><div class="ttname"><a href="class_draw_manager.html#a0815eff0a9b61d46d44dc4d1e16883d5">DrawManager::setMode</a></div><div class="ttdeci">void setMode(DrawMode drawMode)</div><div class="ttdef"><b>Definition:</b> DrawManager.cpp:19</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

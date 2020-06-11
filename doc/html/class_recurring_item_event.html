@@ -151,7 +151,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af37245d358792cdef34ff4c76c74c022 inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top"><a id="af37245d358792cdef34ff4c76c74c022"></a>
 <a class="el" href="class_event.html">Event</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_event.html">Event</a> &amp;event)</td></tr>
 <tr class="separator:af37245d358792cdef34ff4c76c74c022 inherit pub_methods_class_event"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d0d317a74df27f1b961d633af3c456 inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a74d0d317a74df27f1b961d633af3c456">findFreeSpace</a> (const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;events)</td></tr>
+<tr class="memitem:a74d0d317a74df27f1b961d633af3c456 inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top">virtual time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a74d0d317a74df27f1b961d633af3c456">findFreeSpace</a> (const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;events)</td></tr>
 <tr class="separator:a74d0d317a74df27f1b961d633af3c456 inherit pub_methods_class_event"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42e24e73436729b14188d78ca522982f inherit pub_methods_class_event"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a42e24e73436729b14188d78ca522982f">isInRange</a> (time_t rangeStart, time_t rangeEnd) const</td></tr>
 <tr class="separator:a42e24e73436729b14188d78ca522982f inherit pub_methods_class_event"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -332,7 +332,7 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
         <tr>
           <td class="memname">shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt; RecurringItemEvent::freeSelf </td>
           <td>(</td>
-          <td class="paramtype">Event::actionType&#160;</td>
+          <td class="paramtype">actionType&#160;</td>
           <td class="paramname"><em>actionType</em> = <code>actionType::OnlyThis</code></td><td>)</td>
           <td></td>
         </tr>
@@ -343,7 +343,7 @@ vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Removes event from its <a class="el" href="class_recurring_event.html">RecurringEvent</a> parent </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Removes event from all events it depends on </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">actionType</td><td>How many events does function effect </td></tr>
   </table>

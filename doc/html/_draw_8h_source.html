@@ -78,33 +78,31 @@ $(function() {
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Utility/EventSet.h&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../Calendar/EventManager.h&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">class </span><a class="code" href="class_event.html">Event</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_draw.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_draw.html">Draw</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="class_draw.html">Draw</a>(std::ostream &amp;out_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) : out(out_), eventManager(eventManager_) {};</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_draw.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_draw.html">Draw</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="class_draw.html">Draw</a>(std::ostream &amp;out_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) : out(out_), eventManager(eventManager_) {};</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_draw.html">Draw</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_draw.html">Draw</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> moveNext(tm &amp;time) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> movePrevious(tm &amp;time) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_draw.html#a73db4595718835ca05d942043b761d10">   30</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_draw.html#a73db4595718835ca05d942043b761d10">drawEvents</a>(tm &amp;time) = 0;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    std::ostream &amp;out;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="class_draw.html#a5dcd1900a664692505a28fd90d9c35ac">   24</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_draw.html#a5dcd1900a664692505a28fd90d9c35ac">moveNext</a>(tm &amp;time) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_draw.html#ab3bdfc624e096357e05b4254964e08d0">   29</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_draw.html#ab3bdfc624e096357e05b4254964e08d0">movePrevious</a>(tm &amp;time) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_draw.html#a73db4595718835ca05d942043b761d10">   35</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_draw.html#a73db4595718835ca05d942043b761d10">drawEvents</a>(tm &amp;time) = 0;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::ostream &amp;out;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
 <div class="ttc" id="aclass_draw_html_a73db4595718835ca05d942043b761d10"><div class="ttname"><a href="class_draw.html#a73db4595718835ca05d942043b761d10">Draw::drawEvents</a></div><div class="ttdeci">virtual void drawEvents(tm &amp;time)=0</div></div>
-<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:29</div></div>
-<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:16</div></div>
+<div class="ttc" id="aclass_draw_html_a5dcd1900a664692505a28fd90d9c35ac"><div class="ttname"><a href="class_draw.html#a5dcd1900a664692505a28fd90d9c35ac">Draw::moveNext</a></div><div class="ttdeci">virtual void moveNext(tm &amp;time) const =0</div></div>
+<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:14</div></div>
+<div class="ttc" id="aclass_draw_html_ab3bdfc624e096357e05b4254964e08d0"><div class="ttname"><a href="class_draw.html#ab3bdfc624e096357e05b4254964e08d0">Draw::movePrevious</a></div><div class="ttdeci">virtual void movePrevious(tm &amp;time) const =0</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

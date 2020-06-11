@@ -70,14 +70,14 @@ public:
     /**
      * Finds events that exactly match given title
      * Search speed is linear
-     * @return Set of events that have equal title to @param title
+     * @return Set of events that have equal title to title
      */
     EventSet<shared_ptr<Event>> findByTitle(const string &title);
 
     /**
      * Finds events that exactly match given name
      * Search speed is linear
-     * @return Set of events that have equal name to @param fullName
+     * @return Set of events that have equal name to fullName
      */
     EventSet<shared_ptr<Event>> findByAddress(const string &address);
 

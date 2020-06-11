@@ -85,11 +85,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0545cef5b5ef2d04a50051c3a97eb0db"><td class="memItemLeft" align="right" valign="top"><a id="a0545cef5b5ef2d04a50051c3a97eb0db"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>WeekDraw</b> (std::ostream &amp;out_, <a class="el" href="class_event_manager.html">EventManager</a> &amp;eventManager_)</td></tr>
 <tr class="separator:a0545cef5b5ef2d04a50051c3a97eb0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a269bdf4ae27ee13a231492b54cce5b7a"><td class="memItemLeft" align="right" valign="top"><a id="a269bdf4ae27ee13a231492b54cce5b7a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>moveNext</b> (tm &amp;time) const override</td></tr>
+<tr class="memitem:a269bdf4ae27ee13a231492b54cce5b7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_week_draw.html#a269bdf4ae27ee13a231492b54cce5b7a">moveNext</a> (tm &amp;time) const override</td></tr>
 <tr class="separator:a269bdf4ae27ee13a231492b54cce5b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34ab4a536cb4f9890009eb27f066a250"><td class="memItemLeft" align="right" valign="top"><a id="a34ab4a536cb4f9890009eb27f066a250"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>movePrevious</b> (tm &amp;time) const override</td></tr>
+<tr class="memitem:a34ab4a536cb4f9890009eb27f066a250"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_week_draw.html#a34ab4a536cb4f9890009eb27f066a250">movePrevious</a> (tm &amp;time) const override</td></tr>
 <tr class="separator:a34ab4a536cb4f9890009eb27f066a250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d8d193e2f8061347f2b5a0cee5557c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_week_draw.html#a1d8d193e2f8061347f2b5a0cee5557c3">drawEvents</a> (tm &amp;time) override</td></tr>
 <tr class="separator:a1d8d193e2f8061347f2b5a0cee5557c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,6 +137,74 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>out</b>
 <dl class="section date"><dt>Date</dt><dd>: 22.05.2020 </dd></dl>
 
 <p>Implements <a class="el" href="class_draw.html#a73db4595718835ca05d942043b761d10">Draw</a>.</p>
+
+</div>
+</div>
+<a id="a269bdf4ae27ee13a231492b54cce5b7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a269bdf4ae27ee13a231492b54cce5b7a">&#9670;&nbsp;</a></span>moveNext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WeekDraw::moveNext </td>
+          <td>(</td>
+          <td class="paramtype">tm &amp;&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set given time to next time range </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>tm to update </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_draw.html#a5dcd1900a664692505a28fd90d9c35ac">Draw</a>.</p>
+
+</div>
+</div>
+<a id="a34ab4a536cb4f9890009eb27f066a250"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ab4a536cb4f9890009eb27f066a250">&#9670;&nbsp;</a></span>movePrevious()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WeekDraw::movePrevious </td>
+          <td>(</td>
+          <td class="paramtype">tm &amp;&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set given time to previous time range </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>tm to update </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_draw.html#ab3bdfc624e096357e05b4254964e08d0">Draw</a>.</p>
 
 </div>
 </div>
