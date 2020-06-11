@@ -12,8 +12,6 @@
 #include <utility>
 #include <string>
 
-using namespace std;
-
 class SingleEvent : public Event {
 public:
     /**
@@ -22,37 +20,37 @@ public:
      * @param durationUtc_ duration of event
      * @throws invalid_argument if duration is smaller than 1
      */
-    SingleEvent(string title_, time_t startDateUtc_, time_t duration_);
+    SingleEvent(std::string title_, time_t startDateUtc_, time_t duration_);
 
     SingleEvent(const SingleEvent &);
 
     /**
      * @throws InvalidEventSequenceException if input is invalid
      */
-    explicit SingleEvent(istringstream &input);
+    explicit SingleEvent(std::istringstream &input);
 
     SingleEvent &operator=(const SingleEvent &event);
 
-    EventSet<shared_ptr<SingleEvent>> getEvents(time_t start, time_t end) override;
+    EventSet<std::shared_ptr<SingleEvent>> getEvents(time_t start, time_t end) override;
 
-    shared_ptr<SingleEvent> eventExists(time_t start, time_t end) override;
+    std::shared_ptr<SingleEvent> eventExists(time_t start, time_t end) override;
 
-    shared_ptr<SingleEvent> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) override;
+    std::shared_ptr<SingleEvent> eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) override;
 
-    shared_ptr<Event> freeSelf(actionType actionType) override;
+    std::shared_ptr<Event> freeSelf(actionType actionType) override;
 
-    shared_ptr<Event> checkCollision(const EventSet<shared_ptr<Event>> &ev) const override;
+    std::shared_ptr<Event> checkCollision(const EventSet<std::shared_ptr<Event>> &ev) const override;
 
-    string exportEvent() const override;
+    std::string exportEvent() const override;
 
-    string infoAll() const override;
+    std::string infoAll() const override;
 
     void saveState() override;
 
     void restoreState() override;
 
 private:
-    shared_ptr<SingleEvent> state;
+    std::shared_ptr<SingleEvent> state;
 };
 
 #endif

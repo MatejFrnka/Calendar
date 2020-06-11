@@ -7,6 +7,8 @@
 #include "RecurringEvent.h"
 #include "../Utility/FileUtility.h"
 
+using namespace std;
+
 RecurringEvent::RecurringEvent(string title_, time_t startDateUtc_, time_t duration_, time_t timeBetweenEvents_, time_t repeatTill_)
         : Event(move(title_), startDateUtc_, duration_) {
     if (timeBetweenEvents_ <= 0)
@@ -35,7 +37,7 @@ RecurringEvent::RecurringEvent(const RecurringEvent &event) : Event(event) {
     timeBetweenEvents = event.timeBetweenEvents;
     if (event.childNode) {
         shared_ptr<RecurringEvent> child = make_shared<RecurringEvent>(*event.childNode);
-        auto wptr = std::shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
+        auto wptr = shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
         child->parentNode = wptr;
         childNode = child;
     }
@@ -75,7 +77,7 @@ RecurringEvent::RecurringEvent(istringstream &input) : Event(input) {
         FileUtility::readNext(input, sep);
         RecurringEvent rec(input);
         childNode = make_shared<RecurringEvent>(rec);
-        auto wptr = std::shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
+        auto wptr = shared_ptr<RecurringEvent>(this, [](RecurringEvent *) {});
         childNode->parentNode = wptr;
     }
 }

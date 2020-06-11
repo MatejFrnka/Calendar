@@ -11,7 +11,7 @@
 
 class MoveCommand : public Command {
 public:
-    MoveCommand(InputUtility &inputUtility_, shared_ptr<Event> toMove_, EventManager &eventManager_) :
+    MoveCommand(InputUtility &inputUtility_, std::shared_ptr<Event> toMove_, EventManager &eventManager_) :
             Command("move", "Moves an event", inputUtility_),
             target(std::move(toMove_)),
             eventManager(eventManager_) {}
@@ -21,13 +21,13 @@ public:
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         auto newStart = inputUtility.readDateTime("New Start", parameters);
         if (!eventManager.moveEvent(target, newStart)) {
-            inputUtility.out << "Another event is happening during this time" << endl;
+            inputUtility.out << "Another event is happening during this time" << std::endl;
         } else
             inputUtility.success();
         return commands;
     };
 private:
-    shared_ptr<Event> target;
+    std::shared_ptr<Event> target;
     EventManager &eventManager;
 };
 

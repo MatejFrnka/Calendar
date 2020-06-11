@@ -11,7 +11,7 @@
 void WeekDraw::drawEvents(tm &time) {
     time_t start = DatetimeUtility::getStartRangeTime(DatetimeUtility::Week, &time);
     int mday = time.tm_mday;
-    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Week) << endl;
+    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Week) << std::endl;
     time_t end = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     tm *eventTime;
     for (int i = 0; i < 7; ++i) {
@@ -21,9 +21,9 @@ void WeekDraw::drawEvents(tm &time) {
         for (const auto &event : todayEvents) {
             // IF EVENT STARTS BEFORE THE DAY DOES
             if (event != *todayEvents.begin())
-                out << string(8, ' ');
+                out << std::string(8, ' ');
             if (event->getStartDateUtc() < start)
-                out << string(5, '.');
+                out << std::string(5, '.');
             else {
                 time_t t = event->getStartDateUtc();
                 eventTime = localtime(&t);
@@ -32,7 +32,7 @@ void WeekDraw::drawEvents(tm &time) {
             out << " - ";
             // IF EVENT ENDS AFTER THE DAY DOES
             if (event->getEndDateUtc() > end)
-                out << string(5, '.');
+                out << std::string(5, '.');
             else {
                 time_t t = event->getEndDateUtc();
                 eventTime = localtime(&t);

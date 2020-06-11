@@ -10,7 +10,7 @@
 void DayDraw::drawEvents(tm &time) {
     time_t startTime = DatetimeUtility::getStartRangeTime(DatetimeUtility::Day, &time);
     //Print displayed date
-    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Day) << endl;
+    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Day) << std::endl;
     //Get utc time_t of day end
     time_t endTime = DatetimeUtility::getEndRangeTime(DatetimeUtility::Day, &time);
     auto events = eventManager.getEvents(startTime, endTime);
@@ -41,7 +41,7 @@ void DayDraw::drawEvents(tm &time) {
             i += timeJump;
         if (drawTimeLine) {
             drawLine(out, i);
-            out << endl;
+            out << std::endl;
         }
     }
     movePrevious(time);
@@ -55,7 +55,7 @@ void DayDraw::drawEvent(const Event &event, int hourStart, int minuteStart, int 
 
     for (; j < hourEnd; j += timeJump) {
         mkTime(out, j, 0);
-        out << timeBorder << ' ' << customFill("", ' ', '|', '|', width - 10) << ' ' << timeBorder << endl;
+        out << timeBorder << ' ' << customFill("", ' ', '|', '|', width - 10) << ' ' << timeBorder << std::endl;
     }
     drawEventEnd(event, hourEnd, minuteEnd);
 }
@@ -64,38 +64,38 @@ void DayDraw::drawEventStart(const Event &event, int hourStart, int minuteStart)
     if (hourStart < 0) {
         //Draw event when started before day started
         mkTime(out, 0, 0);
-        out << timeBorder << ' ' << customFill(event.getTitle(), '.', '|', '|', width - 10) << ' ' << timeBorder << endl;
+        out << timeBorder << ' ' << customFill(event.getTitle(), '.', '|', '|', width - 10) << ' ' << timeBorder << std::endl;
     } else {
         //Draw event start
         mkTime(out, hourStart, minuteStart);
-        out << timeBorder << ' ' << customFill(event.getTitle(), '=', '|', '|', width - 10) << ' ' << timeBorder << endl;
+        out << timeBorder << ' ' << customFill(event.getTitle(), '=', '|', '|', width - 10) << ' ' << timeBorder << std::endl;
     }
 }
 
 void DayDraw::drawEventEnd(const Event &event, int hourEnd, int minuteEnd) const {
     if (hourEnd > 24) { // Event ends after the day
         mkTime(out, 24, 0);
-        out << timeBorder << ' ' << customFill("", '.', '|', '|', width - 10) << ' ' << timeBorder << endl;
+        out << timeBorder << ' ' << customFill("", '.', '|', '|', width - 10) << ' ' << timeBorder << std::endl;
     } else { // Event ends during the day
         mkTime(out, hourEnd, minuteEnd);
-        out << timeBorder << ' ' << customFill("", '_', '|', '|', width - 10) << ' ' << timeBorder << endl;
+        out << timeBorder << ' ' << customFill("", '_', '|', '|', width - 10) << ' ' << timeBorder << std::endl;
     }
 }
 
-void DayDraw::drawLine(ostream &o, int hour) const {
+void DayDraw::drawLine(std::ostream &o, int hour) const {
     mkTime(o, hour, 0);
-    o << timeBorder << setfill(timeBreak) << setw(width - 6) << timeBorder;
+    o << timeBorder << std::setfill(timeBreak) << std::setw(width - 6) << timeBorder;
 }
 
-void DayDraw::mkTime(ostream &o, int hour, int minute) const {
-    o << setfill('0') << setw(2) << (hour) << ":" << setw(2) << minute << " ";
+void DayDraw::mkTime(std::ostream &o, int hour, int minute) const {
+    o << std::setfill('0') << std::setw(2) << (hour) << ":" << std::setw(2) << minute << " ";
 }
 
-string DayDraw::customFill(const string &body, char fillChar, char lborder, char rborder, unsigned int customWidth) const {
-    ostringstream ss;
-    ss << setfill(fillChar) << lborder << fillChar << (body.empty() ? fillChar : ' ') << (body.length() > customWidth - 6 ? body.substr(0, customWidth - 6) + ".." : body)
+std::string DayDraw::customFill(const std::string &body, char fillChar, char lborder, char rborder, unsigned int customWidth) const {
+    std::ostringstream ss;
+    ss << std::setfill(fillChar) << lborder << fillChar << (body.empty() ? fillChar : ' ') << (body.length() > customWidth - 6 ? body.substr(0, customWidth - 6) + ".." : body)
        << (body.empty() ? fillChar : ' ')
-       << setw(customWidth - 3 - static_cast<int>(body.length())) << rborder;
+       << std::setw(customWidth - 3 - static_cast<int>(body.length())) << rborder;
     return ss.str();
 }
 

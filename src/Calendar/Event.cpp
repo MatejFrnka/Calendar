@@ -9,6 +9,7 @@
 #include "../Utility/FileUtility.h"
 #include "../Utility/Exceptions/InvalidEventSequenceException.h"
 
+using namespace std;
 
 Event::Event(string title_, time_t startDateUtc_, time_t durationUtc_) {
     title = move(title_);

@@ -27,11 +27,11 @@ private:
     int width = 50;
     int timeJump = 2;
 
-    void drawLine(ostream &o, int hour) const;
+    void drawLine(std::ostream &o, int hour) const;
 
-    void mkTime(ostream &o, int hour, int minute) const;
+    void mkTime(std::ostream &o, int hour, int minute) const;
 
-    string customFill(const string &body, char fillChar, char lborder, char rborder, unsigned int customWidth) const;
+    std::string customFill(const std::string &body, char fillChar, char lborder, char rborder, unsigned int customWidth) const;
 
     void drawEvent(const Event &event, int hourStart, int minuteStart, int hourEnd, int minuteEnd) const;
 

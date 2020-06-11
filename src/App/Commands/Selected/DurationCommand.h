@@ -12,7 +12,7 @@
 
 class DurationCommand : public Command {
 public:
-    DurationCommand(InputUtility &inputUtility_, shared_ptr<Event> toChange_, EventManager &eventManager_) :
+    DurationCommand(InputUtility &inputUtility_, std::shared_ptr<Event> toChange_, EventManager &eventManager_) :
             Command("duration", "Changes duration of an event", inputUtility_),
             target(std::move(toChange_)),
             eventManager(eventManager_) {}
@@ -22,13 +22,13 @@ public:
     std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         auto duration = inputUtility.readTimeSpan("New duration", parameters);
         if (!eventManager.changeDuration(target, duration)) {
-            inputUtility.out << "Event collides with another event, cannot change duration" << endl;
+            inputUtility.out << "Event collides with another event, cannot change duration" << std::endl;
         } else
             inputUtility.success();
         return commands;
     };
 private:
-    shared_ptr<Event> target;
+    std::shared_ptr<Event> target;
     EventManager &eventManager;
 };
 

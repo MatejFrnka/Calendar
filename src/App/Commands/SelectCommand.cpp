@@ -16,14 +16,14 @@ SelectCommand::SelectCommand(InputUtility &inputUtility, EventManager &eventMana
                                                                                                  {"place", "Selects event by location"},
                                                                                                  {"all",   "Selects event by title and location"}}),
           eventManager(eventManager_) {
-    commands.push_back(make_shared<DeleteCommand>(inputUtility, nullptr, eventManager));
-    commands.push_back(make_shared<InfoCommand>(inputUtility, nullptr));
-    commands.push_back(make_shared<EditCommand>(inputUtility, nullptr, eventManager));
+    commands.push_back(std::make_shared<DeleteCommand>(inputUtility, nullptr, eventManager));
+    commands.push_back(std::make_shared<InfoCommand>(inputUtility, nullptr));
+    commands.push_back(std::make_shared<EditCommand>(inputUtility, nullptr, eventManager));
 }
 
 std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<std::string> &parameters) {
-    EventSet<shared_ptr<Event>> events;
-    shared_ptr<Event> result;
+    EventSet<std::shared_ptr<Event>> events;
+    std::shared_ptr<Event> result;
     if (parameters.empty()) {
         inputUtility.noParameterFound();
         return std::vector<std::shared_ptr<Command>>();
@@ -39,7 +39,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
     } else if (parameters.front() == "all") {
         parameters.pop();
         auto addrEvents = eventManager.findByAddress(inputUtility.readString("Address", parameters));
-        string title = inputUtility.readString("Title", parameters);
+        std::string title = inputUtility.readString("Title", parameters);
         for (const auto &ev : addrEvents) {
             if (ev->getTitle() == title)
                 events.insert(ev);
@@ -54,7 +54,7 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
     if (events.size() > 1) {
         inputUtility.out << "Multiple events found" << std::endl;
         for (const auto &event : events) {
-            cout << '(' << index << ") " << *event << std::endl;
+            inputUtility.out << '(' << index << ") " << *event << std::endl;
             index++;
         }
         auto it = events.begin();
@@ -65,9 +65,9 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
 
     if (result) {
         std::vector<std::shared_ptr<Command>> res;
-        res.push_back(make_shared<DeleteCommand>(inputUtility, result, eventManager));
-        res.push_back(make_shared<InfoCommand>(inputUtility, result));
-        res.push_back(make_shared<EditCommand>(inputUtility, result, eventManager));
+        res.push_back(std::make_shared<DeleteCommand>(inputUtility, result, eventManager));
+        res.push_back(std::make_shared<InfoCommand>(inputUtility, result));
+        res.push_back(std::make_shared<EditCommand>(inputUtility, result, eventManager));
         inputUtility.out << "Event selected" << std::endl;
         return res;
     } else {

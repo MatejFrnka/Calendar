@@ -15,19 +15,19 @@
 #include <ostream>
 
 struct FileUtility {
-    static shared_ptr<Event> fromString(const string &event) {
-        istringstream ss(event);
-        string type = readNext(ss, ';');
+    static std::shared_ptr<Event> fromString(const std::string &event) {
+        std::istringstream ss(event);
+        std::string type = readNext(ss, ';');
         if (type == "singleevent")
-            return make_shared<SingleEvent>(SingleEvent(ss));
+            return std::make_shared<SingleEvent>(SingleEvent(ss));
         else if (type == "recurringevent")
-            return make_shared<RecurringEvent>(RecurringEvent(ss));
+            return std::make_shared<RecurringEvent>(RecurringEvent(ss));
         else
             throw InvalidEventSequenceException();
     };
 
-    static string readNext(istringstream &input, char separator) {
-        stringstream res;
+    static std::string readNext(std::istringstream &input, char separator) {
+        std::stringstream res;
         while (true) {
             char c = input.get();
             if (c == separator)
@@ -37,13 +37,13 @@ struct FileUtility {
             }
             res << c;
         }
-        string result = res.str();
+        std::string result = res.str();
         return result;
     };
 
-    static bool saveData(const string &data, const string &path = "events_saved.evs") {
-        ofstream file;
-        file.open(path, ios::out | ios::trunc);
+    static bool saveData(const std::string &data, const std::string &path = "events_saved.evs") {
+        std::ofstream file;
+        file.open(path, std::ios::out | std::ios::trunc);
         if (!file.is_open())
             return false;
         file << data;
@@ -57,25 +57,25 @@ struct FileUtility {
      * @return false if loading of at least one event failed
      */
 
-    static vector<string> readData(const string &path = "events_saved.evs") {
-        ifstream file;
-        file.open(path, ios::in);
+    static std::vector<std::string> readData(const std::string &path = "events_saved.evs") {
+        std::ifstream file;
+        file.open(path, std::ios::in);
         if (!file.is_open())
-            throw invalid_argument("Invalid file path\n");
-        string line;
-        vector<string> result;
+            throw std::invalid_argument("Invalid file path\n");
+        std::string line;
+        std::vector<std::string> result;
         while (getline(file, line, '\n')) {
             result.push_back(line);
         }
         return result;
     }
 
-    static bool load(EventManager &eventManager, ostream &out, const string &path = "events_saved.evs") {
-        vector<string> data;
+    static bool load(EventManager &eventManager, std::ostream &out, const std::string &path = "events_saved.evs") {
+        std::vector<std::string> data;
         try {
             data = FileUtility::readData(path);
         }
-        catch (invalid_argument &e) {
+        catch (std::invalid_argument &e) {
             out << e.what();
             return false;
         }
@@ -90,7 +90,7 @@ struct FileUtility {
             }
         }
         if (failedLoads > 0) {
-            out << "Failed to load " << failedLoads << " events" << endl;
+            out << "Failed to load " << failedLoads << " events" << std::endl;
         }
         return true;
     }

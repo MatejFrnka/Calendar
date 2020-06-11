@@ -33,7 +33,7 @@ private:
 
     std::vector<std::shared_ptr<Command>> executeAction(const std::string &commandName, const std::vector<std::shared_ptr<Command>> &commands);
 
-    vector<std::shared_ptr<Command>> executeAction(queue<std::string> &parameters, const vector<std::shared_ptr<Command>> &commands);
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters, const std::vector<std::shared_ptr<Command>> &commands);
 
     std::vector<std::shared_ptr<Command>> homeCommands;
     EventManager &eventManager;

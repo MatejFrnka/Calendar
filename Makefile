@@ -8,6 +8,7 @@ all: $(LIST)
 
 compile:
 	$(CC) $(CFLAGS) $(addsuffix .cpp,$(LIST)) -o frnkamat
+	cp ./examples/save_files/01/events_saved.evs ./events_saved.evs
 
 run:
 	./frnkamat
@@ -16,10 +17,7 @@ run:
 	$(CC) $(CFLAGS) $@.cpp -c -o $@
 
 clean:
-	rm $(LIST)
-	rm a.out
-	rm frnkamat
-	rm events_saved.evs
-
-doc:
-	echo documentation already generated separately by doxygen
+	rm -rf $(LIST)
+	rm -rf a.out
+	rm -rf frnkamat
+	rm -rf events_saved.evs

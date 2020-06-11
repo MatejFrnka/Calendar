@@ -21,7 +21,7 @@ private:
 };
 
 std::vector<std::shared_ptr<Command>> ExportCommand::executeAction(std::queue<std::string> &parameters) {
-    string path = inputUtility.readString("Full path", parameters);
+    std::string path = inputUtility.readString("Full path", parameters);
     if (FileUtility::saveData(eventManager.exportEvents(), path))
         inputUtility.success();
     else

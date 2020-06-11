@@ -10,7 +10,7 @@
 
 class InfoCommand : public Command {
 public:
-    InfoCommand(InputUtility &inputUtility_, shared_ptr<Event> toEdit) :
+    InfoCommand(InputUtility &inputUtility_, std::shared_ptr<Event> toEdit) :
             Command("info", "Prints out info about event", inputUtility_),
             target(std::move(toEdit)) {}
 
@@ -21,7 +21,7 @@ public:
         return commands;
     };
 private:
-    shared_ptr<Event> target;
+    std::shared_ptr<Event> target;
 };
 
 #endif //CALENDAR_INFOCOMMAND_H

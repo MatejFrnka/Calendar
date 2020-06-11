@@ -10,24 +10,22 @@
 #include <utility>
 #include "Command.h"
 
-using namespace std;
-
 class CustomCommand : public Command {
 public:
-    CustomCommand(string name, string description, InputUtility &inputUtility_, function<vector<shared_ptr<Command>>(queue<string> &, CustomCommand &self)> function)
+    CustomCommand(std::string name, std::string description, InputUtility &inputUtility_, std::function<std::vector<std::shared_ptr<Command>>(std::queue<std::string> &, CustomCommand &self)> function)
             : Command(move(name), move(description), inputUtility_), fn(move(function)) {}
 
-    CustomCommand(string name, string description, InputUtility &inputUtility_, function<vector<shared_ptr<Command>>(queue<string> &, CustomCommand &self)> function,
+    CustomCommand(std::string name, std::string description, InputUtility &inputUtility_, std::function<std::vector<std::shared_ptr<Command>>(std::queue<std::string> &, CustomCommand &self)> function,
                   std::vector<std::shared_ptr<Command>> commands_)
             : Command(move(name), move(description), inputUtility_), fn(move(function)) {
         commands = std::move(commands_);
     }
 
-    vector<shared_ptr<Command>> executeAction(queue<string> &parameters) override {
+    std::vector<std::shared_ptr<Command>> executeAction(std::queue<std::string> &parameters) override {
         return fn(parameters, *this);
     };
 private:
-    const function<vector<shared_ptr<Command>>(queue<string> &, CustomCommand &self)> fn;
+    const std::function<std::vector<std::shared_ptr<Command>>(std::queue<std::string> &, CustomCommand &self)> fn;
 };
 
 #endif

@@ -21,7 +21,7 @@ private:
 };
 
 std::vector<std::shared_ptr<Command>> ImportCommand::executeAction(std::queue<std::string> &parameters) {
-    string path = inputUtility.readString("Full path", parameters);
+    std::string path = inputUtility.readString("Full path", parameters);
     FileUtility::load(eventManager, inputUtility.out, path);
     return commands;
 }

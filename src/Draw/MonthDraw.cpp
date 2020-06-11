@@ -12,12 +12,12 @@ void MonthDraw::drawEvents(tm &time) {
     int weekDay = DatetimeUtility::convertWeekDay(time.tm_wday);
     int numberOfDays = DatetimeUtility::getNumberOfDays(time.tm_mon, time.tm_year + 1900);
 
-    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Month) << endl;
+    out << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Month) << std::endl;
     //Draw week days
     for (const auto &dayOfWeek : DatetimeUtility::getWeekDays()) {
         out << dayOfWeek << '\t';
     }
-    out << endl;
+    out << std::endl;
     //Draw empty fields
     for (int i = 0; i < weekDay; ++i) {
         out << "\t";
@@ -39,11 +39,11 @@ void MonthDraw::drawEvents(tm &time) {
         out << "\t";
         //New line after sunday
         if ((i + weekDay) % 7 == 0) {
-            out << '\n' << endl;
+            out << '\n' << std::endl;
         }
         startTime = endTime;
     }
-    out << endl;
+    out << std::endl;
     time.tm_mday -= numberOfDays;
     mktime(&time);
 }

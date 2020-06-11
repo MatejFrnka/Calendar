@@ -4,8 +4,9 @@
  */
 
 #include <sstream>
-#include "RecurringEvent.h"
 #include "SingleEvent.h"
+
+using namespace std;
 
 SingleEvent::SingleEvent(const SingleEvent &event) : Event(event) {
     state = event.state;

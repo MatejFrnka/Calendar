@@ -32,7 +32,6 @@ private:
      * @return true if success, else false
      */
     bool save(EventManager &eventManager) const;
-
 };
 
 

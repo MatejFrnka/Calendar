@@ -9,17 +9,17 @@
 #include "App/Interface.h"
 
 void CalendarApp::start() const {
-    cout << "Calendar running" << endl;
+    std::cout << "Calendar running" << std::endl;
     EventManager ev;
-    if (!FileUtility::load(ev, cout))
-        cout << "Calendar failed to load events" << endl;
-    Interface inteface(cin, cout, ev);
+    if (!FileUtility::load(ev, std::cout))
+        std::cout << "Calendar failed to load events" << std::endl;
+    Interface inteface(std::cin, std::cout, ev);
     inteface.start();
-    cout << "Saving events" << endl;
+    std::cout << "Saving events" << std::endl;
     if (!save(ev))
-        cout << "Failed to save events. Please check program has read-write permissions in its location." << endl;
+        std::cout << "Failed to save events. Please check program has read-write permissions in its location." << std::endl;
     else
-        cout << "Events saved" << endl;
+        std::cout << "Events saved" << std::endl;
 }
 
 bool CalendarApp::save(EventManager &eventManager) const {

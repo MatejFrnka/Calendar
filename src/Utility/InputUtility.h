@@ -140,7 +140,7 @@ public:
      * @throws invalid_argument when no actions were provided
      * @return actionType selected by user
      */
-    Event::actionType readActionType(const vector<Event::actionType> &actions);
+    Event::actionType readActionType(const std::vector<Event::actionType> &actions);
 
     /**
      * @return System datetime timestamp

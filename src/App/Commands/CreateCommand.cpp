@@ -36,7 +36,7 @@ std::vector<std::shared_ptr<Command>> CreateCommand::executeAction(std::queue<st
     if (result)
         inputUtility.success();
     else
-        inputUtility.out << "Cancelled" << endl;
+        inputUtility.out << "Cancelled" << std::endl;
     return commands;
 }
 
@@ -47,7 +47,7 @@ bool CreateCommand::createSingle(std::queue<std::string> &params) const {
     auto duration = inputUtility.readTimeSpan("Duration", params);
 
 
-    auto event = make_shared<SingleEvent>(title, startUtc, duration);
+    auto event = std::make_shared<SingleEvent>(title, startUtc, duration);
 
     if (!eventManager.addEvent(event)) {
         return moveToFree(event);
@@ -61,21 +61,21 @@ bool CreateCommand::createRecurring(std::queue<std::string> &params) const {
     auto duration = inputUtility.readTimeSpan("Duration", params);
     auto timeBetween = inputUtility.readTimeSpan("Time between events", params);
     auto repeatTill = inputUtility.readDate("Repeat till", params, false);
-    shared_ptr<RecurringEvent> event;
+    std::shared_ptr<RecurringEvent> event;
     if (repeatTill == -1)
-        event = make_shared<RecurringEvent>(title, startUtc, duration, timeBetween);
+        event = std::make_shared<RecurringEvent>(title, startUtc, duration, timeBetween);
     else
-        event = make_shared<RecurringEvent>(title, startUtc, duration, timeBetween, repeatTill);
+        event = std::make_shared<RecurringEvent>(title, startUtc, duration, timeBetween, repeatTill);
     if (!eventManager.addEvent(event)) {
         return moveToFree(event);
     }
     return true;
 }
 
-bool CreateCommand::moveToFree(shared_ptr<Event> event) const {
+bool CreateCommand::moveToFree(std::shared_ptr<Event> event) const {
     time_t firstFree = eventManager.findFreeSpace(event);
     if (firstFree == -1) {
-        inputUtility.out << "Another event is happening during given time. Unfortunately, no free time to move this event to was found." << endl;
+        inputUtility.out << "Another event is happening during given time. Unfortunately, no free time to move this event to was found." << std::endl;
         return false;
     }
     tm tm_firstFree = *localtime(&firstFree);

@@ -70,7 +70,7 @@ time_t InputUtility::readTimeSpan(const std::string &attr, const std::string &cu
         ss >> value;
         if (!ss.fail() && ss.get() == '-') {
             if (value <= 0) {
-                out << "Value must be greater than 0" << endl;
+                out << "Value must be greater than 0" << std::endl;
                 continue;
             }
             std::string unit;
@@ -212,18 +212,18 @@ int InputUtility::readSelect(const std::string &attr, int lenght) const {
     }
 }
 
-Event::actionType InputUtility::readActionType(const vector<Event::actionType> &actions) {
+Event::actionType InputUtility::readActionType(const std::vector<Event::actionType> &actions) {
         if (actions.empty())
-            throw invalid_argument("Actions must not be empty");
+            throw std::invalid_argument("Actions must not be empty");
         if (actions.size() > 1) {
-            out << "How many events should be deleted" << endl;
+            out << "How many events should be deleted" << std::endl;
             for (size_t i = 0; i < actions.size(); ++i) {
                 if (actions[i] == Event::AllEvents)
-                    out << '(' << i << ") " << "All events" << endl;
+                    out << '(' << i << ") " << "All events" << std::endl;
                 if (actions[i] == Event::ThisAndNext)
-                    out << '(' << i << ") " << "This and upcoming events" << endl;
+                    out << '(' << i << ") " << "This and upcoming events" << std::endl;
                 if (actions[i] == Event::OnlyThis)
-                    out << '(' << i << ") " << "Only this event" << endl;
+                    out << '(' << i << ") " << "Only this event" << std::endl;
             }
             return actions[readSelect("Select mode", actions.size())];
         } else

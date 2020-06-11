@@ -9,7 +9,6 @@
 #include <utility>
 #include <vector>
 #include "Command.h"
-#include "CustomCommand.h"
 #include "../../Calendar/EventManager.h"
 #include "../../Utility/InputUtility.h"
 
@@ -22,11 +21,11 @@ public:
 private:
     EventManager &eventManager;
 
-    bool createSingle(queue<std::string> &params) const;
+    bool createSingle(std::queue<std::string> &params) const;
 
-    bool createRecurring(queue<std::string> &params) const;
+    bool createRecurring(std::queue<std::string> &params) const;
 
-    bool moveToFree(shared_ptr<Event> event) const;
+    bool moveToFree(std::shared_ptr<Event> event) const;
 };
 
 

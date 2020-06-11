@@ -23,10 +23,10 @@ void Interface::start() {
                 currentActions = executeAction(input, currentActions);
         }
         catch (UnexpectedEndOfInputException &e) {
-            out << "Command was canceled" << endl;
+            out << "Command was canceled" << std::endl;
         }
-        catch (invalid_argument &e) {
-            out << e.what() << endl;
+        catch (std::invalid_argument &e) {
+            out << e.what() << std::endl;
         }
     }
 }

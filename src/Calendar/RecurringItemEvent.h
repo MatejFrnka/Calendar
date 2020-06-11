@@ -9,8 +9,6 @@
 #include "RecurringEvent.h"
 #include <utility>
 
-using namespace std;
-
 class RecurringEvent;
 
 class RecurringItemEvent : public SingleEvent {
@@ -22,40 +20,40 @@ public:
      * @param parentEvent_ Recurring event that generated this event
      * @throws invalid_argument if duration is smaller than 1
      */
-    RecurringItemEvent(string title_, time_t startDateUtc_, time_t duration_, shared_ptr<RecurringEvent> parentEvent_);
+    RecurringItemEvent(std::string title_, time_t startDateUtc_, time_t duration_, std::shared_ptr<RecurringEvent> parentEvent_);
 
-    RecurringItemEvent(shared_ptr<RecurringEvent>, time_t startDateUtc_);
+    RecurringItemEvent(std::shared_ptr<RecurringEvent>, time_t startDateUtc_);
 
     RecurringItemEvent() = delete;
 
-    shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis) override;
+    std::shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis) override;
 
-    vector<Event::actionType> getActionTypes() override;
+    std::vector<Event::actionType> getActionTypes() override;
 
-    string infoAll() const override;
+    std::string infoAll() const override;
 
-    bool addPerson(const shared_ptr<Person> &toAdd) override;
+    bool addPerson(const std::shared_ptr<Person> &toAdd) override;
 
-    bool removePerson(const shared_ptr<Person> &toRemove) override;
+    bool removePerson(const std::shared_ptr<Person> &toRemove) override;
 
     void setEditable(bool editable) override;
 
-    void setTitle(const string &title) override;
+    void setTitle(const std::string &title) override;
 
     void setStartDateUtc(time_t startDateUtc) override;
 
     void setDurationUtc(time_t durationUtc) override;
 
-    void setLocation(const string &location) override;
+    void setLocation(const std::string &location) override;
 
     void saveState() override;
 
     void restoreState() override;
 
 private:
-    shared_ptr<RecurringEvent> parentEvent;
+    std::shared_ptr<RecurringEvent> parentEvent;
 
-    shared_ptr<RecurringItemEvent> state;
+    std::shared_ptr<RecurringItemEvent> state;
 };
 
 #endif

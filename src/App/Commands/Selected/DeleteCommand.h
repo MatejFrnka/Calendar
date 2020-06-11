@@ -7,14 +7,13 @@
 #define CALENDAR_DELETECOMMAND_H
 
 #include "../Command.h"
-
 #include <utility>
 #include "../../../Calendar/Event.h"
 #include "../../../Calendar/EventManager.h"
 
 class DeleteCommand : public Command {
 public:
-    DeleteCommand(InputUtility &inputUtility_, shared_ptr<Event> toDelete_, EventManager &eventManager_) :
+    DeleteCommand(InputUtility &inputUtility_, std::shared_ptr<Event> toDelete_, EventManager &eventManager_) :
             Command("delete", "Deletes an event", inputUtility_),
             target(std::move(toDelete_)),
             eventManager(eventManager_) {}
@@ -27,7 +26,7 @@ public:
         return commands;
     };
 private:
-    shared_ptr<Event> target;
+    std::shared_ptr<Event> target;
     EventManager &eventManager;
 };
 
