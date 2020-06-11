@@ -38,4 +38,3 @@ private:
 
     DrawManager drawManager;
 };
-

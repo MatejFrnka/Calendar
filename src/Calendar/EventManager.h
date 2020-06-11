@@ -108,4 +108,3 @@ public:
 private:
     EventSet<std::shared_ptr<Event>> events;
 };
-

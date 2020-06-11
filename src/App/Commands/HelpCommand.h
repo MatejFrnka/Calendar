@@ -21,5 +21,3 @@ private:
 
     const std::vector<std::shared_ptr<Command>> &refCommands;
 };
-
-

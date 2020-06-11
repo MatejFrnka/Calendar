@@ -18,4 +18,3 @@ public:
 
     void drawEvents(tm &time) override;
 };
-

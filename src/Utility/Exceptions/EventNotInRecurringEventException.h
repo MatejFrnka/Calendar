@@ -14,4 +14,3 @@ class EventNotInRecurringEventException : std::exception {
         return "Event is not in recurring exception";
     }
 };
-

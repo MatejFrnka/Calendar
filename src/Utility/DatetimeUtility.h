@@ -30,5 +30,3 @@ public:
 
     static std::string drawDate(const tm &time, RangeTime range);
 };
-
-

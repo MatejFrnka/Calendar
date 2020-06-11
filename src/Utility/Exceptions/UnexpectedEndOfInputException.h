@@ -11,4 +11,3 @@ class UnexpectedEndOfInputException : std::exception {
         return "Input ended unexpectedly";
     }
 };
-

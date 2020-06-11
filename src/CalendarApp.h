@@ -31,5 +31,3 @@ private:
      */
     bool save(EventManager &eventManager) const;
 };
-
-

@@ -29,4 +29,3 @@ private:
     std::shared_ptr<Event> target;
     EventManager &eventManager;
 };
-

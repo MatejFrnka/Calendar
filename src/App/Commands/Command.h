@@ -62,4 +62,3 @@ protected:
      */
     std::vector<std::shared_ptr<Command>> commands;
 };
-

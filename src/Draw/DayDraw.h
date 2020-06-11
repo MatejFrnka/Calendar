@@ -38,5 +38,3 @@ private:
     void drawEventEnd(const Event &event, int hourEnd, int minuteEnd) const;
 
 };
-
-

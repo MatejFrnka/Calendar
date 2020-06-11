@@ -75,5 +75,3 @@ std::vector<std::shared_ptr<Command>> SelectCommand::executeAction(std::queue<st
     }
     return std::vector<std::shared_ptr<Command>>();
 }
-
-

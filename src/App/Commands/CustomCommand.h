@@ -25,4 +25,3 @@ public:
 private:
     const std::function<std::vector<std::shared_ptr<Command>>(std::queue<std::string> &, CustomCommand &self)> fn;
 };
-

@@ -21,4 +21,3 @@ public:
 private:
     std::shared_ptr<Event> target;
 };
-

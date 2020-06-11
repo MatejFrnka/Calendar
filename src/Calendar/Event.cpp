@@ -250,4 +250,3 @@ string Event::infoAllBody() const {
     }
     return ss.str();
 }
-

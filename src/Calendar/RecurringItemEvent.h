@@ -53,4 +53,3 @@ private:
 
     std::shared_ptr<RecurringItemEvent> state;
 };
-

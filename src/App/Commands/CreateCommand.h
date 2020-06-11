@@ -25,5 +25,3 @@ private:
 
     bool moveToFree(std::shared_ptr<Event> event) const;
 };
-
-

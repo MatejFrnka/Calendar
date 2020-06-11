@@ -14,5 +14,3 @@ class EventNotEditableException : std::exception {
         return "Event is not editable";
     }
 };
-
-

@@ -36,6 +36,3 @@ protected:
     std::ostream &out;
     EventManager &eventManager;
 };
-
-
-

@@ -14,4 +14,3 @@ class InvalidEventSequenceException : std::exception {
         return "Error while loading event - invalid input";
     }
 };
-

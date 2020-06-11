@@ -191,5 +191,3 @@ private:
 
     std::string tryGetVal(std::queue<std::string> &params) const;
 };
-
-

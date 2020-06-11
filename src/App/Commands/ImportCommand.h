@@ -23,4 +23,3 @@ std::vector<std::shared_ptr<Command>> ImportCommand::executeAction(std::queue<st
     FileUtility::load(eventManager, inputUtility.out, path);
     return commands;
 }
-

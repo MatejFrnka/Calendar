@@ -55,5 +55,3 @@ private:
     std::ostream &out;
     tm time{};
 };
-
-

@@ -50,4 +50,3 @@ public:
 private:
     std::shared_ptr<SingleEvent> state;
 };
-

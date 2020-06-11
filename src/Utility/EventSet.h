@@ -15,4 +15,3 @@ struct compare_reference {
 
 template<typename T>
 using EventSet = std::set<T, compare_reference<T>>;
-

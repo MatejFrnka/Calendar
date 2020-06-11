@@ -26,5 +26,3 @@ std::vector<std::shared_ptr<Command>> ExportCommand::executeAction(std::queue<st
         inputUtility.out << "Could not save to that location";
     return commands;
 }
-
-

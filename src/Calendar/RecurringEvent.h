@@ -146,4 +146,3 @@ public:
 
     void setDurationUtc(time_t durationUtc) override;
 };
-
