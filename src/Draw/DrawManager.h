@@ -4,6 +4,7 @@
  */
 
 #pragma once
+
 #include "MonthDraw.h"
 #include "WeekDraw.h"
 #include "DayDraw.h"
@@ -28,10 +29,12 @@ public:
      * Set drawn time to next time range
      */
     void next();
+
     /**
      * Set drawn time to previous time range
      */
     void previous();
+
     /**
      * Sets time to draw
      * @param time to set drawn time to

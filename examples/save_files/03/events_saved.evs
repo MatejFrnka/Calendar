@@ -1,0 +1,7 @@
+singleevent;test1;1592301600;7200;1;;0;
+singleevent;test2;1592318100;60;0;Praha;1;Matej;Frnka;;;
+singleevent;test3;1592318160;18000;1;;0;
+recurringevent;go to sleep;1592341200;28800;1;;0;0;1592607600;86400;1;recurringevent;go to sleep;1592686800;28800;1;;0;0;1593561600;86400;0;
+recurringevent;test5;1592391000;18000;1;;0;1;0;86400;0;
+singleevent;test2;1592473800;3600;1;;0;
+recurringevent;test4;1592542800;10800;1;;0;1;0;86400;0;
