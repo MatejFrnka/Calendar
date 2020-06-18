@@ -70,53 +70,57 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_SINGLE_EVENT</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_SINGLE_EVENT</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Event.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_single_event.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_single_event.html">SingleEvent</a> : <span class="keyword">public</span> <a class="code" href="class_event.html">Event</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_single_event.html">SingleEvent</a>(<span class="keywordtype">string</span> title_, time_t startDateUtc_, time_t duration_);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_single_event.html">SingleEvent</a>(<span class="keyword">const</span> <a class="code" href="class_single_event.html">SingleEvent</a> &amp;);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="class_single_event.html">SingleEvent</a>(istringstream &amp;input);</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Event.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_single_event.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_single_event.html">SingleEvent</a> : <span class="keyword">public</span> <a class="code" href="class_event.html">Event</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_single_event.html#a6bcb7046b146e345b7b003be36323331">   21</a></span>&#160;    <a class="code" href="class_single_event.html#a6bcb7046b146e345b7b003be36323331">SingleEvent</a>(std::string title_, time_t startDateUtc_, time_t duration_);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="class_single_event.html#a6bcb7046b146e345b7b003be36323331">SingleEvent</a>(<span class="keyword">const</span> <a class="code" href="class_single_event.html">SingleEvent</a> &amp;);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_single_event.html#ae891a8a7e1c60d93446de33e45c6c075">   28</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="class_single_event.html#ae891a8a7e1c60d93446de33e45c6c075">SingleEvent</a>(std::istringstream &amp;input);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_single_event.html">SingleEvent</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="class_single_event.html">SingleEvent</a> &amp;event);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    EventSet&lt;std::shared_ptr&lt;SingleEvent&gt;&gt; <a class="code" href="class_single_event.html#aba86d4e73307a41195e068556e84c238">getEvents</a>(time_t start, time_t end) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_single_event.html">SingleEvent</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="class_single_event.html">SingleEvent</a> &amp;event);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    std::shared_ptr&lt;SingleEvent&gt; <a class="code" href="class_single_event.html#a5dd9fa5dd4fc95022dfb2f007340e492">eventExists</a>(time_t start, time_t end) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    EventSet&lt;shared_ptr&lt;SingleEvent&gt;&gt; getEvents(time_t start, time_t end) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::shared_ptr&lt;SingleEvent&gt; <a class="code" href="class_single_event.html#a5dd9fa5dd4fc95022dfb2f007340e492">eventExists</a>(time_t start, time_t end, time_t repeat, time_t repeatTill) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    shared_ptr&lt;SingleEvent&gt; eventExists(time_t start, time_t end) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::shared_ptr&lt;Event&gt; <a class="code" href="class_single_event.html#aea351424de3ca12491f996b8bc94c3a8">freeSelf</a>(actionType actionType) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    shared_ptr&lt;SingleEvent&gt; eventExists(time_t start, time_t end, time_t repeat, time_t repeatTill) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::shared_ptr&lt;Event&gt; <a class="code" href="class_single_event.html#a81641673a18cb1531aae600982b7489e">checkCollision</a>(<span class="keyword">const</span> EventSet&lt;std::shared_ptr&lt;Event&gt;&gt; &amp;ev) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    shared_ptr&lt;Event&gt; freeSelf(actionType actionType) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::string <a class="code" href="class_single_event.html#abd76b359e477e14edd8a2c4f96bdb6e7">exportEvent</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    shared_ptr&lt;Event&gt; checkCollision(<span class="keyword">const</span> EventSet&lt;shared_ptr&lt;Event&gt;&gt; &amp;ev) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    std::string <a class="code" href="class_single_event.html#a3f1803caa512d5fae715cb6226daecc3">infoAll</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">string</span> exportEvent() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_single_event.html#add901b5f26c487f75cbad1c9c484378c">saveState</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">string</span> infoAll() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_single_event.html#a1f274e4ed43de6b6e4a327500f539543">restoreState</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> saveState() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> restoreState() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    shared_ptr&lt;SingleEvent&gt; state;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::shared_ptr&lt;SingleEvent&gt; state;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_single_event_html"><div class="ttname"><a href="class_single_event.html">SingleEvent</a></div><div class="ttdef"><b>Definition:</b> SingleEvent.h:17</div></div>
-<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:29</div></div>
+<div class="ttc" id="aclass_single_event_html_a5dd9fa5dd4fc95022dfb2f007340e492"><div class="ttname"><a href="class_single_event.html#a5dd9fa5dd4fc95022dfb2f007340e492">SingleEvent::eventExists</a></div><div class="ttdeci">std::shared_ptr&lt; SingleEvent &gt; eventExists(time_t start, time_t end) override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:31</div></div>
+<div class="ttc" id="aclass_single_event_html_aba86d4e73307a41195e068556e84c238"><div class="ttname"><a href="class_single_event.html#aba86d4e73307a41195e068556e84c238">SingleEvent::getEvents</a></div><div class="ttdeci">EventSet&lt; std::shared_ptr&lt; SingleEvent &gt; &gt; getEvents(time_t start, time_t end) override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:51</div></div>
+<div class="ttc" id="aclass_single_event_html_a6bcb7046b146e345b7b003be36323331"><div class="ttname"><a href="class_single_event.html#a6bcb7046b146e345b7b003be36323331">SingleEvent::SingleEvent</a></div><div class="ttdeci">SingleEvent(std::string title_, time_t startDateUtc_, time_t duration_)</div></div>
+<div class="ttc" id="aclass_single_event_html"><div class="ttname"><a href="class_single_event.html">SingleEvent</a></div><div class="ttdef"><b>Definition:</b> SingleEvent.h:13</div></div>
+<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:26</div></div>
+<div class="ttc" id="aclass_single_event_html_ae891a8a7e1c60d93446de33e45c6c075"><div class="ttname"><a href="class_single_event.html#ae891a8a7e1c60d93446de33e45c6c075">SingleEvent::SingleEvent</a></div><div class="ttdeci">SingleEvent(std::istringstream &amp;input)</div></div>
+<div class="ttc" id="aclass_single_event_html_a81641673a18cb1531aae600982b7489e"><div class="ttname"><a href="class_single_event.html#a81641673a18cb1531aae600982b7489e">SingleEvent::checkCollision</a></div><div class="ttdeci">std::shared_ptr&lt; Event &gt; checkCollision(const EventSet&lt; std::shared_ptr&lt; Event &gt;&gt; &amp;ev) const override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:65</div></div>
+<div class="ttc" id="aclass_single_event_html_aea351424de3ca12491f996b8bc94c3a8"><div class="ttname"><a href="class_single_event.html#aea351424de3ca12491f996b8bc94c3a8">SingleEvent::freeSelf</a></div><div class="ttdeci">std::shared_ptr&lt; Event &gt; freeSelf(actionType actionType) override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:47</div></div>
+<div class="ttc" id="aclass_single_event_html_abd76b359e477e14edd8a2c4f96bdb6e7"><div class="ttname"><a href="class_single_event.html#abd76b359e477e14edd8a2c4f96bdb6e7">SingleEvent::exportEvent</a></div><div class="ttdeci">std::string exportEvent() const override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:83</div></div>
+<div class="ttc" id="aclass_single_event_html_add901b5f26c487f75cbad1c9c484378c"><div class="ttname"><a href="class_single_event.html#add901b5f26c487f75cbad1c9c484378c">SingleEvent::saveState</a></div><div class="ttdeci">void saveState() override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:75</div></div>
+<div class="ttc" id="aclass_single_event_html_a3f1803caa512d5fae715cb6226daecc3"><div class="ttname"><a href="class_single_event.html#a3f1803caa512d5fae715cb6226daecc3">SingleEvent::infoAll</a></div><div class="ttdeci">std::string infoAll() const override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:58</div></div>
+<div class="ttc" id="aclass_single_event_html_a1f274e4ed43de6b6e4a327500f539543"><div class="ttname"><a href="class_single_event.html#a1f274e4ed43de6b6e4a327500f539543">SingleEvent::restoreState</a></div><div class="ttdeci">void restoreState() override</div><div class="ttdef"><b>Definition:</b> SingleEvent.cpp:79</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

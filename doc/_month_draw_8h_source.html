@@ -70,32 +70,28 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_DRAW_MONTH_DRAW</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_DRAW_MONTH_DRAW</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Draw.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Utility/DatetimeUtility.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_month_draw.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_month_draw.html">MonthDraw</a> : <span class="keyword">public</span> <a class="code" href="class_draw.html">Draw</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="class_month_draw.html">MonthDraw</a>(std::ostream &amp;out_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) : <a class="code" href="class_draw.html">Draw</a>(out_, eventManager_) {};</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Draw.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../Utility/DatetimeUtility.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_month_draw.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_month_draw.html">MonthDraw</a> : <span class="keyword">public</span> <a class="code" href="class_draw.html">Draw</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="class_month_draw.html">MonthDraw</a>(std::ostream &amp;out_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) : <a class="code" href="class_draw.html">Draw</a>(out_, eventManager_) {};</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_month_draw.html#abbd67973f13d9b2679e8fffa43040b89">moveNext</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_month_draw.html#abbd67973f13d9b2679e8fffa43040b89">moveNext</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_month_draw.html#aaf7c6422f1af304dfa9b5a0f5ea9643f">movePrevious</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_month_draw.html#aaf7c6422f1af304dfa9b5a0f5ea9643f">movePrevious</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_month_draw.html#a2c5748dfecc45b94a28d3e853ceaf963">drawEvents</a>(tm &amp;time) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_month_draw.html#a2c5748dfecc45b94a28d3e853ceaf963">drawEvents</a>(tm &amp;time) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
+<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:13</div></div>
 <div class="ttc" id="aclass_month_draw_html_abbd67973f13d9b2679e8fffa43040b89"><div class="ttname"><a href="class_month_draw.html#abbd67973f13d9b2679e8fffa43040b89">MonthDraw::moveNext</a></div><div class="ttdeci">void moveNext(tm &amp;time) const override</div><div class="ttdef"><b>Definition:</b> MonthDraw.cpp:51</div></div>
-<div class="ttc" id="aclass_month_draw_html"><div class="ttname"><a href="class_month_draw.html">MonthDraw</a></div><div class="ttdef"><b>Definition:</b> MonthDraw.h:13</div></div>
+<div class="ttc" id="aclass_month_draw_html"><div class="ttname"><a href="class_month_draw.html">MonthDraw</a></div><div class="ttdef"><b>Definition:</b> MonthDraw.h:11</div></div>
 <div class="ttc" id="aclass_month_draw_html_a2c5748dfecc45b94a28d3e853ceaf963"><div class="ttname"><a href="class_month_draw.html#a2c5748dfecc45b94a28d3e853ceaf963">MonthDraw::drawEvents</a></div><div class="ttdeci">void drawEvents(tm &amp;time) override</div><div class="ttdef"><b>Definition:</b> MonthDraw.cpp:9</div></div>
 <div class="ttc" id="aclass_month_draw_html_aaf7c6422f1af304dfa9b5a0f5ea9643f"><div class="ttname"><a href="class_month_draw.html#aaf7c6422f1af304dfa9b5a0f5ea9643f">MonthDraw::movePrevious</a></div><div class="ttdeci">void movePrevious(tm &amp;time) const override</div><div class="ttdef"><b>Definition:</b> MonthDraw.cpp:55</div></div>
-<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:14</div></div>
+<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:12</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

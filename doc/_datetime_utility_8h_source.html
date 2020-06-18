@@ -70,40 +70,35 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_DATETIMEUTILITY_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_DATETIMEUTILITY_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_datetime_utility.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_datetime_utility.html">DatetimeUtility</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">enum</span> RangeTime {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        Day,</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        Week,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        Month</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    };</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_datetime_utility.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_datetime_utility.html">DatetimeUtility</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">enum</span> RangeTime {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        Day,</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        Week,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        Month</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    };</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">static</span> time_t getStartRangeTime(RangeTime range, tm *resultTime);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">static</span> time_t getStartRangeTime(RangeTime range, tm *resultTime);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">static</span> time_t getEndRangeTime(RangeTime range, tm *resultTime);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">static</span> time_t getEndRangeTime(RangeTime range, tm *resultTime);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> convertWeekDay(<span class="keywordtype">int</span> day);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> convertWeekDay(<span class="keywordtype">int</span> day);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="class_datetime_utility.html#ae0ac483deb850fb976ebb84e562cdfec">getNumberOfDays</a>(<span class="keywordtype">int</span> month, <span class="keywordtype">int</span> year);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="class_datetime_utility.html#ae0ac483deb850fb976ebb84e562cdfec">getNumberOfDays</a>(<span class="keywordtype">int</span> month, <span class="keywordtype">int</span> year);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">static</span> std::vector&lt;std::string&gt; getWeekDays();</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">static</span> std::vector&lt;std::string&gt; getWeekDays();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">static</span> std::vector&lt;std::string&gt; getMonths();</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">static</span> std::vector&lt;std::string&gt; getMonths();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">static</span> std::string drawDate(<span class="keyword">const</span> tm &amp;time, RangeTime range);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;};</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif //CALENDAR_DATETIMEUTILITY_H</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">static</span> std::string drawDate(<span class="keyword">const</span> tm &amp;time, RangeTime range);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_datetime_utility_html"><div class="ttname"><a href="class_datetime_utility.html">DatetimeUtility</a></div><div class="ttdef"><b>Definition:</b> DatetimeUtility.h:13</div></div>
+<div class="ttc" id="aclass_datetime_utility_html"><div class="ttname"><a href="class_datetime_utility.html">DatetimeUtility</a></div><div class="ttdef"><b>Definition:</b> DatetimeUtility.h:11</div></div>
 <div class="ttc" id="aclass_datetime_utility_html_ae0ac483deb850fb976ebb84e562cdfec"><div class="ttname"><a href="class_datetime_utility.html#ae0ac483deb850fb976ebb84e562cdfec">DatetimeUtility::getNumberOfDays</a></div><div class="ttdeci">static int getNumberOfDays(int month, int year)</div><div class="ttdef"><b>Definition:</b> DatetimeUtility.cpp:10</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

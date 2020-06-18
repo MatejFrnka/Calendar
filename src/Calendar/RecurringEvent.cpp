@@ -149,10 +149,11 @@ time_t RecurringEvent::TimeOfEvent(time_t start, time_t end, time_t repeat, time
             break;
         if (!this->isRepeatToInfinity() && this->getRepeatTill() < startA)
             break;
-        if (repeatToInfinity_ && repeatTill_ < startB)
+        if (!repeatToInfinity_ && repeatTill_ < startB)
             break;
         if (abs(startA - startB) < abs(timeDiff))
             timeDiff = startA - startB;
+
     }
     return -1;
 }

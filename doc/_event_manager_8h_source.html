@@ -70,67 +70,63 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_EVENT_MANAGER</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_EVENT_MANAGER</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Event.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;../Utility/EventSet.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_event_manager.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_event_manager.html">EventManager</a> {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#a2a4708da18ea9fd2f42c8a1d21bd3148">addEvent</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;<span class="keywordtype">string</span>);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#a2a4708da18ea9fd2f42c8a1d21bd3148">addEvent</a>(<span class="keyword">const</span> shared_ptr&lt;Event&gt; &amp;event);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_event_manager.html#a80edbfbd1aacf873822b316406b3aa6c">removeEvent</a>(shared_ptr&lt;Event&gt; event, Event::actionType actionType = Event::actionType::OnlyThis);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#a77a58b2d45cfffdd7a5520c654ec56da">moveEvent</a>(shared_ptr&lt;Event&gt; event, time_t newStartDateUtc);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#a35066571a191318b81abd0790dc2d9e2">changeDuration</a>(shared_ptr&lt;Event&gt; event, time_t newDuration);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    shared_ptr&lt;Event&gt; <a class="code" href="class_event_manager.html#a61d50dc80ca058701e736dda034048b5">checkAvailability</a>(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    EventSet&lt;shared_ptr&lt;SingleEvent&gt;&gt; <a class="code" href="class_event_manager.html#a1987f7cb1893e8c9648307ca93b738b6">getEvents</a>(time_t start, time_t end);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    EventSet&lt;shared_ptr&lt;Event&gt;&gt; <a class="code" href="class_event_manager.html#af33ce51dfa174a2bb4301a296e956c7e">findByTitle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;title);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    EventSet&lt;shared_ptr&lt;Event&gt;&gt; <a class="code" href="class_event_manager.html#ad45585c212e4883a31783d0c7246b42d">findByAddress</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;address);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    shared_ptr&lt;SingleEvent&gt; <a class="code" href="class_event_manager.html#a1c675e604eecde2ac309ae5f7a20c0db">findByStart</a>(time_t start);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_event_manager.html#a8270f190ff3d6eca49d44e66576a03f0">exportEvents</a>();</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;Event.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../Utility/EventSet.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_event_manager.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_event_manager.html">EventManager</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#ad8b88f653543e941c2c1b91d1547ca18">addEvent</a>(<span class="keyword">const</span> std::string &amp;input);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#ad8b88f653543e941c2c1b91d1547ca18">addEvent</a>(<span class="keyword">const</span> std::shared_ptr&lt;Event&gt; &amp;event);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_event_manager.html#a6e8f5060bd7d205d3fd3a13255f9bc55">removeEvent</a>(std::shared_ptr&lt;Event&gt; event, Event::actionType actionType = Event::actionType::OnlyThis);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#ab0c0dc15c25b9567c85f8a39b792ce64">moveEvent</a>(std::shared_ptr&lt;Event&gt; event, time_t newStartDateUtc);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_event_manager.html#a896572058f41b85e76f31dcef251b1d8">changeDuration</a>(std::shared_ptr&lt;Event&gt; event, time_t newDuration);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    std::shared_ptr&lt;Event&gt; <a class="code" href="class_event_manager.html#af719806330caeb8de14db588ed42a981">checkAvailability</a>(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    EventSet&lt;std::shared_ptr&lt;SingleEvent&gt;&gt; <a class="code" href="class_event_manager.html#a6a15fd6f4637fd9a58df768f9e27b612">getEvents</a>(time_t start, time_t end);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    EventSet&lt;std::shared_ptr&lt;Event&gt;&gt; <a class="code" href="class_event_manager.html#a78578a7d9de82b62abf5db3b86b8d554">findByTitle</a>(<span class="keyword">const</span> std::string &amp;title);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    EventSet&lt;std::shared_ptr&lt;Event&gt;&gt; <a class="code" href="class_event_manager.html#a806a48d9867e40c17474ef5882432125">findByAddress</a>(<span class="keyword">const</span> std::string &amp;address);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    std::shared_ptr&lt;SingleEvent&gt; <a class="code" href="class_event_manager.html#af2cebcb638d986a7c9be833b6757ddd2">findByStart</a>(time_t start);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    std::string <a class="code" href="class_event_manager.html#a0188ba2fae05c6e9757357a9f2470a90">exportEvents</a>();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> operator=(<span class="keyword">const</span> <a class="code" href="class_event_manager.html">EventManager</a> &amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> operator=(<span class="keyword">const</span> <a class="code" href="class_event_manager.html">EventManager</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a>(<span class="keyword">const</span> <a class="code" href="class_event_manager.html">EventManager</a> &amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a>(<span class="keyword">const</span> <a class="code" href="class_event_manager.html">EventManager</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    time_t <a class="code" href="class_event_manager.html#a0d42864c780197a6a73c80db6b70c912">findFreeSpace</a>(shared_ptr&lt;Event&gt; event) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    EventSet&lt;shared_ptr&lt;Event&gt;&gt; events;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;};</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    time_t <a class="code" href="class_event_manager.html#a8175b19ab8a7aea2a3a25a51636a7a6e">findFreeSpace</a>(std::shared_ptr&lt;Event&gt; event) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    EventSet&lt;std::shared_ptr&lt;Event&gt;&gt; events;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
-<div class="ttc" id="aclass_event_manager_html_a77a58b2d45cfffdd7a5520c654ec56da"><div class="ttname"><a href="class_event_manager.html#a77a58b2d45cfffdd7a5520c654ec56da">EventManager::moveEvent</a></div><div class="ttdeci">bool moveEvent(shared_ptr&lt; Event &gt; event, time_t newStartDateUtc)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:49</div></div>
-<div class="ttc" id="aclass_event_manager_html_a1987f7cb1893e8c9648307ca93b738b6"><div class="ttname"><a href="class_event_manager.html#a1987f7cb1893e8c9648307ca93b738b6">EventManager::getEvents</a></div><div class="ttdeci">EventSet&lt; shared_ptr&lt; SingleEvent &gt; &gt; getEvents(time_t start, time_t end)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:27</div></div>
-<div class="ttc" id="aclass_event_manager_html_a1c675e604eecde2ac309ae5f7a20c0db"><div class="ttname"><a href="class_event_manager.html#a1c675e604eecde2ac309ae5f7a20c0db">EventManager::findByStart</a></div><div class="ttdeci">shared_ptr&lt; SingleEvent &gt; findByStart(time_t start)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:79</div></div>
-<div class="ttc" id="aclass_event_manager_html_af33ce51dfa174a2bb4301a296e956c7e"><div class="ttname"><a href="class_event_manager.html#af33ce51dfa174a2bb4301a296e956c7e">EventManager::findByTitle</a></div><div class="ttdeci">EventSet&lt; shared_ptr&lt; Event &gt; &gt; findByTitle(const string &amp;title)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:87</div></div>
-<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:29</div></div>
-<div class="ttc" id="aclass_event_manager_html_a2a4708da18ea9fd2f42c8a1d21bd3148"><div class="ttname"><a href="class_event_manager.html#a2a4708da18ea9fd2f42c8a1d21bd3148">EventManager::addEvent</a></div><div class="ttdeci">bool addEvent(const string &amp;string)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:10</div></div>
-<div class="ttc" id="aclass_event_manager_html_a8270f190ff3d6eca49d44e66576a03f0"><div class="ttname"><a href="class_event_manager.html#a8270f190ff3d6eca49d44e66576a03f0">EventManager::exportEvents</a></div><div class="ttdeci">string exportEvents()</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:105</div></div>
-<div class="ttc" id="aclass_event_manager_html_a80edbfbd1aacf873822b316406b3aa6c"><div class="ttname"><a href="class_event_manager.html#a80edbfbd1aacf873822b316406b3aa6c">EventManager::removeEvent</a></div><div class="ttdeci">void removeEvent(shared_ptr&lt; Event &gt; event, Event::actionType actionType=Event::actionType::OnlyThis)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:39</div></div>
-<div class="ttc" id="aclass_event_manager_html_a61d50dc80ca058701e736dda034048b5"><div class="ttname"><a href="class_event_manager.html#a61d50dc80ca058701e736dda034048b5">EventManager::checkAvailability</a></div><div class="ttdeci">shared_ptr&lt; Event &gt; checkAvailability(const Event &amp;event) const</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:22</div></div>
-<div class="ttc" id="aclass_event_manager_html_a35066571a191318b81abd0790dc2d9e2"><div class="ttname"><a href="class_event_manager.html#a35066571a191318b81abd0790dc2d9e2">EventManager::changeDuration</a></div><div class="ttdeci">bool changeDuration(shared_ptr&lt; Event &gt; event, time_t newDuration)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:62</div></div>
-<div class="ttc" id="aclass_event_manager_html_a0d42864c780197a6a73c80db6b70c912"><div class="ttname"><a href="class_event_manager.html#a0d42864c780197a6a73c80db6b70c912">EventManager::findFreeSpace</a></div><div class="ttdeci">time_t findFreeSpace(shared_ptr&lt; Event &gt; event) const</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:75</div></div>
-<div class="ttc" id="aclass_event_manager_html_ad45585c212e4883a31783d0c7246b42d"><div class="ttname"><a href="class_event_manager.html#ad45585c212e4883a31783d0c7246b42d">EventManager::findByAddress</a></div><div class="ttdeci">EventSet&lt; shared_ptr&lt; Event &gt; &gt; findByAddress(const string &amp;address)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:96</div></div>
+<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:13</div></div>
+<div class="ttc" id="aclass_event_manager_html_af2cebcb638d986a7c9be833b6757ddd2"><div class="ttname"><a href="class_event_manager.html#af2cebcb638d986a7c9be833b6757ddd2">EventManager::findByStart</a></div><div class="ttdeci">std::shared_ptr&lt; SingleEvent &gt; findByStart(time_t start)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:79</div></div>
+<div class="ttc" id="aclass_event_manager_html_a6a15fd6f4637fd9a58df768f9e27b612"><div class="ttname"><a href="class_event_manager.html#a6a15fd6f4637fd9a58df768f9e27b612">EventManager::getEvents</a></div><div class="ttdeci">EventSet&lt; std::shared_ptr&lt; SingleEvent &gt; &gt; getEvents(time_t start, time_t end)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:27</div></div>
+<div class="ttc" id="aclass_event_manager_html_a78578a7d9de82b62abf5db3b86b8d554"><div class="ttname"><a href="class_event_manager.html#a78578a7d9de82b62abf5db3b86b8d554">EventManager::findByTitle</a></div><div class="ttdeci">EventSet&lt; std::shared_ptr&lt; Event &gt; &gt; findByTitle(const std::string &amp;title)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:87</div></div>
+<div class="ttc" id="aclass_event_manager_html_a0188ba2fae05c6e9757357a9f2470a90"><div class="ttname"><a href="class_event_manager.html#a0188ba2fae05c6e9757357a9f2470a90">EventManager::exportEvents</a></div><div class="ttdeci">std::string exportEvents()</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:105</div></div>
+<div class="ttc" id="aclass_event_manager_html_a6e8f5060bd7d205d3fd3a13255f9bc55"><div class="ttname"><a href="class_event_manager.html#a6e8f5060bd7d205d3fd3a13255f9bc55">EventManager::removeEvent</a></div><div class="ttdeci">void removeEvent(std::shared_ptr&lt; Event &gt; event, Event::actionType actionType=Event::actionType::OnlyThis)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:39</div></div>
+<div class="ttc" id="aclass_event_manager_html_ad8b88f653543e941c2c1b91d1547ca18"><div class="ttname"><a href="class_event_manager.html#ad8b88f653543e941c2c1b91d1547ca18">EventManager::addEvent</a></div><div class="ttdeci">bool addEvent(const std::string &amp;input)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:10</div></div>
+<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:26</div></div>
+<div class="ttc" id="aclass_event_manager_html_ab0c0dc15c25b9567c85f8a39b792ce64"><div class="ttname"><a href="class_event_manager.html#ab0c0dc15c25b9567c85f8a39b792ce64">EventManager::moveEvent</a></div><div class="ttdeci">bool moveEvent(std::shared_ptr&lt; Event &gt; event, time_t newStartDateUtc)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:49</div></div>
+<div class="ttc" id="aclass_event_manager_html_af719806330caeb8de14db588ed42a981"><div class="ttname"><a href="class_event_manager.html#af719806330caeb8de14db588ed42a981">EventManager::checkAvailability</a></div><div class="ttdeci">std::shared_ptr&lt; Event &gt; checkAvailability(const Event &amp;event) const</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:22</div></div>
+<div class="ttc" id="aclass_event_manager_html_a806a48d9867e40c17474ef5882432125"><div class="ttname"><a href="class_event_manager.html#a806a48d9867e40c17474ef5882432125">EventManager::findByAddress</a></div><div class="ttdeci">EventSet&lt; std::shared_ptr&lt; Event &gt; &gt; findByAddress(const std::string &amp;address)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:96</div></div>
+<div class="ttc" id="aclass_event_manager_html_a8175b19ab8a7aea2a3a25a51636a7a6e"><div class="ttname"><a href="class_event_manager.html#a8175b19ab8a7aea2a3a25a51636a7a6e">EventManager::findFreeSpace</a></div><div class="ttdeci">time_t findFreeSpace(std::shared_ptr&lt; Event &gt; event) const</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:75</div></div>
+<div class="ttc" id="aclass_event_manager_html_a896572058f41b85e76f31dcef251b1d8"><div class="ttname"><a href="class_event_manager.html#a896572058f41b85e76f31dcef251b1d8">EventManager::changeDuration</a></div><div class="ttdeci">bool changeDuration(std::shared_ptr&lt; Event &gt; event, time_t newDuration)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:62</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

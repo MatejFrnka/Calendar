@@ -70,44 +70,40 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_MOVECOMMAND_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_MOVECOMMAND_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../Command.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;../../../Calendar/EventManager.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_move_command.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_move_command.html">MoveCommand</a> : <span class="keyword">public</span> <a class="code" href="class_command.html">Command</a> {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_move_command.html">MoveCommand</a>(<a class="code" href="class_input_utility.html">InputUtility</a> &amp;inputUtility_, shared_ptr&lt;Event&gt; toMove_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) :</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            <a class="code" href="class_command.html">Command</a>(<span class="stringliteral">&quot;move&quot;</span>, <span class="stringliteral">&quot;Moves an event&quot;</span>, inputUtility_),</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            target(std::move(toMove_)),</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            eventManager(eventManager_) {}</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../Command.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../../../Calendar/EventManager.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="class_move_command.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_move_command.html">MoveCommand</a> : <span class="keyword">public</span> <a class="code" href="class_command.html">Command</a> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="class_move_command.html">MoveCommand</a>(<a class="code" href="class_input_utility.html">InputUtility</a> &amp;inputUtility_, std::shared_ptr&lt;Event&gt; toMove_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) :</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <a class="code" href="class_command.html">Command</a>(<span class="stringliteral">&quot;move&quot;</span>, <span class="stringliteral">&quot;Moves an event&quot;</span>, inputUtility_),</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            target(std::move(toMove_)),</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            eventManager(eventManager_) {}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="class_move_command.html">MoveCommand</a>(<span class="keyword">const</span> <a class="code" href="class_move_command.html">MoveCommand</a> &amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="class_move_command.html">MoveCommand</a>(<span class="keyword">const</span> <a class="code" href="class_move_command.html">MoveCommand</a> &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_move_command.html#ad51038cbee072a2c9e0e99f7ecfc734f">   21</a></span>&#160;    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; <a class="code" href="class_move_command.html#ad51038cbee072a2c9e0e99f7ecfc734f">executeAction</a>(std::queue&lt;std::string&gt; &amp;parameters)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">auto</span> newStart = inputUtility.<a class="code" href="class_input_utility.html#af9ca1544099e5e6ac9b736911489aa88">readDateTime</a>(<span class="stringliteral">&quot;New Start&quot;</span>, parameters);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordflow">if</span> (!eventManager.<a class="code" href="class_event_manager.html#a77a58b2d45cfffdd7a5520c654ec56da">moveEvent</a>(target, newStart)) {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            inputUtility.out &lt;&lt; <span class="stringliteral">&quot;Another event is happening during this time&quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        } <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            inputUtility.<a class="code" href="class_input_utility.html#a469e2bfe0d8712a98f8072288d53e542">success</a>();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_command.html#a728646fd1cf131c32dcbf2a2a4852be2">commands</a>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    };</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    shared_ptr&lt;Event&gt; target;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif //CALENDAR_MOVECOMMAND_H</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_move_command.html#ad51038cbee072a2c9e0e99f7ecfc734f">   19</a></span>&#160;    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; <a class="code" href="class_move_command.html#ad51038cbee072a2c9e0e99f7ecfc734f">executeAction</a>(std::queue&lt;std::string&gt; &amp;parameters)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">auto</span> newStart = inputUtility.<a class="code" href="class_input_utility.html#af9ca1544099e5e6ac9b736911489aa88">readDateTime</a>(<span class="stringliteral">&quot;New Start&quot;</span>, parameters);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">if</span> (!eventManager.<a class="code" href="class_event_manager.html#ab0c0dc15c25b9567c85f8a39b792ce64">moveEvent</a>(target, newStart)) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            inputUtility.out &lt;&lt; <span class="stringliteral">&quot;Another event is happening during this time&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        } <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            inputUtility.<a class="code" href="class_input_utility.html#a469e2bfe0d8712a98f8072288d53e542">success</a>();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_command.html#a728646fd1cf131c32dcbf2a2a4852be2">commands</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    std::shared_ptr&lt;Event&gt; target;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
-<div class="ttc" id="aclass_event_manager_html_a77a58b2d45cfffdd7a5520c654ec56da"><div class="ttname"><a href="class_event_manager.html#a77a58b2d45cfffdd7a5520c654ec56da">EventManager::moveEvent</a></div><div class="ttdeci">bool moveEvent(shared_ptr&lt; Event &gt; event, time_t newStartDateUtc)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:49</div></div>
+<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:13</div></div>
 <div class="ttc" id="aclass_input_utility_html_a469e2bfe0d8712a98f8072288d53e542"><div class="ttname"><a href="class_input_utility.html#a469e2bfe0d8712a98f8072288d53e542">InputUtility::success</a></div><div class="ttdeci">void success() const</div><div class="ttdef"><b>Definition:</b> InputUtility.cpp:192</div></div>
-<div class="ttc" id="aclass_move_command_html_ad51038cbee072a2c9e0e99f7ecfc734f"><div class="ttname"><a href="class_move_command.html#ad51038cbee072a2c9e0e99f7ecfc734f">MoveCommand::executeAction</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; executeAction(std::queue&lt; std::string &gt; &amp;parameters) override</div><div class="ttdef"><b>Definition:</b> MoveCommand.h:21</div></div>
-<div class="ttc" id="aclass_move_command_html"><div class="ttname"><a href="class_move_command.html">MoveCommand</a></div><div class="ttdef"><b>Definition:</b> MoveCommand.h:12</div></div>
-<div class="ttc" id="aclass_command_html_a728646fd1cf131c32dcbf2a2a4852be2"><div class="ttname"><a href="class_command.html#a728646fd1cf131c32dcbf2a2a4852be2">Command::commands</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; commands</div><div class="ttdef"><b>Definition:</b> Command.h:65</div></div>
-<div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:18</div></div>
-<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:17</div></div>
+<div class="ttc" id="aclass_move_command_html_ad51038cbee072a2c9e0e99f7ecfc734f"><div class="ttname"><a href="class_move_command.html#ad51038cbee072a2c9e0e99f7ecfc734f">MoveCommand::executeAction</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; executeAction(std::queue&lt; std::string &gt; &amp;parameters) override</div><div class="ttdef"><b>Definition:</b> MoveCommand.h:19</div></div>
+<div class="ttc" id="aclass_move_command_html"><div class="ttname"><a href="class_move_command.html">MoveCommand</a></div><div class="ttdef"><b>Definition:</b> MoveCommand.h:10</div></div>
+<div class="ttc" id="aclass_command_html_a728646fd1cf131c32dcbf2a2a4852be2"><div class="ttname"><a href="class_command.html#a728646fd1cf131c32dcbf2a2a4852be2">Command::commands</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; commands</div><div class="ttdef"><b>Definition:</b> Command.h:63</div></div>
+<div class="ttc" id="aclass_event_manager_html_ab0c0dc15c25b9567c85f8a39b792ce64"><div class="ttname"><a href="class_event_manager.html#ab0c0dc15c25b9567c85f8a39b792ce64">EventManager::moveEvent</a></div><div class="ttdeci">bool moveEvent(std::shared_ptr&lt; Event &gt; event, time_t newStartDateUtc)</div><div class="ttdef"><b>Definition:</b> EventManager.cpp:49</div></div>
+<div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:16</div></div>
+<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:15</div></div>
 <div class="ttc" id="aclass_input_utility_html_af9ca1544099e5e6ac9b736911489aa88"><div class="ttname"><a href="class_input_utility.html#af9ca1544099e5e6ac9b736911489aa88">InputUtility::readDateTime</a></div><div class="ttdeci">time_t readDateTime(const std::string &amp;attr, const std::string &amp;currentVal=&quot;&quot;, bool required=true) const</div><div class="ttdef"><b>Definition:</b> InputUtility.cpp:47</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

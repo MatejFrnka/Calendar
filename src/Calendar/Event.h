@@ -151,7 +151,7 @@ public:
         tm time = *localtime(&start);
         ostream << "Date: " << DatetimeUtility::drawDate(time, DatetimeUtility::RangeTime::Day) << "\tTitle: " << event.getTitle();
         if (!event.getLocation().empty())
-            ostream << "\tLocation: elect " << event.getLocation();
+            ostream << "\tLocation: " << event.getLocation();
         return ostream;
     }
 

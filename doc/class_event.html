@@ -98,10 +98,10 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac30bc175f8f495f02c082df84b2c58e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ac30bc175f8f495f02c082df84b2c58e2">Event</a> (string title_, time_t startDateUtc_, time_t durationUtc_)</td></tr>
-<tr class="separator:ac30bc175f8f495f02c082df84b2c58e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05fc45cdf97285a5873af9aa27f7e5ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a05fc45cdf97285a5873af9aa27f7e5ed">Event</a> (istringstream &amp;input)</td></tr>
-<tr class="separator:a05fc45cdf97285a5873af9aa27f7e5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1728603fd695eee0ff6381ba867b8b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#aa1728603fd695eee0ff6381ba867b8b6">Event</a> (std::string title_, time_t startDateUtc_, time_t durationUtc_)</td></tr>
+<tr class="separator:aa1728603fd695eee0ff6381ba867b8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69c79ff2201e86f8646e2762bd33a873"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a69c79ff2201e86f8646e2762bd33a873">Event</a> (std::istringstream &amp;input)</td></tr>
+<tr class="separator:a69c79ff2201e86f8646e2762bd33a873"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8b35bf9237b74824194f87128e4fdab"><td class="memItemLeft" align="right" valign="top"><a id="ae8b35bf9237b74824194f87128e4fdab"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Event</b> (const <a class="el" href="class_event.html">Event</a> &amp;event)</td></tr>
 <tr class="separator:ae8b35bf9237b74824194f87128e4fdab"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,36 +112,36 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aadeda7ef90f662afc7779113be26a945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd90f4beb1ce774296c41f7bb7bd5ec9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#abd90f4beb1ce774296c41f7bb7bd5ec9">restoreState</a> ()=0</td></tr>
 <tr class="separator:abd90f4beb1ce774296c41f7bb7bd5ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d0d317a74df27f1b961d633af3c456"><td class="memItemLeft" align="right" valign="top">virtual time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a74d0d317a74df27f1b961d633af3c456">findFreeSpace</a> (const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;events)</td></tr>
-<tr class="separator:a74d0d317a74df27f1b961d633af3c456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad955439ee2ba22ee5e808e529fa24b67"><td class="memItemLeft" align="right" valign="top">virtual EventSet&lt; shared_ptr&lt; <a class="el" href="class_single_event.html">SingleEvent</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ad955439ee2ba22ee5e808e529fa24b67">getEvents</a> (time_t start, time_t end)=0</td></tr>
-<tr class="separator:ad955439ee2ba22ee5e808e529fa24b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ef00a0af9b75f274f569ee0c2e1ceee"><td class="memItemLeft" align="right" valign="top">virtual time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a9ef00a0af9b75f274f569ee0c2e1ceee">findFreeSpace</a> (const EventSet&lt; std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;events)</td></tr>
+<tr class="separator:a9ef00a0af9b75f274f569ee0c2e1ceee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4f5c1c2f8a44fe38f1377a94cf4c24f"><td class="memItemLeft" align="right" valign="top">virtual EventSet&lt; std::shared_ptr&lt; <a class="el" href="class_single_event.html">SingleEvent</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ae4f5c1c2f8a44fe38f1377a94cf4c24f">getEvents</a> (time_t start, time_t end)=0</td></tr>
+<tr class="separator:ae4f5c1c2f8a44fe38f1377a94cf4c24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42e24e73436729b14188d78ca522982f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a42e24e73436729b14188d78ca522982f">isInRange</a> (time_t rangeStart, time_t rangeEnd) const</td></tr>
 <tr class="separator:a42e24e73436729b14188d78ca522982f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b8c720fb401ef90787ed83e814c69cd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a4b8c720fb401ef90787ed83e814c69cd">isInRange</a> (time_t start, time_t end, time_t rangeStart, time_t rangeEnd) const</td></tr>
 <tr class="separator:a4b8c720fb401ef90787ed83e814c69cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac857200b95b5f65d5b3455bb82f561c2"><td class="memItemLeft" align="right" valign="top">virtual shared_ptr&lt; <a class="el" href="class_single_event.html">SingleEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ac857200b95b5f65d5b3455bb82f561c2">eventExists</a> (time_t start, time_t end)=0</td></tr>
-<tr class="separator:ac857200b95b5f65d5b3455bb82f561c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c3a1911e960cbc2c2aab00f32bd304e"><td class="memItemLeft" align="right" valign="top">virtual shared_ptr&lt; <a class="el" href="class_single_event.html">SingleEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a6c3a1911e960cbc2c2aab00f32bd304e">eventExists</a> (time_t start, time_t end, time_t repeat, time_t repeatTill)=0</td></tr>
-<tr class="separator:a6c3a1911e960cbc2c2aab00f32bd304e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad52c2626ad993c67ad28089ab7ada5e0"><td class="memItemLeft" align="right" valign="top">virtual shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ad52c2626ad993c67ad28089ab7ada5e0">freeSelf</a> (actionType actionType)=0</td></tr>
-<tr class="separator:ad52c2626ad993c67ad28089ab7ada5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8282bc9e0e0f01594080464d0d2530c"><td class="memItemLeft" align="right" valign="top">virtual vector&lt; actionType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#af8282bc9e0e0f01594080464d0d2530c">getActionTypes</a> ()</td></tr>
+<tr class="memitem:af4b379493fc66bf3f1910babc95b3190"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="class_single_event.html">SingleEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#af4b379493fc66bf3f1910babc95b3190">eventExists</a> (time_t start, time_t end)=0</td></tr>
+<tr class="separator:af4b379493fc66bf3f1910babc95b3190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab82fbcefbb35aa512e0b293dbb6e2fa1"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="class_single_event.html">SingleEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ab82fbcefbb35aa512e0b293dbb6e2fa1">eventExists</a> (time_t start, time_t end, time_t repeat, time_t repeatTill)=0</td></tr>
+<tr class="separator:ab82fbcefbb35aa512e0b293dbb6e2fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c8632e28380e152d408552fd0713ca3"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a4c8632e28380e152d408552fd0713ca3">freeSelf</a> (actionType actionType)=0</td></tr>
+<tr class="separator:a4c8632e28380e152d408552fd0713ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8282bc9e0e0f01594080464d0d2530c"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; actionType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#af8282bc9e0e0f01594080464d0d2530c">getActionTypes</a> ()</td></tr>
 <tr class="separator:af8282bc9e0e0f01594080464d0d2530c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5146e5e2e7c3ad78e1fc6451c1cce4ed"><td class="memItemLeft" align="right" valign="top">virtual shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a5146e5e2e7c3ad78e1fc6451c1cce4ed">checkCollision</a> (const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;ev) const =0</td></tr>
-<tr class="separator:a5146e5e2e7c3ad78e1fc6451c1cce4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00ba7ad162f67e3b585460ff03bf481c"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a00ba7ad162f67e3b585460ff03bf481c">exportEvent</a> () const</td></tr>
+<tr class="memitem:aa5f01cd1c6525c1b81365fbb440cac4f"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#aa5f01cd1c6525c1b81365fbb440cac4f">checkCollision</a> (const EventSet&lt; std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;ev) const =0</td></tr>
+<tr class="separator:aa5f01cd1c6525c1b81365fbb440cac4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ba7ad162f67e3b585460ff03bf481c"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a00ba7ad162f67e3b585460ff03bf481c">exportEvent</a> () const</td></tr>
 <tr class="separator:a00ba7ad162f67e3b585460ff03bf481c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e3919104a658fb2ab6b997e0ee960d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a9e3919104a658fb2ab6b997e0ee960d3">operator&lt;</a> (const <a class="el" href="class_event.html">Event</a> &amp;event) const</td></tr>
 <tr class="separator:a9e3919104a658fb2ab6b997e0ee960d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a065981d76f443fae12a50f6a3c7c7e2a"><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a065981d76f443fae12a50f6a3c7c7e2a">infoAll</a> () const =0</td></tr>
-<tr class="separator:a065981d76f443fae12a50f6a3c7c7e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a324695526166dab50bdf2893a379cd1f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a324695526166dab50bdf2893a379cd1f">addPerson</a> (const shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;toAdd)</td></tr>
-<tr class="separator:a324695526166dab50bdf2893a379cd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3448a2d00a0ef603eae55c1be842ae0e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a3448a2d00a0ef603eae55c1be842ae0e">removePerson</a> (const shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;toRemove)</td></tr>
-<tr class="separator:a3448a2d00a0ef603eae55c1be842ae0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11c0ca66552978485de10344280fd3ea"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a11c0ca66552978485de10344280fd3ea">infoAll</a> () const =0</td></tr>
+<tr class="separator:a11c0ca66552978485de10344280fd3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee462d0c9aa8256f2be6f11ce14d90fc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#aee462d0c9aa8256f2be6f11ce14d90fc">addPerson</a> (const std::shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;toAdd)</td></tr>
+<tr class="separator:aee462d0c9aa8256f2be6f11ce14d90fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea870f73afbce346114879b9a7bd6ed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#aeea870f73afbce346114879b9a7bd6ed">removePerson</a> (const std::shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;toRemove)</td></tr>
+<tr class="separator:aeea870f73afbce346114879b9a7bd6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf84b92b4c403d9d04261c0d4186edde"><td class="memItemLeft" align="right" valign="top"><a id="acf84b92b4c403d9d04261c0d4186edde"></a>
-const vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPeople</b> () const</td></tr>
+const std::vector&lt; std::shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPeople</b> () const</td></tr>
 <tr class="separator:acf84b92b4c403d9d04261c0d4186edde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af021db46c726e7fda8fb89731006c005"><td class="memItemLeft" align="right" valign="top"><a id="af021db46c726e7fda8fb89731006c005"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>getEditable</b> () const</td></tr>
@@ -149,10 +149,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>getEditable</b> () co
 <tr class="memitem:a1da0e7041b5624e46d27ac0bb04cc856"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a1da0e7041b5624e46d27ac0bb04cc856">setEditable</a> (bool editable)</td></tr>
 <tr class="separator:a1da0e7041b5624e46d27ac0bb04cc856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b595fd6b44108955cdb3a2a1b3555e0"><td class="memItemLeft" align="right" valign="top"><a id="a7b595fd6b44108955cdb3a2a1b3555e0"></a>
-const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTitle</b> () const</td></tr>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTitle</b> () const</td></tr>
 <tr class="separator:a7b595fd6b44108955cdb3a2a1b3555e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dca89a922fffcd39d42623a307d4b59"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a8dca89a922fffcd39d42623a307d4b59">setTitle</a> (const string &amp;title)</td></tr>
-<tr class="separator:a8dca89a922fffcd39d42623a307d4b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8959ffa14a297d1e8ddb0cef8b6791f2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a8959ffa14a297d1e8ddb0cef8b6791f2">setTitle</a> (const std::string &amp;title)</td></tr>
+<tr class="separator:a8959ffa14a297d1e8ddb0cef8b6791f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8868bc6d5c930f9267768a72ffeaa486"><td class="memItemLeft" align="right" valign="top"><a id="a8868bc6d5c930f9267768a72ffeaa486"></a>
 time_t&#160;</td><td class="memItemRight" valign="bottom"><b>getStartDateUtc</b> () const</td></tr>
 <tr class="separator:a8868bc6d5c930f9267768a72ffeaa486"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,10 +167,10 @@ time_t&#160;</td><td class="memItemRight" valign="bottom"><b>getDurationUtc</b> 
 time_t&#160;</td><td class="memItemRight" valign="bottom"><b>getEndDateUtc</b> () const</td></tr>
 <tr class="separator:a0a96c4293c253508005441b012f3eb22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa641135385916b7a46a52ed6169e4158"><td class="memItemLeft" align="right" valign="top"><a id="aa641135385916b7a46a52ed6169e4158"></a>
-const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getLocation</b> () const</td></tr>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getLocation</b> () const</td></tr>
 <tr class="separator:aa641135385916b7a46a52ed6169e4158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b0bfee2764f42148cc0c08f9a57edb8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a6b0bfee2764f42148cc0c08f9a57edb8">setLocation</a> (const string &amp;location)</td></tr>
-<tr class="separator:a6b0bfee2764f42148cc0c08f9a57edb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d8a39597b9a2d566655d71af4ca995a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a7d8a39597b9a2d566655d71af4ca995a">setLocation</a> (const std::string &amp;location)</td></tr>
+<tr class="separator:a7d8a39597b9a2d566655d71af4ca995a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classinheritable__enable__shared__from__this"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classinheritable__enable__shared__from__this')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classinheritable__enable__shared__from__this.html">inheritable_enable_shared_from_this&lt; Event &gt;</a></td></tr>
 <tr class="memitem:a603e1cad2fb515a038e30162c666da9a inherit pub_methods_classinheritable__enable__shared__from__this"><td class="memItemLeft" align="right" valign="top"><a id="a603e1cad2fb515a038e30162c666da9a"></a>
 std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>shared_from_this</b> ()</td></tr>
@@ -181,22 +181,22 @@ std::shared_ptr&lt; Down &gt;&#160;</td><td class="memItemRight" valign="bottom"
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ae1ecfde3799eadd66a2021f320708079"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ae1ecfde3799eadd66a2021f320708079">infoAllBody</a> () const</td></tr>
+<tr class="memitem:ae1ecfde3799eadd66a2021f320708079"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#ae1ecfde3799eadd66a2021f320708079">infoAllBody</a> () const</td></tr>
 <tr class="separator:ae1ecfde3799eadd66a2021f320708079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310b330685a9f8318f3b3c0c77c253d2"><td class="memItemLeft" align="right" valign="top">time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a310b330685a9f8318f3b3c0c77c253d2">getFirstEventTime</a> (time_t startFrom, time_t startDate, time_t duration, time_t timeBetweenEvents) const</td></tr>
 <tr class="separator:a310b330685a9f8318f3b3c0c77c253d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a111a47fc64200e4fa1dcd77881f74c40"><td class="memItemLeft" align="right" valign="top"><a id="a111a47fc64200e4fa1dcd77881f74c40"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>sanitize</b> (const string &amp;input) const</td></tr>
-<tr class="separator:a111a47fc64200e4fa1dcd77881f74c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a133224c3815f4c3ea0d63797221dfb31"><td class="memItemLeft" align="right" valign="top"><a id="a133224c3815f4c3ea0d63797221dfb31"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>sanitize</b> (const std::string &amp;input) const</td></tr>
+<tr class="separator:a133224c3815f4c3ea0d63797221dfb31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a3ee63c02debab736a7b2fb866107a382"><td class="memItemLeft" align="right" valign="top"><a id="a3ee63c02debab736a7b2fb866107a382"></a>
 const char&#160;</td><td class="memItemRight" valign="bottom"><b>sep</b> = ';'</td></tr>
 <tr class="separator:a3ee63c02debab736a7b2fb866107a382"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e8de498b221d63144d056c81ca03571"><td class="memItemLeft" align="right" valign="top"><a id="a4e8de498b221d63144d056c81ca03571"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>title</b></td></tr>
-<tr class="separator:a4e8de498b221d63144d056c81ca03571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea60f7e05999fdb6490a5d75b50fed8f"><td class="memItemLeft" align="right" valign="top"><a id="aea60f7e05999fdb6490a5d75b50fed8f"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>title</b></td></tr>
+<tr class="separator:aea60f7e05999fdb6490a5d75b50fed8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab808f534ddc936423c446dcfabc21b2a"><td class="memItemLeft" align="right" valign="top"><a id="ab808f534ddc936423c446dcfabc21b2a"></a>
 time_t&#160;</td><td class="memItemRight" valign="bottom"><b>startDateUtc</b></td></tr>
 <tr class="separator:ab808f534ddc936423c446dcfabc21b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,12 +206,12 @@ time_t&#160;</td><td class="memItemRight" valign="bottom"><b>durationUtc</b></td
 <tr class="memitem:a39aca2fb6bde59fd9b00c9605fe26bf8"><td class="memItemLeft" align="right" valign="top"><a id="a39aca2fb6bde59fd9b00c9605fe26bf8"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>editable</b></td></tr>
 <tr class="separator:a39aca2fb6bde59fd9b00c9605fe26bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a218e776860f5852a4cedfe5e13e6fd1f"><td class="memItemLeft" align="right" valign="top"><a id="a218e776860f5852a4cedfe5e13e6fd1f"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>location</b></td></tr>
-<tr class="separator:a218e776860f5852a4cedfe5e13e6fd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02f9cbedcb7d6d0be449d24c188ab7aa"><td class="memItemLeft" align="right" valign="top"><a id="a02f9cbedcb7d6d0be449d24c188ab7aa"></a>
-vector&lt; shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>people</b></td></tr>
-<tr class="separator:a02f9cbedcb7d6d0be449d24c188ab7aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60a471c7f609cca35477512fe6785f4d"><td class="memItemLeft" align="right" valign="top"><a id="a60a471c7f609cca35477512fe6785f4d"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>location</b></td></tr>
+<tr class="separator:a60a471c7f609cca35477512fe6785f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24523f2d45123485e8b2dc17c0452446"><td class="memItemLeft" align="right" valign="top"><a id="a24523f2d45123485e8b2dc17c0452446"></a>
+std::vector&lt; std::shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>people</b></td></tr>
+<tr class="separator:a24523f2d45123485e8b2dc17c0452446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -222,8 +222,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class event should be stored in smart pointer </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac30bc175f8f495f02c082df84b2c58e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac30bc175f8f495f02c082df84b2c58e2">&#9670;&nbsp;</a></span>Event() <span class="overload">[1/2]</span></h2>
+<a id="aa1728603fd695eee0ff6381ba867b8b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1728603fd695eee0ff6381ba867b8b6">&#9670;&nbsp;</a></span>Event() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +231,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">Event::Event </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
+          <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>title_</em>, </td>
         </tr>
         <tr>
@@ -263,17 +263,15 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">invalid_argument</td><td>if duration is smaller than 1</td></tr>
+    <tr><td class="paramname">invalid_argument</td><td>if duration is smaller than 1 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>: Matej Frnka <a href="#" onclick="location.href='mai'+'lto:'+'frn'+'ka'+'mat'+'@f'+'it.'+'cv'+'ut.'+'cz'; return false;">frnka<span style="display: none;">.nosp@m.</span>mat@<span style="display: none;">.nosp@m.</span>fit.c<span style="display: none;">.nosp@m.</span>vut.<span style="display: none;">.nosp@m.</span>cz</a> </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>: 29.04.2020 </dd></dl>
 
 </div>
 </div>
-<a id="a05fc45cdf97285a5873af9aa27f7e5ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05fc45cdf97285a5873af9aa27f7e5ed">&#9670;&nbsp;</a></span>Event() <span class="overload">[2/2]</span></h2>
+<a id="a69c79ff2201e86f8646e2762bd33a873"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69c79ff2201e86f8646e2762bd33a873">&#9670;&nbsp;</a></span>Event() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +282,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">Event::Event </td>
           <td>(</td>
-          <td class="paramtype">istringstream &amp;&#160;</td>
+          <td class="paramtype">std::istringstream &amp;&#160;</td>
           <td class="paramname"><em>input</em></td><td>)</td>
           <td></td>
         </tr>
@@ -305,8 +303,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a324695526166dab50bdf2893a379cd1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a324695526166dab50bdf2893a379cd1f">&#9670;&nbsp;</a></span>addPerson()</h2>
+<a id="aee462d0c9aa8256f2be6f11ce14d90fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee462d0c9aa8256f2be6f11ce14d90fc">&#9670;&nbsp;</a></span>addPerson()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -317,7 +315,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">bool Event::addPerson </td>
           <td>(</td>
-          <td class="paramtype">const shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>toAdd</em></td><td>)</td>
           <td></td>
         </tr>
@@ -335,12 +333,12 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#af721cfb87138d0dd49a3f8daabcdb646">RecurringItemEvent</a>.</p>
+<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#a3ad7e79973650d4dd7b84ecfd7cd99cf">RecurringItemEvent</a>.</p>
 
 </div>
 </div>
-<a id="a5146e5e2e7c3ad78e1fc6451c1cce4ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5146e5e2e7c3ad78e1fc6451c1cce4ed">&#9670;&nbsp;</a></span>checkCollision()</h2>
+<a id="aa5f01cd1c6525c1b81365fbb440cac4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5f01cd1c6525c1b81365fbb440cac4f">&#9670;&nbsp;</a></span>checkCollision()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,9 +347,9 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual shared_ptr&lt;<a class="el" href="class_event.html">Event</a>&gt; Event::checkCollision </td>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="class_event.html">Event</a>&gt; Event::checkCollision </td>
           <td>(</td>
-          <td class="paramtype">const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const EventSet&lt; std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>ev</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -370,12 +368,12 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to first event this event collides with or null pointer if it doenst collide with any events </dd></dl>
 
-<p>Implemented in <a class="el" href="class_recurring_event.html#a1e12d5318eee9339392b4d52cba505e2">RecurringEvent</a>, and <a class="el" href="class_single_event.html#a76860f366d333b3de38fa4c714348a20">SingleEvent</a>.</p>
+<p>Implemented in <a class="el" href="class_recurring_event.html#aec074273650b9217b27077474735bbb9">RecurringEvent</a>, and <a class="el" href="class_single_event.html#a81641673a18cb1531aae600982b7489e">SingleEvent</a>.</p>
 
 </div>
 </div>
-<a id="ac857200b95b5f65d5b3455bb82f561c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac857200b95b5f65d5b3455bb82f561c2">&#9670;&nbsp;</a></span>eventExists() <span class="overload">[1/2]</span></h2>
+<a id="af4b379493fc66bf3f1910babc95b3190"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4b379493fc66bf3f1910babc95b3190">&#9670;&nbsp;</a></span>eventExists() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -384,7 +382,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual shared_ptr&lt;<a class="el" href="class_single_event.html">SingleEvent</a>&gt; Event::eventExists </td>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="class_single_event.html">SingleEvent</a>&gt; Event::eventExists </td>
           <td>(</td>
           <td class="paramtype">time_t&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -420,8 +418,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a6c3a1911e960cbc2c2aab00f32bd304e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c3a1911e960cbc2c2aab00f32bd304e">&#9670;&nbsp;</a></span>eventExists() <span class="overload">[2/2]</span></h2>
+<a id="ab82fbcefbb35aa512e0b293dbb6e2fa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab82fbcefbb35aa512e0b293dbb6e2fa1">&#9670;&nbsp;</a></span>eventExists() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -430,7 +428,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual shared_ptr&lt;<a class="el" href="class_single_event.html">SingleEvent</a>&gt; Event::eventExists </td>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="class_single_event.html">SingleEvent</a>&gt; Event::eventExists </td>
           <td>(</td>
           <td class="paramtype">time_t&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -508,8 +506,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a74d0d317a74df27f1b961d633af3c456"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74d0d317a74df27f1b961d633af3c456">&#9670;&nbsp;</a></span>findFreeSpace()</h2>
+<a id="a9ef00a0af9b75f274f569ee0c2e1ceee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ef00a0af9b75f274f569ee0c2e1ceee">&#9670;&nbsp;</a></span>findFreeSpace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -520,7 +518,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">time_t Event::findFreeSpace </td>
           <td>(</td>
-          <td class="paramtype">const EventSet&lt; shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">const EventSet&lt; std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>events</em></td><td>)</td>
           <td></td>
         </tr>
@@ -539,12 +537,12 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Start of next first free space, -1 if there is no space ever (caused by recurring events repeating to infinity) </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_recurring_event.html#a1ddd36facf7c6a0db78768c3bfc82e2f">RecurringEvent</a>.</p>
+<p>Reimplemented in <a class="el" href="class_recurring_event.html#a00bcb3896a43704bf9772ad30ee5bb21">RecurringEvent</a>.</p>
 
 </div>
 </div>
-<a id="ad52c2626ad993c67ad28089ab7ada5e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad52c2626ad993c67ad28089ab7ada5e0">&#9670;&nbsp;</a></span>freeSelf()</h2>
+<a id="a4c8632e28380e152d408552fd0713ca3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c8632e28380e152d408552fd0713ca3">&#9670;&nbsp;</a></span>freeSelf()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -553,7 +551,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual shared_ptr&lt;<a class="el" href="class_event.html">Event</a>&gt; Event::freeSelf </td>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="class_event.html">Event</a>&gt; Event::freeSelf </td>
           <td>(</td>
           <td class="paramtype">actionType&#160;</td>
           <td class="paramname"><em>actionType</em></td><td>)</td>
@@ -606,8 +604,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="ad955439ee2ba22ee5e808e529fa24b67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad955439ee2ba22ee5e808e529fa24b67">&#9670;&nbsp;</a></span>getEvents()</h2>
+<a id="ae4f5c1c2f8a44fe38f1377a94cf4c24f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4f5c1c2f8a44fe38f1377a94cf4c24f">&#9670;&nbsp;</a></span>getEvents()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -616,7 +614,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual EventSet&lt;shared_ptr&lt;<a class="el" href="class_single_event.html">SingleEvent</a>&gt; &gt; Event::getEvents </td>
+          <td class="memname">virtual EventSet&lt;std::shared_ptr&lt;<a class="el" href="class_single_event.html">SingleEvent</a>&gt; &gt; Event::getEvents </td>
           <td>(</td>
           <td class="paramtype">time_t&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -639,7 +637,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns events generated by <a class="el" href="class_recurring_event.html">RecurringEvent</a> happening in given time. Includes events not fully included. Eg. start of event happens before param start but end happens between param start and param end Events ending at the same time as param start or starting at the same time as param end will not be inlcuded </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Returns events generated by event happening in given time. Includes events not fully included. Eg. start of event happens before param start but end happens between param start and param end Events ending at the same time as param start or starting at the same time as param end will not be inlcuded </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">start</td><td>Start of range </td></tr>
     <tr><td class="paramname">end</td><td>End of range </td></tr>
@@ -710,8 +708,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a065981d76f443fae12a50f6a3c7c7e2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a065981d76f443fae12a50f6a3c7c7e2a">&#9670;&nbsp;</a></span>infoAll()</h2>
+<a id="a11c0ca66552978485de10344280fd3ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11c0ca66552978485de10344280fd3ea">&#9670;&nbsp;</a></span>infoAll()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -720,7 +718,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual string Event::infoAll </td>
+          <td class="memname">virtual std::string Event::infoAll </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -883,8 +881,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a3448a2d00a0ef603eae55c1be842ae0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3448a2d00a0ef603eae55c1be842ae0e">&#9670;&nbsp;</a></span>removePerson()</h2>
+<a id="aeea870f73afbce346114879b9a7bd6ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeea870f73afbce346114879b9a7bd6ed">&#9670;&nbsp;</a></span>removePerson()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -895,7 +893,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">bool Event::removePerson </td>
           <td>(</td>
-          <td class="paramtype">const shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="struct_person.html">Person</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>toRemove</em></td><td>)</td>
           <td></td>
         </tr>
@@ -913,7 +911,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#ae284489d562697fb04b1e5b7fde324c9">RecurringItemEvent</a>.</p>
+<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#a17a94e9fb38f701352c65fe534de9127">RecurringItemEvent</a>.</p>
 
 </div>
 </div>
@@ -1041,8 +1039,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a6b0bfee2764f42148cc0c08f9a57edb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b0bfee2764f42148cc0c08f9a57edb8">&#9670;&nbsp;</a></span>setLocation()</h2>
+<a id="a7d8a39597b9a2d566655d71af4ca995a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d8a39597b9a2d566655d71af4ca995a">&#9670;&nbsp;</a></span>setLocation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1053,7 +1051,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">void Event::setLocation </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>location</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1071,7 +1069,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#ac1ec5b90c8eaed449950c5b71f102076">RecurringItemEvent</a>.</p>
+<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#aa5a3d438f208d543778362220033fd56">RecurringItemEvent</a>.</p>
 
 </div>
 </div>
@@ -1109,8 +1107,8 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a8dca89a922fffcd39d42623a307d4b59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dca89a922fffcd39d42623a307d4b59">&#9670;&nbsp;</a></span>setTitle()</h2>
+<a id="a8959ffa14a297d1e8ddb0cef8b6791f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8959ffa14a297d1e8ddb0cef8b6791f2">&#9670;&nbsp;</a></span>setTitle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1121,7 +1119,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
         <tr>
           <td class="memname">void Event::setTitle </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>title</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1139,7 +1137,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#a65942ea031b98c8b7dfbf172b42d8672">RecurringItemEvent</a>.</p>
+<p>Reimplemented in <a class="el" href="class_recurring_item_event.html#a55279506ac2a8277fdda97f32714c39a">RecurringItemEvent</a>.</p>
 
 </div>
 </div>

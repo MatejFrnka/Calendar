@@ -70,59 +70,66 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_RECURRING_EVENT_ITEM</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_RECURRING_EVENT_ITEM</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;RecurringEvent.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;RecurringEvent.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">class </span><a class="code" href="class_recurring_event.html">RecurringEvent</a>;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">class </span><a class="code" href="class_recurring_event.html">RecurringEvent</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_recurring_item_event.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a> : <span class="keyword">public</span> <a class="code" href="class_single_event.html">SingleEvent</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a>(<span class="keywordtype">string</span> title_, time_t startDateUtc_, time_t duration_, shared_ptr&lt;RecurringEvent&gt; parentEvent_);</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_recurring_item_event.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a> : <span class="keyword">public</span> <a class="code" href="class_single_event.html">SingleEvent</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_recurring_item_event.html#aee4f5f23f70dcaeed361880d6f3a13a5">   21</a></span>&#160;    <a class="code" href="class_recurring_item_event.html#aee4f5f23f70dcaeed361880d6f3a13a5">RecurringItemEvent</a>(std::string title_, time_t startDateUtc_, time_t duration_, std::shared_ptr&lt;RecurringEvent&gt; parentEvent_);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a>(std::shared_ptr&lt;RecurringEvent&gt;, time_t startDateUtc_);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a>() = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a>(shared_ptr&lt;RecurringEvent&gt;, time_t startDateUtc_);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    std::shared_ptr&lt;Event&gt; <a class="code" href="class_recurring_item_event.html#a85488a53dc12c71e57e8b71b0e4fae86">freeSelf</a>(actionType actionType = actionType::OnlyThis) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="class_recurring_item_event.html">RecurringItemEvent</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    std::vector&lt;Event::actionType&gt; <a class="code" href="class_recurring_item_event.html#aca6bbf597f8f96a314d3bf6e9ab169ea">getActionTypes</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    shared_ptr&lt;Event&gt; freeSelf(actionType actionType = actionType::OnlyThis) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::string <a class="code" href="class_recurring_item_event.html#afa82f3d7f9893b9da4332e181bcbda0d">infoAll</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    vector&lt;Event::actionType&gt; getActionTypes() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_recurring_item_event.html#a3ad7e79973650d4dd7b84ecfd7cd99cf">addPerson</a>(<span class="keyword">const</span> std::shared_ptr&lt;Person&gt; &amp;toAdd) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">string</span> infoAll() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_recurring_item_event.html#a17a94e9fb38f701352c65fe534de9127">removePerson</a>(<span class="keyword">const</span> std::shared_ptr&lt;Person&gt; &amp;toRemove) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">bool</span> addPerson(<span class="keyword">const</span> shared_ptr&lt;Person&gt; &amp;toAdd) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#ad3b45a67ca0dcae09be300f8f4941c69">setEditable</a>(<span class="keywordtype">bool</span> editable) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> removePerson(<span class="keyword">const</span> shared_ptr&lt;Person&gt; &amp;toRemove) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#a55279506ac2a8277fdda97f32714c39a">setTitle</a>(<span class="keyword">const</span> std::string &amp;title) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> setEditable(<span class="keywordtype">bool</span> editable) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#a2882c1c7b224144100a41fd7cd069764">setStartDateUtc</a>(time_t startDateUtc) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> setTitle(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;title) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#a4fef944ec9888696df199417677f4b3f">setDurationUtc</a>(time_t durationUtc) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> setStartDateUtc(time_t startDateUtc) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#aa5a3d438f208d543778362220033fd56">setLocation</a>(<span class="keyword">const</span> std::string &amp;location) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> setDurationUtc(time_t durationUtc) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#a7aa474b3483039b106f37fdbaad1c92e">saveState</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> setLocation(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;location) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_recurring_item_event.html#a14521129bd93be6dada0729656765eac">restoreState</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> saveState() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> restoreState() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    shared_ptr&lt;RecurringEvent&gt; parentEvent;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    shared_ptr&lt;RecurringItemEvent&gt; state;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    std::shared_ptr&lt;RecurringEvent&gt; parentEvent;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    std::shared_ptr&lt;RecurringItemEvent&gt; state;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_recurring_item_event_html"><div class="ttname"><a href="class_recurring_item_event.html">RecurringItemEvent</a></div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.h:16</div></div>
-<div class="ttc" id="aclass_single_event_html"><div class="ttname"><a href="class_single_event.html">SingleEvent</a></div><div class="ttdef"><b>Definition:</b> SingleEvent.h:17</div></div>
-<div class="ttc" id="aclass_recurring_event_html"><div class="ttname"><a href="class_recurring_event.html">RecurringEvent</a></div><div class="ttdef"><b>Definition:</b> RecurringEvent.h:25</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a55279506ac2a8277fdda97f32714c39a"><div class="ttname"><a href="class_recurring_item_event.html#a55279506ac2a8277fdda97f32714c39a">RecurringItemEvent::setTitle</a></div><div class="ttdeci">void setTitle(const std::string &amp;title) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:52</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html"><div class="ttname"><a href="class_recurring_item_event.html">RecurringItemEvent</a></div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.h:12</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a4fef944ec9888696df199417677f4b3f"><div class="ttname"><a href="class_recurring_item_event.html#a4fef944ec9888696df199417677f4b3f">RecurringItemEvent::setDurationUtc</a></div><div class="ttdeci">void setDurationUtc(time_t durationUtc) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:64</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a7aa474b3483039b106f37fdbaad1c92e"><div class="ttname"><a href="class_recurring_item_event.html#a7aa474b3483039b106f37fdbaad1c92e">RecurringItemEvent::saveState</a></div><div class="ttdeci">void saveState() override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:83</div></div>
+<div class="ttc" id="aclass_single_event_html"><div class="ttname"><a href="class_single_event.html">SingleEvent</a></div><div class="ttdef"><b>Definition:</b> SingleEvent.h:13</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_aca6bbf597f8f96a314d3bf6e9ab169ea"><div class="ttname"><a href="class_recurring_item_event.html#aca6bbf597f8f96a314d3bf6e9ab169ea">RecurringItemEvent::getActionTypes</a></div><div class="ttdeci">std::vector&lt; Event::actionType &gt; getActionTypes() override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:24</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_aa5a3d438f208d543778362220033fd56"><div class="ttname"><a href="class_recurring_item_event.html#aa5a3d438f208d543778362220033fd56">RecurringItemEvent::setLocation</a></div><div class="ttdeci">void setLocation(const std::string &amp;location) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:70</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a17a94e9fb38f701352c65fe534de9127"><div class="ttname"><a href="class_recurring_item_event.html#a17a94e9fb38f701352c65fe534de9127">RecurringItemEvent::removePerson</a></div><div class="ttdeci">bool removePerson(const std::shared_ptr&lt; Person &gt; &amp;toRemove) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:38</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_afa82f3d7f9893b9da4332e181bcbda0d"><div class="ttname"><a href="class_recurring_item_event.html#afa82f3d7f9893b9da4332e181bcbda0d">RecurringItemEvent::infoAll</a></div><div class="ttdeci">std::string infoAll() const override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:76</div></div>
+<div class="ttc" id="aclass_recurring_event_html"><div class="ttname"><a href="class_recurring_event.html">RecurringEvent</a></div><div class="ttdef"><b>Definition:</b> RecurringEvent.h:21</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a14521129bd93be6dada0729656765eac"><div class="ttname"><a href="class_recurring_item_event.html#a14521129bd93be6dada0729656765eac">RecurringItemEvent::restoreState</a></div><div class="ttdeci">void restoreState() override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:89</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_ad3b45a67ca0dcae09be300f8f4941c69"><div class="ttname"><a href="class_recurring_item_event.html#ad3b45a67ca0dcae09be300f8f4941c69">RecurringItemEvent::setEditable</a></div><div class="ttdeci">void setEditable(bool editable) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:46</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a3ad7e79973650d4dd7b84ecfd7cd99cf"><div class="ttname"><a href="class_recurring_item_event.html#a3ad7e79973650d4dd7b84ecfd7cd99cf">RecurringItemEvent::addPerson</a></div><div class="ttdeci">bool addPerson(const std::shared_ptr&lt; Person &gt; &amp;toAdd) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:30</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_aee4f5f23f70dcaeed361880d6f3a13a5"><div class="ttname"><a href="class_recurring_item_event.html#aee4f5f23f70dcaeed361880d6f3a13a5">RecurringItemEvent::RecurringItemEvent</a></div><div class="ttdeci">RecurringItemEvent(std::string title_, time_t startDateUtc_, time_t duration_, std::shared_ptr&lt; RecurringEvent &gt; parentEvent_)</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a85488a53dc12c71e57e8b71b0e4fae86"><div class="ttname"><a href="class_recurring_item_event.html#a85488a53dc12c71e57e8b71b0e4fae86">RecurringItemEvent::freeSelf</a></div><div class="ttdeci">std::shared_ptr&lt; Event &gt; freeSelf(actionType actionType=actionType::OnlyThis) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:15</div></div>
+<div class="ttc" id="aclass_recurring_item_event_html_a2882c1c7b224144100a41fd7cd069764"><div class="ttname"><a href="class_recurring_item_event.html#a2882c1c7b224144100a41fd7cd069764">RecurringItemEvent::setStartDateUtc</a></div><div class="ttdeci">void setStartDateUtc(time_t startDateUtc) override</div><div class="ttdef"><b>Definition:</b> RecurringItemEvent.cpp:58</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

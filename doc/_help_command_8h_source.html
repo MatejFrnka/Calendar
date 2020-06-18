@@ -70,34 +70,29 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_APP_COMMANDS_HELP_COMMAND</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_APP_COMMANDS_HELP_COMMAND</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Command.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_help_command.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_help_command.html">HelpCommand</a> : <span class="keyword">public</span> <a class="code" href="class_command.html">Command</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="class_help_command.html">HelpCommand</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;commands_, <a class="code" href="class_input_utility.html">InputUtility</a> &amp;inputUtility_) : <a class="code" href="class_command.html">Command</a>(<span class="stringliteral">&quot;help&quot;</span>, <span class="stringliteral">&quot;&quot;</span>, inputUtility_), refCommands(commands_) {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    }</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;Command.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_help_command.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_help_command.html">HelpCommand</a> : <span class="keyword">public</span> <a class="code" href="class_command.html">Command</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_help_command.html">HelpCommand</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;commands_, <a class="code" href="class_input_utility.html">InputUtility</a> &amp;inputUtility_) : <a class="code" href="class_command.html">Command</a>(<span class="stringliteral">&quot;help&quot;</span>, <span class="stringliteral">&quot;&quot;</span>, inputUtility_), refCommands(commands_) {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    }</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; <a class="code" href="class_help_command.html#afa190f08a3b42798bacb7448f705d024">executeAction</a>(std::queue&lt;std::string&gt; &amp;parameters) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; <a class="code" href="class_help_command.html#afa190f08a3b42798bacb7448f705d024">executeAction</a>(std::queue&lt;std::string&gt; &amp;parameters) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">void</span> printCommandsRec(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;toPrint, <span class="keywordtype">int</span> depth) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;refCommands;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> printCommandsRec(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;toPrint, <span class="keywordtype">int</span> depth) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;refCommands;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_help_command_html"><div class="ttname"><a href="class_help_command.html">HelpCommand</a></div><div class="ttdef"><b>Definition:</b> HelpCommand.h:14</div></div>
+<div class="ttc" id="aclass_help_command_html"><div class="ttname"><a href="class_help_command.html">HelpCommand</a></div><div class="ttdef"><b>Definition:</b> HelpCommand.h:12</div></div>
 <div class="ttc" id="aclass_help_command_html_afa190f08a3b42798bacb7448f705d024"><div class="ttname"><a href="class_help_command.html#afa190f08a3b42798bacb7448f705d024">HelpCommand::executeAction</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; executeAction(std::queue&lt; std::string &gt; &amp;parameters) override</div><div class="ttdef"><b>Definition:</b> HelpCommand.cpp:34</div></div>
-<div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:18</div></div>
-<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:17</div></div>
+<div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:16</div></div>
+<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:15</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

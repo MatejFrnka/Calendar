@@ -70,53 +70,48 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_DRAW_DAY_DRAW</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_DRAW_DAY_DRAW</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Draw.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Utility/DatetimeUtility.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_day_draw.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_day_draw.html">DayDraw</a> : <span class="keyword">public</span> <a class="code" href="class_draw.html">Draw</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="class_day_draw.html">DayDraw</a>(std::ostream &amp;out_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) : <a class="code" href="class_draw.html">Draw</a>(out_, eventManager_) {};</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Draw.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../Utility/DatetimeUtility.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_day_draw.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_day_draw.html">DayDraw</a> : <span class="keyword">public</span> <a class="code" href="class_draw.html">Draw</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_day_draw.html">DayDraw</a>(std::ostream &amp;out_, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager_) : <a class="code" href="class_draw.html">Draw</a>(out_, eventManager_) {};</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_day_draw.html#ac7f82dde7f6e122c1f6cd7320cdfe682">drawEvents</a>(tm &amp;time) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_day_draw.html#ac7f82dde7f6e122c1f6cd7320cdfe682">drawEvents</a>(tm &amp;time) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_day_draw.html#a8490433331d580ad2fe26aa4379aecfb">moveNext</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_day_draw.html#a8490433331d580ad2fe26aa4379aecfb">moveNext</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_day_draw.html#a74d348e98baed2ffb8344690687da11f">movePrevious</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_day_draw.html#a74d348e98baed2ffb8344690687da11f">movePrevious</a>(tm &amp;time) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">char</span> timeBorder = <span class="charliteral">&#39;|&#39;</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">char</span> timeBreak = <span class="charliteral">&#39;-&#39;</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">int</span> width = 50;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">int</span> timeJump = 2;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">char</span> timeBorder = <span class="charliteral">&#39;|&#39;</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">char</span> timeBreak = <span class="charliteral">&#39;-&#39;</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">int</span> width = 50;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">int</span> timeJump = 2;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> drawLine(std::ostream &amp;o, <span class="keywordtype">int</span> hour) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> drawLine(ostream &amp;o, <span class="keywordtype">int</span> hour) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> mkTime(std::ostream &amp;o, <span class="keywordtype">int</span> hour, <span class="keywordtype">int</span> minute) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> mkTime(ostream &amp;o, <span class="keywordtype">int</span> hour, <span class="keywordtype">int</span> minute) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::string customFill(<span class="keyword">const</span> std::string &amp;body, <span class="keywordtype">char</span> fillChar, <span class="keywordtype">char</span> lborder, <span class="keywordtype">char</span> rborder, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> customWidth) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">string</span> customFill(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;body, <span class="keywordtype">char</span> fillChar, <span class="keywordtype">char</span> lborder, <span class="keywordtype">char</span> rborder, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> customWidth) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> drawEvent(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event, <span class="keywordtype">int</span> hourStart, <span class="keywordtype">int</span> minuteStart, <span class="keywordtype">int</span> hourEnd, <span class="keywordtype">int</span> minuteEnd) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> drawEvent(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event, <span class="keywordtype">int</span> hourStart, <span class="keywordtype">int</span> minuteStart, <span class="keywordtype">int</span> hourEnd, <span class="keywordtype">int</span> minuteEnd) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> drawEventStart(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event, <span class="keywordtype">int</span> hourStart, <span class="keywordtype">int</span> minuteStart) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> drawEventStart(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event, <span class="keywordtype">int</span> hourStart, <span class="keywordtype">int</span> minuteStart) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> drawEventEnd(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event, <span class="keywordtype">int</span> hourEnd, <span class="keywordtype">int</span> minuteEnd) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> drawEventEnd(<span class="keyword">const</span> <a class="code" href="class_event.html">Event</a> &amp;event, <span class="keywordtype">int</span> hourEnd, <span class="keywordtype">int</span> minuteEnd) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
+<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:13</div></div>
 <div class="ttc" id="aclass_day_draw_html_a8490433331d580ad2fe26aa4379aecfb"><div class="ttname"><a href="class_day_draw.html#a8490433331d580ad2fe26aa4379aecfb">DayDraw::moveNext</a></div><div class="ttdeci">void moveNext(tm &amp;time) const override</div><div class="ttdef"><b>Definition:</b> DayDraw.cpp:102</div></div>
-<div class="ttc" id="aclass_day_draw_html"><div class="ttname"><a href="class_day_draw.html">DayDraw</a></div><div class="ttdef"><b>Definition:</b> DayDraw.h:14</div></div>
-<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:29</div></div>
+<div class="ttc" id="aclass_day_draw_html"><div class="ttname"><a href="class_day_draw.html">DayDraw</a></div><div class="ttdef"><b>Definition:</b> DayDraw.h:12</div></div>
+<div class="ttc" id="aclass_event_html"><div class="ttname"><a href="class_event.html">Event</a></div><div class="ttdef"><b>Definition:</b> Event.h:26</div></div>
 <div class="ttc" id="aclass_day_draw_html_ac7f82dde7f6e122c1f6cd7320cdfe682"><div class="ttname"><a href="class_day_draw.html#ac7f82dde7f6e122c1f6cd7320cdfe682">DayDraw::drawEvents</a></div><div class="ttdeci">void drawEvents(tm &amp;time) override</div><div class="ttdef"><b>Definition:</b> DayDraw.cpp:10</div></div>
-<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:14</div></div>
+<div class="ttc" id="aclass_draw_html"><div class="ttname"><a href="class_draw.html">Draw</a></div><div class="ttdef"><b>Definition:</b> Draw.h:12</div></div>
 <div class="ttc" id="aclass_day_draw_html_a74d348e98baed2ffb8344690687da11f"><div class="ttname"><a href="class_day_draw.html#a74d348e98baed2ffb8344690687da11f">DayDraw::movePrevious</a></div><div class="ttdeci">void movePrevious(tm &amp;time) const override</div><div class="ttdef"><b>Definition:</b> DayDraw.cpp:106</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

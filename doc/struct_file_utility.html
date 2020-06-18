@@ -73,23 +73,65 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a26b00cce517187c7bad09af9dfe0ecd0"><td class="memItemLeft" align="right" valign="top"><a id="a26b00cce517187c7bad09af9dfe0ecd0"></a>
-static shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fromString</b> (const string &amp;event)</td></tr>
-<tr class="separator:a26b00cce517187c7bad09af9dfe0ecd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada697e4aadfe3f4ed296b04c341f75f1"><td class="memItemLeft" align="right" valign="top"><a id="ada697e4aadfe3f4ed296b04c341f75f1"></a>
-static string&#160;</td><td class="memItemRight" valign="bottom"><b>readNext</b> (istringstream &amp;input, char separator)</td></tr>
-<tr class="separator:ada697e4aadfe3f4ed296b04c341f75f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a0b2ab747c23669520d80b8b83c058f"><td class="memItemLeft" align="right" valign="top"><a id="a3a0b2ab747c23669520d80b8b83c058f"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>saveData</b> (const string &amp;data)</td></tr>
-<tr class="separator:a3a0b2ab747c23669520d80b8b83c058f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a991d29d154e35bb96443d7d740cc5060"><td class="memItemLeft" align="right" valign="top"><a id="a991d29d154e35bb96443d7d740cc5060"></a>
-static vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>readData</b> ()</td></tr>
-<tr class="separator:a991d29d154e35bb96443d7d740cc5060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0152f58a9ccbe47c9fde89d7a50afb3"><td class="memItemLeft" align="right" valign="top"><a id="ad0152f58a9ccbe47c9fde89d7a50afb3"></a>
+static std::shared_ptr&lt; <a class="el" href="class_event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fromString</b> (const std::string &amp;event)</td></tr>
+<tr class="separator:ad0152f58a9ccbe47c9fde89d7a50afb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a892c4c2e0ddde6727e49c53ace3b7ae8"><td class="memItemLeft" align="right" valign="top"><a id="a892c4c2e0ddde6727e49c53ace3b7ae8"></a>
+static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>readNext</b> (std::istringstream &amp;input, char separator)</td></tr>
+<tr class="separator:a892c4c2e0ddde6727e49c53ace3b7ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae6ec475dec935a8290e7634062901e6"><td class="memItemLeft" align="right" valign="top"><a id="aae6ec475dec935a8290e7634062901e6"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>saveData</b> (const std::string &amp;data, const std::string &amp;path=&quot;events_saved.evs&quot;)</td></tr>
+<tr class="separator:aae6ec475dec935a8290e7634062901e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a755f8899d03c4f77318877bce41879a6"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_file_utility.html#a755f8899d03c4f77318877bce41879a6">readData</a> (const std::string &amp;path=&quot;events_saved.evs&quot;)</td></tr>
+<tr class="separator:a755f8899d03c4f77318877bce41879a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8e53a52c8a3c611651fab595e941810"><td class="memItemLeft" align="right" valign="top"><a id="ad8e53a52c8a3c611651fab595e941810"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (<a class="el" href="class_event_manager.html">EventManager</a> &amp;eventManager, std::ostream &amp;out, const std::string &amp;path=&quot;events_saved.evs&quot;)</td></tr>
+<tr class="separator:ad8e53a52c8a3c611651fab595e941810"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>: Matej Frnka <a href="#" onclick="location.href='mai'+'lto:'+'frn'+'ka'+'mat'+'@f'+'it.'+'cv'+'ut.'+'cz'; return false;">frnka<span style="display: none;">.nosp@m.</span>mat@<span style="display: none;">.nosp@m.</span>fit.c<span style="display: none;">.nosp@m.</span>vut.<span style="display: none;">.nosp@m.</span>cz</a> </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>: 02.06.2020 </dd></dl>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a755f8899d03c4f77318877bce41879a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a755f8899d03c4f77318877bce41879a6">&#9670;&nbsp;</a></span>readData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::vector&lt;std::string&gt; FileUtility::readData </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em> = <code>&quot;events_saved.evs&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Loads events from file </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">eventManager</td><td>event manager to load events into </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">invalid_argument</td><td>when supplied path does not work </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>false if loading of at least one event failed </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>D:/Documents/GitHub/BIPA2/Calendar/src/Utility/<a class="el" href="_file_utility_8h_source.html">FileUtility.h</a></li>
 </ul>
 </div><!-- contents -->

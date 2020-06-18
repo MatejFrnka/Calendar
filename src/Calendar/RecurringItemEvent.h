@@ -24,7 +24,7 @@ public:
 
     RecurringItemEvent() = delete;
 
-    std::shared_ptr<Event> freeSelf(actionType actionType = actionType::OnlyThis) override;
+    std::shared_ptr<Event> freeSelf(actionType actionType) override;
 
     std::vector<Event::actionType> getActionTypes() override;
 

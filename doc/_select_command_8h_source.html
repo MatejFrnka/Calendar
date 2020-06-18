@@ -70,31 +70,26 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CALENDAR_SELECTCOMMAND_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CALENDAR_SELECTCOMMAND_H</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Command.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../../Calendar/EventManager.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_select_command.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_select_command.html">SelectCommand</a> : <span class="keyword">public</span> <a class="code" href="class_command.html">Command</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="class_select_command.html#a6ec6eeff14fed26ffb734ab5e2b3d9f0">SelectCommand</a>(<a class="code" href="class_input_utility.html">InputUtility</a> &amp;inputUtility, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager);</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Command.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../../Calendar/EventManager.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_select_command.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_select_command.html">SelectCommand</a> : <span class="keyword">public</span> <a class="code" href="class_command.html">Command</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="class_select_command.html#a6ec6eeff14fed26ffb734ab5e2b3d9f0">SelectCommand</a>(<a class="code" href="class_input_utility.html">InputUtility</a> &amp;inputUtility, <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; <a class="code" href="class_select_command.html#a991460cffc2ddedd9d5e2b6fa449790c">executeAction</a>(std::queue&lt;std::string&gt; &amp;parameters) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; <a class="code" href="class_select_command.html#a991460cffc2ddedd9d5e2b6fa449790c">executeAction</a>(std::queue&lt;std::string&gt; &amp;parameters) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif //CALENDAR_SELECTCOMMAND_H</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="class_event_manager.html">EventManager</a> &amp;eventManager;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:15</div></div>
+<div class="ttc" id="aclass_event_manager_html"><div class="ttname"><a href="class_event_manager.html">EventManager</a></div><div class="ttdef"><b>Definition:</b> EventManager.h:13</div></div>
 <div class="ttc" id="aclass_select_command_html_a6ec6eeff14fed26ffb734ab5e2b3d9f0"><div class="ttname"><a href="class_select_command.html#a6ec6eeff14fed26ffb734ab5e2b3d9f0">SelectCommand::SelectCommand</a></div><div class="ttdeci">SelectCommand(InputUtility &amp;inputUtility, EventManager &amp;eventManager)</div><div class="ttdef"><b>Definition:</b> SelectCommand.cpp:13</div></div>
 <div class="ttc" id="aclass_select_command_html_a991460cffc2ddedd9d5e2b6fa449790c"><div class="ttname"><a href="class_select_command.html#a991460cffc2ddedd9d5e2b6fa449790c">SelectCommand::executeAction</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; Command &gt; &gt; executeAction(std::queue&lt; std::string &gt; &amp;parameters) override</div><div class="ttdef"><b>Definition:</b> SelectCommand.cpp:24</div></div>
-<div class="ttc" id="aclass_select_command_html"><div class="ttname"><a href="class_select_command.html">SelectCommand</a></div><div class="ttdef"><b>Definition:</b> SelectCommand.h:13</div></div>
-<div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:18</div></div>
-<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:17</div></div>
+<div class="ttc" id="aclass_select_command_html"><div class="ttname"><a href="class_select_command.html">SelectCommand</a></div><div class="ttdef"><b>Definition:</b> SelectCommand.h:11</div></div>
+<div class="ttc" id="aclass_input_utility_html"><div class="ttname"><a href="class_input_utility.html">InputUtility</a></div><div class="ttdef"><b>Definition:</b> InputUtility.h:16</div></div>
+<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> Command.h:15</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
